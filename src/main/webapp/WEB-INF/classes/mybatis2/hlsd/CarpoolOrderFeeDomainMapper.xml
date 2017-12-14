@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CarpoolOrderFeeDomainMapper">
+  <!-- <resultMap id="BaseResultMap" type="com.huliansudi.domain.CarpoolOrderFeeDomain">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="cityId" jdbcType="VARCHAR" property="cityid" />
+    <result column="endMileage" jdbcType="DOUBLE" property="endmileage" />
+    <result column="isFightAlone" jdbcType="VARCHAR" property="isfightalone" />
+    <result column="mileagePrice" jdbcType="DOUBLE" property="mileageprice" />
+    <result column="provinceId" jdbcType="VARCHAR" property="provinceid" />
+    <result column="startMileage" jdbcType="DOUBLE" property="startmileage" />
+    <result column="isCrosstown" jdbcType="VARCHAR" property="iscrosstown" />
+  </resultMap> -->
+  <sql id="table_name">
+  	t_carpool_order_price
+  </sql>
+  <sql id="Base_Column_List">
+    Id, cityId, endMileage, isFightAlone, mileagePrice, provinceId, startMileage, isCrosstown
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from 
+    <include refid="table_name"/>
+    where Id = #{_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from 
+    <include refid="table_name"/>
+    <where>
+    Id = #{_parameter}
+    </where>
+  </delete>
+  <insert id="insert" parameterType="pd">
+    insert into 
+    <include refid="table_name"/> 
+    (Id, cityId, endMileage, 
+      isFightAlone, mileagePrice, provinceId, 
+      startMileage, isCrosstown)
+    values (#{id,jdbcType=INTEGER}, #{cityid,jdbcType=VARCHAR}, #{endmileage,jdbcType=DOUBLE}, 
+      #{isfightalone,jdbcType=VARCHAR}, #{mileageprice,jdbcType=DOUBLE}, #{provinceid,jdbcType=VARCHAR}, 
+      #{startmileage,jdbcType=DOUBLE}, #{iscrosstown,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pd">
+    insert into t_carpool_order_price
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="cityid != null">
+        cityId,
+      </if>
+      <if test="endmileage != null">
+        endMileage,
+      </if>
+      <if test="isfightalone != null">
+        isFightAlone,
+      </if>
+      <if test="mileageprice != null">
+        mileagePrice,
+      </if>
+      <if test="provinceid != null">
+        provinceId,
+      </if>
+      <if test="startmileage != null">
+        startMileage,
+      </if>
+      <if test="iscrosstown != null">
+        isCrosstown,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cityid != null">
+        #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="endmileage != null">
+        #{endmileage,jdbcType=DOUBLE},
+      </if>
+      <if test="isfightalone != null">
+        #{isfightalone,jdbcType=VARCHAR},
+      </if>
+      <if test="mileageprice != null">
+        #{mileageprice,jdbcType=DOUBLE},
+      </if>
+      <if test="provinceid != null">
+        #{provinceid,jdbcType=VARCHAR},
+      </if>
+      <if test="startmileage != null">
+        #{startmileage,jdbcType=DOUBLE},
+      </if>
+      <if test="iscrosstown != null">
+        #{iscrosstown,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update t_carpool_order_price
+    <set>
+      <if test="cityid != null">
+        cityId = #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="endmileage != null">
+        endMileage = #{endmileage,jdbcType=DOUBLE},
+      </if>
+      <if test="isfightalone != null">
+        isFightAlone = #{isfightalone,jdbcType=VARCHAR},
+      </if>
+      <if test="mileageprice != null">
+        mileagePrice = #{mileageprice,jdbcType=DOUBLE},
+      </if>
+      <if test="provinceid != null">
+        provinceId = #{provinceid,jdbcType=VARCHAR},
+      </if>
+      <if test="startmileage != null">
+        startMileage = #{startmileage,jdbcType=DOUBLE},
+      </if>
+      <if test="iscrosstown != null">
+        isCrosstown = #{iscrosstown,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pd">
+    update t_carpool_order_price
+    set cityId = #{cityid,jdbcType=VARCHAR},
+      endMileage = #{endmileage,jdbcType=DOUBLE},
+      isFightAlone = #{isfightalone,jdbcType=VARCHAR},
+      mileagePrice = #{mileageprice,jdbcType=DOUBLE},
+      provinceId = #{provinceid,jdbcType=VARCHAR},
+      startMileage = #{startmileage,jdbcType=DOUBLE},
+      isCrosstown = #{iscrosstown,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

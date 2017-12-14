@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TActivitiesModelMapper">
+  <!-- <resultMap id="BaseResultMap" type="pd">
+    <id column="activityId" jdbcType="VARCHAR" property="activityid" />
+    <result column="activityName" jdbcType="VARCHAR" property="activityname" />
+    <result column="startTime" jdbcType="DATE" property="starttime" />
+    <result column="endTime" jdbcType="DATE" property="endtime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap> -->
+  <sql id="Base_Column_List">
+    activityId, activityName, startTime, endTime, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from t_activities
+    where activityId = #{_parameterR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_activities
+    where activityId = #{_parameter}
+  </delete>
+  <insert id="insert" parameterType="pd">
+    insert into t_activities (activityId, activityName, startTime, 
+      endTime, remark)
+    values (#{activityid,jdbcType=VARCHAR}, #{activityname,jdbcType=VARCHAR}, #{starttime,jdbcType=DATE}, 
+      #{endtime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pd">
+    insert into t_activities
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="activityid != null">
+        activityId,
+      </if>
+      <if test="activityname != null">
+        activityName,
+      </if>
+      <if test="starttime != null">
+        startTime,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="activityid != null">
+        #{activityid,jdbcType=VARCHAR},
+      </if>
+      <if test="activityname != null">
+        #{activityname,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=DATE},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update t_activities
+    <set>
+      <if test="activityname != null">
+        activityName = #{activityname,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null">
+        startTime = #{starttime,jdbcType=DATE},
+      </if>
+      <if test="endtime != null">
+        endTime = #{endtime,jdbcType=DATE},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where activityId = #{activityid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pd">
+    update t_activities
+    set activityName = #{activityname,jdbcType=VARCHAR},
+      startTime = #{starttime,jdbcType=DATE},
+      endTime = #{endtime,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR}
+    where activityId = #{activityid,jdbcType=VARCHAR}
+  </update>
+</mapper>

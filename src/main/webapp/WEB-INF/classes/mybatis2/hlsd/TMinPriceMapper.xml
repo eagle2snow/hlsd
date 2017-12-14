@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MinPriceMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		t_min_price
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,	
+		PROVINCEID,	
+		CITYID,	
+		MINPRICE,	
+		BMINPRICE,	
+		PMINPRICE,	
+		DRIVERTYPE,	
+		GOODSDESCRIPTION,	
+		SECONDORDERMINFEE
+		<!-- CREATETIMR,
+		CREATER,
+		UPDATETIME,
+		UPDATER	 -->
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},	
+		#{PROVINCEID},	
+		#{CITYID},	
+		#{MINPRICE},	
+		#{BMINPRICE},	
+		#{PMINPRICE},	
+		#{DRIVERTYPE},	
+		#{GOODSDESCRIPTION},	
+		#{SECONDORDERMINFEE}
+		<!-- #{CREATETIMR},
+		#{CREATER},
+		#{UPDATETIME},
+		#{UPDATER} -->	
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		<include refid="tableName"/>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID != null and ID != ''">
+        ID,
+      </if>
+      <if test="CITYID != null and CITYID != ''">
+        CITYID,
+      </if>
+       <if test="MINPRICE != null and MINPRICE != ''">
+        MINPRICE,
+      </if>
+     <if test="BMINPRICE != null and BMINPRICE != ''">
+        BMINPRICE,
+      </if>
+       <if test="PROVINCEID != null and PROVINCEID != ''">
+        PROVINCEID,
+      </if>
+       <if test="PMINPRICE != null and PMINPRICE != ''">
+        PMINPRICE,
+      </if>
+      <if test="DRIVERTYPE != null and DRIVERTYPE != ''">
+        DRIVERTYPE,
+      </if>
+      <if test="GOODSDESCRIPTION != null and GOODSDESCRIPTION != ''">
+        GOODSDESCRIPTION,
+      </if>
+      <if test="SECONDORDERMINFEE != null and SECONDORDERMINFEE != ''">
+        SECONDORDERMINFEE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID != null and ID != ''">
+        #{ID},
+      </if>
+      <if test="CITYID != null and CITYID != ''">
+        #{CITYID},
+      </if>
+      <if test="MINPRICE != null and MINPRICE != ''">
+        #{MINPRICE},
+      </if>
+      <if test="BMINPRICE != null and BMINPRICE != ''">
+        #{BMINPRICE},
+      </if>
+      <if test="PROVINCEID != null and PROVINCEID != ''">
+        #{PROVINCEID},
+      </if>
+      <if test="PMINPRICE != null and PMINPRICE != ''">
+        #{PMINPRICE},
+      </if>
+      <if test="DRIVERTYPE != null and DRIVERTYPE != ''">
+        #{DRIVERTYPE},
+      </if>
+      <if test="GOODSDESCRIPTION != null and GOODSDESCRIPTION != ''">
+        #{GOODSDESCRIPTION},
+      </if>
+      <if test="SECONDORDERMINFEE != null and SECONDORDERMINFEE != ''">
+        #{SECONDORDERMINFEE},
+      </if>
+    </trim>
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set
+			<if test="PROVINCEID != null and PROVINCEID != ''">
+				PROVINCEID = #{PROVINCEID},
+			</if> 
+			<if test="CITYID != null and CITYID != ''">
+				CITYID = #{CITYID},
+			</if> 
+			<if test="MINPRICE != null and MINPRICE != ''">
+				MINPRICE = #{MINPRICE},
+			</if> 
+			<if test="BMINPRICE != null and BMINPRICE != ''">
+				BMINPRICE = #{BMINPRICE},
+			</if> 
+			<if test="PMINPRICE != null and PMINPRICE != ''">
+				PMINPRICE = #{PMINPRICE},
+			</if> 
+			<if test="DRIVERTYPE != null and DRIVERTYPE != ''">
+				DRIVERTYPE = #{DRIVERTYPE},
+			</if> 
+			<if test="GOODSDESCRIPTION != null and GOODSDESCRIPTION != ''">
+				GOODSDESCRIPTION = #{GOODSDESCRIPTION},
+			</if> 
+			<if test="SECONDORDERMINFEE != null and SECONDORDERMINFEE != ''">
+				SECONDORDERMINFEE = #{SECONDORDERMINFEE},
+			</if> 
+		ID = ID
+		where 
+		ID = #{ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		SELECT
+			m.ID,	
+			p.PROVINCE,	
+			c.CITY,	
+			m.MINPRICE,	
+			m.BMINPRICE,	
+			m.PMINPRICE,	
+			m.DRIVERTYPE,	
+			m.GOODSDESCRIPTION,	
+			m.SECONDORDERMINFEE	
+		FROM 
+		<include refid="tableName"/> m LEFT JOIN t_cities c ON m.CITYID = c.CITYID LEFT JOIN t_provinces p ON m.PROVINCEID = p.PROVINCEID
+		WHERE 1=1
+		<if test="pd.PROVINCEID != null and pd.PROVINCEID !=''">
+			AND m.PROVINCEID = #{pd.PROVINCEID}
+		</if>
+		<if test="pd.CITYID != null and pd.CITYID !=''">
+			AND m.CITYID = #{pd.CITYID}
+		</if>
+		<if test="pd.DRIVERTYPE != null and pd.DRIVERTYPE !=''">
+			AND m.DRIVERTYPE = #{pd.DRIVERTYPE}
+		</if>
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			AND
+				(
+				<!--	根据需求自己加检索条件-->
+					m.ID LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					m.GOODSDESCRIPTION LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				
+				)
+		</if>
+		ORDER BY m.PROVINCEID
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- zhangWenchao -->
+</mapper>

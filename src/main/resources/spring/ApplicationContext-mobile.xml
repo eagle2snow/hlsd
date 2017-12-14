@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+	">
+   
+    <!-- 终端统一认证接口服务（这里可以配置jwt的token认证和redis实现的token认证） AuthenticateByJwt  -->
+	<bean id="authenService" class="com.fh.service.app.authenticate.impl.AuthenticateByRedis" primary="true"></bean>
+   
+    <!-- 测试接口服务 ,当然不在这里写，在DemoService类上面加上 @Service(demoService) 这样也是可以注入的-->
+	<bean id="demoService" class="com.fh.service.app.demo.DemoService" primary="true"></bean>
+	
+    <!-- 骑手接口服务 -->
+	<bean id="HorsemanService" class="com.fh.service.app.hlsd.HorsemanService" primary="true"></bean>
+    <!-- 骑手订单信息接口服务 -->
+	<bean id="HorsemanOrderService" class="com.fh.service.app.hlsd.HorsemanOrderService" primary="true"></bean>
+    <!-- 骑手等级分数信息接口服务 -->
+	<bean id="HorsemanScaleScoreService" class="com.fh.service.app.hlsd.HorsemanScaleScoreService" primary="true"></bean>
+    <!-- BD专员接口服务 -->
+	<bean id="BDUserService" class="com.fh.service.app.hlsd.BD.BDUserService" primary="true"></bean>
+    <!-- BD专员接口服务 -->
+	<bean id="BDIncomeService" class="com.fh.service.app.hlsd.BD.BDIncomeService" primary="true"></bean>
+    
+</beans>

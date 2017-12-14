@@ -1,0 +1,436 @@
+@charset "utf-8";
+#userapp {
+    animation-duration: 3s; //动画持续时间
+    animation-delay: 1s; //动画延迟时间
+    animation-iteration-count: 1; //动画执行次数
+}
+
+#adminapp {
+    animation-duration: 3s; //动画持续时间
+    animation-delay: 1s; //动画延迟时间
+    animation-iteration-count: 1; //动画执行次数
+}
+
+.user-download {
+    animation-duration: 3s; //动画持续时间
+    animation-delay: 1s; //动画延迟时间
+    animation-iteration-count: 1; //动画执行次数
+}
+
+.admin-download {
+    animation-duration: 3s; //动画持续时间
+    animation-delay: 1s; //动画延迟时间
+    animation-iteration-count: 1; //动画执行次数
+}
+
+.downorder {
+    position: absolute;
+    left: 0;
+    top: 350px;
+}
+.goorder{
+     position: absolute;
+    left: 140px;
+    top: 630px;
+}
+.goorder a{
+    display: block;
+    width: 360px;
+    height: 90px;
+    font-size: 36px;
+    color: #fff;
+    text-align: center;
+    line-height: 90px;
+    background: #44c2f1;
+    border-top-left-radius: 45px;
+    border-bottom-left-radius: 45px;
+     border-top-right-radius: 45px;
+}
+
+/*content*/
+
+.content {
+    height: 2375px;
+    background: url(../img/di2.png) no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+.content-list {
+    width: 1400px;
+    height: 320px;
+    margin: 0 auto;
+    position: relative;
+    top: -110px;
+    left: 0;
+}
+
+.content-list ul {
+    height: 320px;
+    padding-left: 80px;
+}
+
+
+/*suer-app*/
+
+.content-user {
+    width: 1400px;
+    margin: 0 auto;
+    margin-top: 140px;
+    height: 850px;
+    background: url(../img/Shadow.png) no-repeat -60% 110%;
+}
+
+.content-user .user-left {
+    width: 700px;
+    height: 700px;
+    float: left;
+    text-align: right;
+}
+
+.content-user .user-right {
+    float: left;
+    width: 700px;
+    height: 340px;
+    padding-top: 360px;
+}
+
+.content-user .user-download {
+    height: 266px;
+    width: 500px;
+    position: relative;
+}
+
+.content-user .user-right h2 {
+    color: #212632;
+    font-size: 48px;
+}
+
+.content-user .user-right p {
+    color: #212632;
+    font-size: 18px;
+    width: 500px;
+    margin-top: 35px;
+    line-height: 32px;
+    letter-spacing: 1px;
+}
+
+.content-user .user-right a {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 200px;
+    height: 46px;
+    background: #44c2f1;
+    box-shadow: 2px 2px 2px #dcdcdc;
+    color: #fff;
+    text-align: center;
+    line-height: 46px;
+    font-size: 22px;
+}
+
+
+/*admin-app*/
+
+.content-admin {
+    width: 1400px;
+    margin: 0 auto;
+    height: 900px;
+    background: url(../img/Shadow.png) no-repeat 130% 100%;
+}
+
+.content-admin .admin-left {
+    width: 730px;
+    height: 700px;
+    float: left;
+    position: relative;
+}
+
+.content-admin .admin-left .admin-download {
+    width: 500px;
+    height: 260px;
+    position: absolute;
+    right: 0;
+    bottom: 210px;
+}
+
+.content-admin .admin-left h2 {
+    color: #212632;
+    font-size: 48px;
+}
+
+.content-admin .admin-left p {
+    color: #212632;
+    font-size: 18px;
+    width: 500px;
+    margin-top: 35px;
+    line-height: 32px;
+    letter-spacing: 1px;
+}
+
+.content-admin .admin-left a {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 200px;
+    height: 46px;
+    background: #44c2f1;
+    box-shadow: 2px 2px 2px #dcdcdc;
+    color: #fff;
+    text-align: center;
+    line-height: 46px;
+    font-size: 22px;
+}
+
+.content-admin .admin-right {
+    float: left;
+    width: 630px;
+    height: 700px;
+    text-align: right;
+}
+
+.content-list li {
+    float: left;
+    width: 280px;
+    height: 260px;
+    background: url(../img/lansedi.png) no-repeat center center;
+    padding-top: 60px;
+    margin: 0 12px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.content-list li img {
+    width: 72px;
+    height: 72px;
+}
+
+.content-list li p {
+    padding-top: 45px;
+    font-size: 22px;
+    color: #FFFFFF;
+}
+.content-list li b {
+    display: block;
+    height: 2px;
+    width: 100px;
+    margin:  10px auto;
+    background: #fff;
+    }
+.content-list li span {
+    display: block;
+    width: 220px;
+    padding-top: 10px;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+
+.content-intro h2 {
+    width: 420px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 48px;
+    color: #212632;
+    margin-top: -40px;
+    margin-bottom: 50px;
+}
+
+.content-intro p {
+    width: 868px;
+    margin: 0 auto;
+    color: #212632;
+    font-size: 18px;
+    line-height: 32px;
+}
+
+
+/*intro*/
+
+.link {
+    height: 120px;
+    width: 100%;
+    background: #212632;
+}
+
+.intro {
+    height: 870px;
+    width: 1400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.intro-top {
+    position: absolute;
+    top: -100px;
+    left: 0;
+}
+
+.intro-img {
+    width: 1130px;
+    float: left;
+    height: 550px;
+}
+
+.intro-more {
+    float: left;
+    height: 550px;
+    position: relative;
+}
+
+.intro-more-btn {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+.intro-bottom {
+    height: 380px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.intro-bottom .intro-title {
+    width: 680px;
+    height: 114px;
+    float: left;
+    border-right: 1px solid #44c2f1;
+}
+
+.intro-bottom .intro-title h2 {
+    font-size: 48px;
+    padding-left: 40px;
+}
+
+.intro-bottom .intro-p {
+    float: right;
+    width: 680px;
+    padding-left: 20px;
+    margin-top: -10px;
+}
+
+.intro-bottom .intro-p p {
+    width: 630px;
+    font-size: 18px;
+    color: #212632;
+    line-height: 32px;
+    letter-spacing: 1px;
+}
+
+
+
+/*内容效果*/
+
+.content-list ul>li:hover {
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -o-transform: scale(1.1);
+}
+
+.content-list ul>li:hover img {
+    animation-name: hlsd-pulse;
+    animation-duration: 3s;
+    animation-fill-mode: both;
+}
+
+@keyframes hlsd-pulse {
+    from {
+        transform: scale3d(1, 1, 1);
+    }
+    50% {
+        transform: scale3d(1.2, 1.2, 1.2);
+    }
+    to {
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+
+
+/*线框运动*/
+
+.bb {
+    position: relative;
+    top: 80px;
+    width: 760px;
+    height: 170px;
+    background: url(../img/banner-line.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+
+/*.bb:before,.bb:after{
+            content: " ";
+            display: block;
+            position: absolute;
+            width: 760px;
+            height: 160px;
+            top: -10px;
+            left: -10px;
+            border:2px solid #fff;
+            z-index:10;
+            box-sizing: border-box;
+            -webkit-animation: clipAni 4s infinite linear;
+        }
+        .bb:before{
+            -webkit-animation-delay: -2s;
+        }
+        @keyframes  clipAni{
+            0%,100%{
+                clip:rect(0px,760px,160px,737px);
+            }
+            25%{
+                clip:rect(0px,760px,3px,0px);
+            }
+            50%{
+                clip:rect(0px,3px,160px,0px);
+            }
+            75%{
+                clip:rect(157px,760px,160px,0px);
+            }            
+        }*/
+
+.bb-order {
+    position: absolute;
+    bottom: 0px;
+    right: 30px;
+    width: 140px;
+    height: 34px;
+    z-index: 9999;
+    background: #FFFFFF;
+}
+
+.bb-order a {
+    display: block;
+    width: 140px;
+    height: 34px;
+    line-height: 34px;
+    background: #FFFFFF;
+    color: #323949;
+    text-align: center;
+    font-size: 18px;
+}
+
+.bb-order a:hover {
+    background: #44c2f1;
+    color: #FFFFFF;
+}
+
+.bb-hlsd {
+    color: #44c2f1;
+    font-size: 120px;
+    position: absolute;
+    top: -70px;
+    left: 140px;
+}
+
+.bb-hlsd-intro {
+    color: #FFFFFF;
+    opacity: 0.6;
+    font-size: 36px;
+    position: absolute;
+    top: 80px;
+    left: 140px;
+    letter-spacing: 1px;
+}

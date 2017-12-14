@@ -1,0 +1,946 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AppUserMappers">
+	<sql id="tableName">
+		t_user
+	</sql>
+	<sql id="Base_Column_List">
+		userId, 
+		expressCompanyId, 
+		userName, 
+		userPassword, 
+		userType, 
+		nickName,
+		userPhoto,
+		userMobileNo, 
+		userSex, 
+		userBirthday, 
+		userCardNo, 
+		userlevel, 
+		expressCompany,
+		industry,
+		provinceId, 
+		cityId, 
+		areaId, 
+		detailAddress, 
+		driverLicense, 
+		counterPart,
+		wokerNumber,
+		networkTel, 
+		employeeCard, 
+		identityCard, 
+		getLicenseDate, 
+		selectCarId, 
+		money,
+		orderId1,
+		orderId2, 
+		currentMode, 
+		inviteCode, 
+		status, 
+		noPassReason, 
+		commentScore,
+		createTime,
+		creater, 
+		updateTime, 
+		updater, 
+		spelllistState, 
+		loginFlag, 
+		backCashFlag,
+		beInvitedCode,
+		alipayAccount, 
+		alipayRealName, 
+		openId, 
+		wxRealName, 
+		easemobFlag, 
+		wxpayRealName,
+		wxImage,
+		wxNickName, 
+		ywtFlag, 
+		createTime_max_1, 
+		createTime_min_1, 
+		beInvitedCodeList,
+		inviteCodeId,
+		inviteId, 
+		inviteRoot, 
+		onlySign, 
+		orderNumberStatus, 
+		allTotalPrices, 
+		phoneFlag,
+		isUse,
+		standId, 
+		role, 
+		PromoNum, 
+		deliveryDistance, 
+		parentInviteCodeIdList,
+		allPriceDiscount,
+		displayPrice, 
+		smokedScale,
+		cashPledge,
+		scaleScore,
+		scaleId,
+		bukdUser,
+		availableBalance,
+		beInviteTime
+	</sql>
+	<sql id="FieldValue">
+		#{userId}, 
+		#{expressCompanyId}, 
+		#{userName}, 
+		#{userPassword}, 
+		#{userType}, 
+		#{nickName},
+		#{userPhoto},
+		#{userMobileNo}, 
+		#{userSex}, 
+		#{userBirthday}, 
+		#{userCardNo}, 
+		#{userlevel}, 
+		#{expressCompany},
+		#{industry},
+		#{provinceId}, 
+		#{cityId}, 
+		#{areaId}, 
+		#{detailAddress}, 
+		#{driverLicense}, 
+		#{counterPart},
+		#{wokerNumber},
+		#{networkTel}, 
+		#{employeeCard}, 
+		#{identityCard}, 
+		#{getLicenseDate}, 
+		#{selectCarId}, 
+		#{money},
+		#{orderId1},
+		#{orderId2}, 
+		#{currentMode}, 
+		#{inviteCode}, 
+		#{status}, 
+		#{noPassReason}, 
+		#{commentScore},
+		#{createTime},
+		#{creater}, 
+		#{updateTime}, 
+		#{updater}, 
+		#{spelllistState}, 
+		#{loginFlag}, 
+		#{backCashFlag},
+		#{beInvitedCode},
+		#{alipayAccount}, 
+		#{alipayRealName}, 
+		#{openId}, 
+		#{wxRealName}, 
+		#{easemobFlag}, 
+		#{wxpayRealName},
+		#{wxImage},
+		#{wxNickName}, 
+		#{ywtFlag}, 
+		#{createTime_max_1}, 
+		#{createTime_min_1}, 
+		#{beInvitedCodeList},
+		#{inviteCodeId},
+		#{inviteId}, 
+		#{inviteRoot}, 
+		#{onlySign}, 
+		#{orderNumberStatus}, 
+		#{allTotalPrices}, 
+		#{phoneFlag},
+		#{isUse},
+		#{standId}, 
+		#{role}, 
+		#{PromoNum}, 
+		#{deliveryDistance}, 
+		#{parentInviteCodeIdList},
+		#{allPriceDiscount},
+		#{displayPrice}, 
+		#{smokedScale},
+		#{cashPledge},
+		#{scaleScore},
+		#{scaleId},
+		#{bukdUser},
+		#{availableBalance},
+		#{beInviteTime}
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="pd">
+		select
+		<include refid="Base_Column_List" />
+		from t_user
+		where userId = #{_parameter}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from t_user
+		where userId = #{_parameter}
+	</delete>
+	<insert id="insert" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+			(
+		<include refid="Base_Column_List"></include>
+			) values (
+		<include refid="FieldValue"></include>
+			)
+	</insert>
+	<insert id="insertSelective" parameterType="pd">
+		insert into t_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				userId,
+			</if>
+			<if test="expressCompanyId != null">
+				expressCompanyId,
+			</if>
+			<if test="userName != null">
+				userName,
+			</if>
+			<if test="userPassword != null">
+				userPassword,
+			</if>
+			<if test="userType != null">
+				userType,
+			</if>
+			<if test="nickName != null">
+				nickName,
+			</if>
+			<if test="userPhoto != null">
+				userPhoto,
+			</if>
+			<if test="userMobileNo != null">
+				userMobileNo,
+			</if>
+			<if test="userSex != null">
+				userSex,
+			</if>
+			<if test="userBirthday != null">
+				userBirthday,
+			</if>
+			<if test="userCardNo != null">
+				userCardNo,
+			</if>
+			<if test="userlevel != null">
+				userlevel,
+			</if>
+			<if test="expressCompany != null">
+				expressCompany,
+			</if>
+			<if test="industry != null">
+				industry,
+			</if>
+			<if test="provinceId != null">
+				provinceId,
+			</if>
+			<if test="cityId != null">
+				cityId,
+			</if>
+			<if test="areaId != null">
+				areaId,
+			</if>
+			<if test="detailAddress != null">
+				detailAddress,
+			</if>
+			<if test="driverLicense != null">
+				driverLicense,
+			</if>
+			<if test="counterPart != null">
+				counterPart,
+			</if>
+			<if test="wokerNumber != null">
+				wokerNumber,
+			</if>
+			<if test="networkTel != null">
+				networkTel,
+			</if>
+			<if test="employeeCard != null">
+				employeeCard,
+			</if>
+			<if test="identityCard != null">
+				identityCard,
+			</if>
+			<if test="getLicenseDate != null">
+				getLicenseDate,
+			</if>
+			<if test="selectCarId != null">
+				selectCarId,
+			</if>
+			<if test="money != null">
+				money,
+			</if>
+			<if test="orderId1 != null">
+				orderId1,
+			</if>
+			<if test="orderId2 != null">
+				orderId2,
+			</if>
+			<if test="currentMode != null">
+				currentMode,
+			</if>
+			<if test="inviteCode != null">
+				inviteCode,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="noPassReason != null">
+				noPassReason,
+			</if>
+			<if test="commentScore != null">
+				commentScore,
+			</if>
+			<if test="createTime != null">
+				createTime,
+			</if>
+			<if test="creater != null">
+				creater,
+			</if>
+			<if test="updateTime != null">
+				updateTime,
+			</if>
+			<if test="updater != null">
+				updater,
+			</if>
+			<if test="spelllistState != null">
+				spelllistState,
+			</if>
+			<if test="loginFlag != null">
+				loginFlag,
+			</if>
+			<if test="backCashFlag != null">
+				backCashFlag,
+			</if>
+			<if test="beInvitedCode != null">
+				beInvitedCode,
+			</if>
+			<if test="alipayAccount != null">
+				alipayAccount,
+			</if>
+			<if test="alipayRealName != null">
+				alipayRealName,
+			</if>
+			<if test="openId != null">
+				openId,
+			</if>
+			<if test="wxRealName != null">
+				wxRealName,
+			</if>
+			<if test="easemobFlag != null">
+				easemobFlag,
+			</if>
+			<if test="wxpayRealName != null">
+				wxpayRealName,
+			</if>
+			<if test="wxImage != null">
+				wxImage,
+			</if>
+			<if test="wxNickName != null">
+				wxNickName,
+			</if>
+			<if test="ywtFlag != null">
+				ywtFlag,
+			</if>
+			<if test="createTime_max_1 != null">
+				createTime_max_1,
+			</if>
+			<if test="createTime_min_1 != null">
+				createTime_min_1,
+			</if>
+			<if test="beInvitedCodeList != null">
+				beInvitedCodeList,
+			</if>
+			<if test="inviteCodeId != null">
+				inviteCodeId,
+			</if>
+			<if test="inviteId != null">
+				inviteId,
+			</if>
+			<if test="inviteRoot != null">
+				inviteRoot,
+			</if>
+			<if test="onlySign != null">
+				onlySign,
+			</if>
+			<if test="orderNumberStatus != null">
+				orderNumberStatus,
+			</if>
+			<if test="allTotalPrices != null">
+				allTotalPrices,
+			</if>
+			<if test="phoneFlag != null">
+				phoneFlag,
+			</if>
+			<if test="isUse != null">
+				isUse,
+			</if>
+			<if test="standId != null">
+				standId,
+			</if>
+			<if test="role != null">
+				role,
+			</if>
+			<if test="PromoNum != null">
+				PromoNum,
+			</if>
+			<if test="deliveryDistance != null">
+				deliveryDistance,
+			</if>
+			<if test="parentInviteCodeIdList != null">
+				parentInviteCodeIdList,
+			</if>
+			<if test="allPriceDiscount != null">
+				allPriceDiscount,
+			</if>
+			<if test="displayPrice != null">
+				displayPrice,
+			</if>
+			<if test="smokedScale != null">
+				smokedScale,
+			</if>
+			<if test="scaleScore != null">
+				scaleScore,
+			</if>
+			<if test="availableBalance != null">
+				availableBalance,
+			</if>
+			<if test="scaleId != null">
+				scaleId,
+			</if>
+			<if test="beInviteTime != null">
+				beInviteTime
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId},
+			</if>
+			<if test="expressCompanyId != null">
+				#{expressCompanyId},
+			</if>
+			<if test="userName != null">
+				#{userName},
+			</if>
+			<if test="userPassword != null">
+				#{userPassword},
+			</if>
+			<if test="userType != null">
+				#{userType},
+			</if>
+			<if test="nickName != null">
+				#{nickName},
+			</if>
+			<if test="userPhoto != null">
+				#{userPhoto},
+			</if>
+			<if test="userMobileNo != null">
+				#{userMobileNo},
+			</if>
+			<if test="userSex != null">
+				#{userSex},
+			</if>
+			<if test="userBirthday != null">
+				#{userBirthday},
+			</if>
+			<if test="userCardNo != null">
+				#{userCardNo},
+			</if>
+			<if test="userlevel != null">
+				#{userlevel},
+			</if>
+			<if test="expressCompany != null">
+				#{expressCompany},
+			</if>
+			<if test="industry != null">
+				#{industry},
+			</if>
+			<if test="provinceId != null">
+				#{provinceId},
+			</if>
+			<if test="cityId != null">
+				#{cityId},
+			</if>
+			<if test="areaId != null">
+				#{areaId},
+			</if>
+			<if test="detailAddress != null">
+				#{detailAddress},
+			</if>
+			<if test="driverLicense != null">
+				#{driverLicense},
+			</if>
+			<if test="counterPart != null">
+				#{counterPart},
+			</if>
+			<if test="wokerNumber != null">
+				#{wokerNumber},
+			</if>
+			<if test="networkTel != null">
+				#{networkTel},
+			</if>
+			<if test="employeeCard != null">
+				#{employeeCard},
+			</if>
+			<if test="identityCard != null">
+				#{identityCard},
+			</if>
+			<if test="getLicenseDate != null">
+				#{getLicenseDate},
+			</if>
+			<if test="selectCarId != null">
+				#{selectCarId},
+			</if>
+			<if test="money != null">
+				#{money},
+			</if>
+			<if test="orderId1 != null">
+				#{orderId1},
+			</if>
+			<if test="orderId2 != null">
+				#{orderId2},
+			</if>
+			<if test="currentMode != null">
+				#{currentMode},
+			</if>
+			<if test="inviteCode != null">
+				#{inviteCode},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="noPassReason != null">
+				#{noPassReason},
+			</if>
+			<if test="commentScore != null">
+				#{commentScore},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			<if test="creater != null">
+				#{creater},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime},
+			</if>
+			<if test="updater != null">
+				#{updater},
+			</if>
+			<if test="spelllistState != null">
+				#{spelllistState},
+			</if>
+			<if test="loginFlag != null">
+				#{loginFlag},
+			</if>
+			<if test="backCashFlag != null">
+				#{backCashFlag},
+			</if>
+			<if test="beInvitedCode != null">
+				#{beInvitedCode},
+			</if>
+			<if test="alipayAccount != null">
+				#{alipayAccount},
+			</if>
+			<if test="alipayRealName != null">
+				#{alipayRealName},
+			</if>
+			<if test="openId != null">
+				#{openId},
+			</if>
+			<if test="wxRealName != null">
+				#{wxRealName},
+			</if>
+			<if test="easemobFlag != null">
+				#{easemobFlag},
+			</if>
+			<if test="wxpayRealName != null">
+				#{wxpayRealName},
+			</if>
+			<if test="wxImage != null">
+				#{wxImage},
+			</if>
+			<if test="wxNickName != null">
+				#{wxNickName},
+			</if>
+			<if test="ywtFlag != null">
+				#{ywtFlag},
+			</if>
+			<if test="createTime_max_1 != null">
+				#{createTime_max_1},
+			</if>
+			<if test="createTime_min_1 != null">
+				#{createTime_min_1},
+			</if>
+			<if test="beInvitedCodeList != null">
+				#{beInvitedCodeList},
+			</if>
+			<if test="inviteCodeId != null">
+				#{inviteCodeId},
+			</if>
+			<if test="inviteId != null">
+				#{inviteId},
+			</if>
+			<if test="inviteRoot != null">
+				#{inviteRoot},
+			</if>
+			<if test="onlySign != null">
+				#{onlySign},
+			</if>
+			<if test="orderNumberStatus != null">
+				#{orderNumberStatus},
+			</if>
+			<if test="allTotalPrices != null">
+				#{allTotalPrices},
+			</if>
+			<if test="phoneFlag != null">
+				#{phoneFlag},
+			</if>
+			<if test="isUse != null">
+				#{isUse},
+			</if>
+			<if test="standId != null">
+				#{standId},
+			</if>
+			<if test="role != null">
+				#{role},
+			</if>
+			<if test="PromoNum != null">
+				#{PromoNum},
+			</if>
+			<if test="deliveryDistance != null">
+				#{deliveryDistance},
+			</if>
+			<if test="parentInviteCodeIdList != null">
+				#{parentInviteCodeIdList},
+			</if>
+			<if test="allPriceDiscount != null">
+				#{allPriceDiscount},
+			</if>
+			<if test="displayPrice != null">
+				#{displayPrice},
+			</if>
+			<if test="smokedScale != null">
+				#{smokedScale},
+			</if>
+			<if test="scaleScore != null">
+				#{scaleScore},
+			</if>
+			<if test="availableBalance != null">
+				#{availableBalance},
+			</if>
+			<if test="scaleId != null">
+				#{scaleId},
+			</if>
+			<if test="beInviteTime != null">
+				#{beInviteTime}
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="pd">
+		update t_user
+		<set>
+			<if test="expressCompanyId != null">
+				expressCompanyId = #{expressCompanyId},
+			</if>
+			<if test="userName != null">
+				userName = #{userName},
+			</if>
+			<if test="userPassword != null">
+				userPassword = #{userPassword},
+			</if>
+			<if test="userType != null">
+				userType = #{userType},
+			</if>
+			<if test="nickName != null">
+				nickName = #{nickName},
+			</if>
+			<if test="userPhoto != null">
+				userPhoto = #{userPhoto},
+			</if>
+			<if test="userMobileNo != null">
+				userMobileNo = #{userMobileNo},
+			</if>
+			<if test="userSex != null">
+				userSex = #{userSex},
+			</if>
+			<if test="userBirthday != null">
+				userBirthday = #{userBirthday},
+			</if>
+			<if test="userCardNo != null">
+				userCardNo = #{userCardNo},
+			</if>
+			<if test="userlevel != null">
+				userlevel = #{userlevel},
+			</if>
+			<if test="expressCompany != null">
+				expressCompany = #{expressCompany},
+			</if>
+			<if test="industry != null">
+				industry = #{industry},
+			</if>
+			<if test="provinceId != null">
+				provinceId = #{provinceId},
+			</if>
+			<if test="cityId != null">
+				cityId = #{cityId},
+			</if>
+			<if test="areaId != null">
+				areaId = #{areaId},
+			</if>
+			<if test="detailAddress != null">
+				detailAddress = #{detailAddress},
+			</if>
+			<if test="driverLicense != null">
+				driverLicense = #{driverLicense},
+			</if>
+			<if test="counterPart != null">
+				counterPart = #{counterPart},
+			</if>
+			<if test="wokerNumber != null">
+				wokerNumber = #{wokerNumber},
+			</if>
+			<if test="networkTel != null">
+				networkTel = #{networkTel},
+			</if>
+			<if test="employeeCard != null">
+				employeeCard = #{employeeCard},
+			</if>
+			<if test="identityCard != null">
+				identityCard = #{identityCard},
+			</if>
+			<if test="getLicenseDate != null">
+				getLicenseDate = #{getLicenseDate},
+			</if>
+			<if test="selectCarId != null">
+				selectCarId = #{selectCarId},
+			</if>
+			<if test="money != null">
+				money = #{money},
+			</if>
+			<if test="orderId1 != null">
+				orderId1 = #{orderId1},
+			</if>
+			<if test="orderId2 != null">
+				orderId2 = #{orderId2},
+			</if>
+			<if test="currentMode != null">
+				currentMode = #{currentMode},
+			</if>
+			<if test="inviteCode != null">
+				inviteCode = #{inviteCode},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="noPassReason != null">
+				noPassReason = #{noPassReason},
+			</if>
+			<if test="commentScore != null">
+				commentScore = #{commentScore},
+			</if>
+			<if test="createTime != null">
+				createTime = #{createTime},
+			</if>
+			<if test="creater != null">
+				creater = #{creater},
+			</if>
+			<if test="updateTime != null">
+				updateTime = #{updateTime},
+			</if>
+			<if test="updater != null">
+				updater = #{updater},
+			</if>
+			<if test="spelllistState != null">
+				spelllistState = #{spelllistState},
+			</if>
+			<if test="loginFlag != null">
+				loginFlag = #{loginFlag},
+			</if>
+			<if test="backCashFlag != null">
+				backCashFlag = #{backCashFlag},
+			</if>
+			<if test="beInvitedCode != null">
+				beInvitedCode = #{beInvitedCode},
+			</if>
+			<if test="alipayAccount != null">
+				alipayAccount = #{alipayAccount},
+			</if>
+			<if test="alipayRealName != null">
+				alipayRealName = #{alipayRealName},
+			</if>
+			<if test="openId != null">
+				openId = #{openId},
+			</if>
+			<if test="wxRealName != null">
+				wxRealName = #{wxRealName},
+			</if>
+			<if test="easemobFlag != null">
+				easemobFlag = #{easemobFlag},
+			</if>
+			<if test="wxpayRealName != null">
+				wxpayRealName = #{wxpayRealName},
+			</if>
+			<if test="wxImage != null">
+				wxImage = #{wxImage},
+			</if>
+			<if test="wxNickName != null">
+				wxNickName = #{wxNickName},
+			</if>
+			<if test="ywtFlag != null">
+				ywtFlag = #{ywtFlag},
+			</if>
+			<if test="createTime_max_1 != null">
+				createTime_max_1 = #{createTime_max_1},
+			</if>
+			<if test="createTime_min_1 != null">
+				createTime_min_1 = #{createTime_min_1},
+			</if>
+			<if test="beInvitedCodeList != null">
+				beInvitedCodeList = #{beInvitedCodeList},
+			</if>
+			<if test="inviteCodeId != null">
+				inviteCodeId = #{inviteCodeId},
+			</if>
+			<if test="inviteId != null">
+				inviteId = #{inviteId},
+			</if>
+			<if test="inviteRoot != null">
+				inviteRoot = #{inviteRoot},
+			</if>
+			<if test="onlySign != null">
+				onlySign = #{onlySign},
+			</if>
+			<if test="orderNumberStatus != null">
+				orderNumberStatus = #{orderNumberStatus},
+			</if>
+			<if test="allTotalPrices != null">
+				allTotalPrices = #{allTotalPrices},
+			</if>
+			<if test="phoneFlag != null">
+				phoneFlag = #{phoneFlag},
+			</if>
+			<if test="isUse != null">
+				isUse = #{isUse},
+			</if>
+			<if test="standId != null">
+				standId = #{standId},
+			</if>
+			<if test="role != null">
+				role = #{role},
+			</if>
+			<if test="PromoNum != null">
+				PromoNum = #{PromoNum},
+			</if>
+			<if test="deliveryDistance != null">
+				deliveryDistance = #{deliveryDistance},
+			</if>
+			<if test="parentInviteCodeIdList != null">
+				parentInviteCodeIdList = #{parentInviteCodeIdList},
+			</if>
+			<if test="allPriceDiscount != null">
+				allPriceDiscount = #{allPriceDiscount},
+			</if>
+			<if test="displayPrice != null">
+				displayPrice = #{displayPrice},
+			</if>
+			<if test="smokedScore != null">
+				smokedScore = #{smokedScore,jdbcType=DOUBLE},
+			</if>
+			<if test="scaleScore != null">
+				scaleScore = #{scaleScore},
+			</if>
+			<if test="scaleId != null">
+				scaleId = #{scaleId},
+			</if>
+			<if test="availableBalance != null">
+				availableBalance = #{availableBalance},
+			</if>
+			<if test="beInviteTime != null">
+				beInviteTime = #{beInviteTime},
+			</if>
+			userId = #{userId}
+		</set>
+		where userId = #{userId}
+	</update>
+	
+	<!-- 更新用户邀请码 -->
+	<update id="updateUserBeInvitedCode" parameterType="pd">
+		update t_user
+		<set>
+		    beInvitedCode = #{beInvitedCode},
+		    beInviteTime = #{beInviteTime}
+		</set>
+			where userId = #{userId}
+	</update>
+	
+	<!-- 查询用户的邀请码存在不存在 -->
+	<select id="findUserinviteCode" parameterType="java.lang.String" resultType="Integer">
+		select count(userMobileNo) cnt from t_user where userMobileNo = #{_parameter} and userType = '5' limit 1
+	</select>
+	
+	
+	<select id="getUserByMobileNo" parameterType="pd" resultType="pd">
+		select beInvitedCode,userId,role,status
+		from t_user
+		where userMobileNo = #{userMobileNo} and userType = #{userType} limit 1
+	</select>
+	<!-- 根据用户电话和用户类型查询用户信息 -->
+	<select id="getUserByMobileNoAndUerType" parameterType="pd" resultType="pd">
+		select userId,beInvitedCode
+		from t_user
+		where userMobileNo = #{userMobileNo} and userType = #{userType} limit 1
+	</select>
+	
+	
+    <insert id="saveHorseMan" parameterType="pd">
+		insert into t_user 
+		( userId,userMobileNo,userType,status,role,displayPrice,money,isUse,
+		  commentScore,beInvitedCode,orderNumberStatus,easemobFlag,selectCarId,availableBalance,createTime,
+		  scaleScore,scaleId,commonId,beInviteTime
+		)
+		values (
+			#{userId},
+			#{userMobileNo},
+			#{userType},
+			#{status},
+			#{role},
+			#{displayPrice},
+			#{money},
+			'0',
+		    #{commentScore},
+		    #{beInvitedCode},
+		    #{orderNumberStatus},
+		    #{easemobFlag},
+		    #{selectCarId},
+		    #{money},
+			now(),
+			#{scaleScore},
+			#{scaleId},
+			#{commonId},
+			#{beInviteTime}
+		)
+	</insert>
+	
+	<!-- 更新用户token，即密码字段 -->
+	<update id="updateUserToken" parameterType="pd">
+		update t_user
+		<set>
+		    userPassword = #{userPassword},
+		    phoneFlag = #{phoneFlag}
+		</set>
+			where userId = #{userId}
+	</update>
+	<!-- 根据电话号码模糊查询用户 -->
+	<select id="queryUserIdByUserMobile" resultType="String" parameterType="String">
+		SELECT userId FROM
+		<include refid="tableName"/>
+		WHERE userMobileNo LIKE  CONCAT(CONCAT('%', #{_parameter}),'%')
+	</select>
+	
+	<!-- 根据邀请码查询用户 -->
+	<select id="getUserByBeInvitedCode" parameterType="String" resultType="String">
+		SELECT userId FROM t_user WHERE BEINVITEDCODE = #{_parameter}
+	</select>
+	<!-- 根据用户id修改用户的被邀请码 -->
+	<update id="updateBeInvitedCodeByUserId" parameterType="List">
+		UPDATE t_user SET BEINVITEDCODE = NULL 
+		WHERE USERID IN
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+		</foreach>
+	</update>
+</mapper>

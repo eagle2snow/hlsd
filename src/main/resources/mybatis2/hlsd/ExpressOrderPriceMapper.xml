@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ExpressOrderPriceMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		t_express_order_price
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,	
+		CITYID,	
+		ENDMILEAGE,	
+		MILEAGEPRICE,	
+		PROVINCEID,	
+		STARTMILEAGE,	
+		DRIVERTYPE,	
+		IP,	
+		ORDERTYPE,	
+		PRICETYPE,	
+		UPDATETIME,	
+		UPDATER,	
+		STARTTIME,	
+		ENDTIME
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},	
+		#{CITYID},	
+		#{ENDMILEAGE},	
+		#{MILEAGEPRICE},	
+		#{PROVINCEID},	
+		#{STARTMILEAGE},	
+		#{DRIVERTYPE},	
+		#{IP},	
+		#{ORDERTYPE},	
+		#{PRICETYPE},	
+		#{UPDATETIME},	
+		#{UPDATER},	
+		#{STARTTIME},	
+		#{ENDTIME}	
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		<selectKey resultType="Integer" keyProperty="ID">
+			SELECT LAST_INSERT_ID() AS ID
+		</selectKey>
+		insert into 
+	<include refid="tableName"/>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        ID,
+      </if>
+      <if test="CITYID != null">
+        CITYID,
+      </if>
+      <if test="ENDMILEAGE != null">
+        ENDMILEAGE,
+      </if>
+      <if test="MILEAGEPRICE != null">
+        MILEAGEPRICE,
+      </if>
+      <if test="PROVINCEID != null">
+        PROVINCEID,
+      </if>
+      <if test="STARTMILEAGE != null">
+        STARTMILEAGE,
+      </if>
+      <if test="DRIVERTYPE != null">
+        DRIVERTYPE,
+      </if>
+      <if test="IP != null">
+        IP,
+      </if>
+      <if test="ORDERTYPE != null">
+        ORDERTYPE,
+      </if>
+      <if test="PRICETYPE != null">
+        PRICETYPE,
+      </if>
+      <if test="UPDATETIME != null">
+        UPDATETIME,
+      </if>
+      <if test="UPDATER != null">
+        UPDATER,
+      </if>
+      <if test="STARTTIME != null and STARTTIME != ''">
+        STARTTIME,
+      </if>
+      <if test="ENDTIME != null and ENDTIME != ''">
+        ENDTIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ID != null">
+        #{ID},
+      </if>
+      <if test="CITYID != null">
+        #{CITYID},
+      </if>
+      <if test="ENDMILEAGE != null">
+        #{ENDMILEAGE},
+      </if>
+      <if test="MILEAGEPRICE != null">
+        #{MILEAGEPRICE},
+      </if>
+      <if test="PROVINCEID != null">
+        #{PROVINCEID},
+      </if>
+      <if test="STARTMILEAGE != null">
+        #{STARTMILEAGE},
+      </if>
+      <if test="DRIVERTYPE != null">
+        #{DRIVERTYPE},
+      </if>
+      <if test="IP != null">
+        #{IP},
+      </if>
+      <if test="ORDERTYPE != null">
+        #{ORDERTYPE},
+      </if>
+      <if test="PRICETYPE != null">
+        #{PRICETYPE},
+      </if>
+      <if test="UPDATETIME != null">
+        #{UPDATETIME},
+      </if>
+      <if test="UPDATER != null and UPDATER != ''">
+        #{UPDATER},
+      </if>
+      <if test="STARTTIME != null and STARTTIME != ''">
+        #{STARTTIME},
+      </if>
+      <if test="ENDTIME != null and ENDTIME != ''">
+        #{ENDTIME},
+      </if>
+    </trim>
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+		<if test="ID != null and ID != ''">
+			ID = #{ID},
+		</if>
+		<if test="CITYID != null and CITYID != ''">
+			CITYID = #{CITYID},
+		</if>
+		<if test="ENDMILEAGE != null and ENDMILEAGE != ''">
+			ENDMILEAGE = #{ENDMILEAGE},
+		</if>
+		<if test="MILEAGEPRICE != null and MILEAGEPRICE != ''">
+			MILEAGEPRICE = #{MILEAGEPRICE},
+		</if>
+		<if test="PROVINCEID != null and PROVINCEID != ''">
+			PROVINCEID = #{PROVINCEID},
+		</if>
+		<if test="DRIVERTYPE != null and DRIVERTYPE != ''">
+			DRIVERTYPE = #{DRIVERTYPE},
+		</if>
+		<if test="IP != null and IP != ''">
+			IP = #{IP},
+		</if>
+		<if test="ORDERTYPE != null and ORDERTYPE != ''">
+			ORDERTYPE = #{ORDERTYPE},
+		</if>
+		<if test="PRICETYPE != null and PRICETYPE != ''">
+			PRICETYPE = #{PRICETYPE},
+		</if>
+		<if test="UPDATETIME != null and UPDATETIME != ''">
+			UPDATETIME = #{UPDATETIME},
+		</if>
+		<if test="UPDATER != null and UPDATER != ''">
+			UPDATER = #{UPDATER},
+		</if>
+		<if test="STARTTIME != null and STARTTIME != ''">
+			STARTTIME = #{STARTTIME},
+		</if>
+		<if test="ENDTIME != null and ENDTIME != ''">
+			ENDTIME = #{ENDTIME},
+		</if>
+		where 
+		ID = #{ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+	
+	<select id="getPriceById" parameterType="Integer" resultType="pd">
+		SELECT
+		e.ID,c.CITY,e.ENDMILEAGE,e.MILEAGEPRICE,p.PROVINCE,e.STARTMILEAGE,e.DRIVERTYPE,	
+		e.ORDERTYPE,	
+		e.PRICETYPE,	
+		e.STARTTIME,	
+		e.ENDTIME
+		from 
+		<include refid="tableName"/> e LEFT JOIN t_provinces p ON p.PROVINCEID = e.PROVINCEID LEFT JOIN t_cities c ON e.CITYID = c.CITYID
+		WHERE ID = #{ID}
+	</select>
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		e.ID,c.CITY,e.ENDMILEAGE,e.MILEAGEPRICE,p.PROVINCE,e.STARTMILEAGE,e.DRIVERTYPE,	
+		e.ORDERTYPE,	
+		e.PRICETYPE,	
+		e.STARTTIME,	
+		e.ENDTIME
+		from 
+		<include refid="tableName"/> e , t_provinces p, t_cities c
+		where 1=1 AND e.CITYID = c.CITYID AND p.PROVINCEID = e.PROVINCEID
+		<if test="pd.CITYID != null and pd.CITYID != ''">
+			AND CITYID = #{pd.CITYID}
+		</if>
+		<if test="pd.AREAID != null and pd.AREAID != ''">
+			AND AREAID = #{pd.AREAID}
+		</if>
+		<if test="pd.PROVINCEID != null and pd.PROVINCEID != ''">
+			AND PROVINCEID = #{pd.PROVINCEID}
+		</if>
+		<if test="pd.DRIVERTYPE != null and pd.DRIVERTYPE != ''">
+			AND DRIVERTYPE = #{pd.DRIVERTYPE}
+		</if>
+		<if test="pd.PRICETYPE != null and pd.PRICETYPE != ''">
+			AND PRICETYPE = #{pd.PRICETYPE}
+		</if>
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					<!-- 根据需求自己加检索条件 -->
+					ID LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					<!--  or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')  -->
+				
+				)
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- zhangWenchao -->
+</mapper>

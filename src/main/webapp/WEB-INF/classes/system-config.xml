@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>配置文件，调用方式：Tools.getProperty("client_relogin_time", "1")</comment>
+	<!-- 是否为开发测试环境，生产环境请配置为 false -->
+	<entry key="devMode">true</entry>
+	<!-- 主要用于互联速递调用这个接口认证的key，需要他们那边MD5加密传到这边进行匹配 -->
+	<entry key="api_token_key">openplat201707!~_</entry>
+	<!-- AES加密的key -->
+	<entry key="aesKey">hlsd20170601!~_</entry>
+	<entry key="userMobileNoList">13616733545-18823763762-13525996463-15919463515-15915396284-18679654648-12345678102-12345612345</entry>
+	<!-- 终端重新登录时间设置(单位：小时) -->
+	<entry key="client_relogin_time">7</entry>
+	<!-- 终端认证Token有效时间(单位：毫秒，5400000为1.5小时,0表示永不过期) -->
+	<entry key="token_ext_time">0</entry>
+	<entry key="yzm_ext_time">600000</entry> <!-- 验证码10分钟有效期 -->
+	
+	<!-- 发送短信配置(短信宝) -->
+	<entry key="sms.name">cchy9696</entry>
+	<entry key="sms.password">725432f5191c68ea7461efcfe93d1e5b</entry>
+	<!-- 发送短信配置(云之讯短信) -->
+	<entry key="yzx_Sid">fdd0b3a16b35a0f538ff3fe3ba60e422</entry>
+	<entry key="yzx_token">33362038387474cd02ccbc8f722cf920</entry>
+	<entry key="yzx_appId">ab4561e94dfc4545a5dd531a1a12eb6a</entry>
+	
+	<!-- 微信扫码支付参数配置 -->
+	<entry key="APP_ID">wx08cbd8c363e5525c</entry>
+	<entry key="APP_SECRET">ec800c9863cd1cb92aacfa589d5ce371</entry>
+	<entry key="MCH_ID">1413387902</entry>
+	<entry key="API_KEY">OSIFJ23OIRNF34OIJ9J8FH23FNIDSOFF</entry>
+	<!-- 骑手微信商户信息 -->
+	<entry key="WEIXIN_APP_ID">wx67b1ca7fdc9fa2bb</entry>
+	<entry key="WEIXIN_MCH_ID">1487749402</entry>
+	<entry key="WEIXIN_API_KEY">OSIFJ888IRNF025IJ9J8FH23HLSDERWQ</entry>
+	<entry key="CREATE_IP">8.8.8.8</entry>
+	<entry key="UFDODER_URL">https://api.mch.weixin.qq.com/pay/unifiedorder</entry>
+	<entry key="WEIXIN_NOTIFY_URL">http://go888.f3322.net:88/website/callback/wx/receiveMoney.act</entry>
+	
+	
+	<!-- 订单费用配置 -->
+	<entry key="startPrice">12</entry> <!--骑手起步价 -->
+	<entry key="cakeStartPrice">16</entry> <!--蛋糕起步价 -->
+	<entry key="carStartPrice">15</entry> <!--汽车起步价 -->
+	<entry key="pickupFee">10</entry> <!--取货费 -->
+	<entry key="nightFeeStartTime">23</entry> <!--夜间费开始时间 -->
+	<entry key="nightFeeEndTime">5</entry> <!--夜间费结束时间 -->
+	
+	
+	<!-- 网站登录超时时间(单位：秒，36000为10小时) -->
+	<entry key="website_token_ext_time">36000</entry>
+	<!-- 下单到互联速递系统的url -->
+	<entry key="HLSD_ORDER_URL">http://go888.f3322.net:88/hlsdv1</entry>
+	<!-- 押金信息 -->
+	<entry key="cashPledgeMessage">500-减震箱,2500-电瓶车,3000-减震箱和电瓶车</entry>
+	<!-- 支付宝支付信息 -->
+	<!-- 商户id -->
+	<entry key="PARTNER">2088421964006558</entry>
+	<!-- 商户收款账号 -->
+	<entry key="SELLER">Api_Open@huliansudi.com</entry>
+	<!-- 商户私钥，pkcs8格式 -->
+	<entry key="RSA_PRIVATE">
+		MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAPe0MT1kEXbVm0Bz
+		r3IboO0XuZy2uJzQ9e7QStXkVq4XkmRT8nzKCCuHGJlyqupdjyZJ/UYVazKNOF8Q
+		Du5e7TlRdkpP4KL1bKLruM0hEdlS1rIGOAZSdttNiTKMg/S/OF3A7Di7RdNoUuUx
+		69tL/TU5BP3yZL5eDOyLLasYqe0/AgMBAAECgYEAwk4+ResGbBJ5m6Bj4v3bScDP
+		oCgRPyoHkVMhMRHSEPR6qGrVj6AnsoVh/ZTej8Pec+mcXOqWUWxH6QI+xCwApuez
+		Ffm7I8f5usWusr6l5SzIEE3bQlov7vqH5Va5AeK4PZQwx+xua2VDuc0vFLX5TFak
+		GkvKo/12iv0XO/Szc0ECQQD99zRtuFCW9joSzUaOWqfl3llUOMxOq7fa2PwtEMxD
+		33rlI/n3CkO0coPjnakFoAsYrddKLhEpIWdc1n3j85efAkEA+bAllxkryTG9upJR
+		VCccsmfNE1yZc/gb6+EWqgidcNWhZgk6tkclGXD4NJIzBsnUVPQV8Nt8JDhy7q3l
+		uRhGYQJATQa+Ew0U/ERf5rX10VUzmSdwBnhXlwDD+Y9YJL70hR1x46+er8ugL0mQ
+		MOfvjLI2y1xmcKw6LjRgairv8cQ+1wJAQoRFj1o6SvAAXlqqZePBhlmWzWimzLk1
+		HwKo2gVPhAa1Z4xf4r1TSdLJnJ+yDkXoVfVsfuzJxpBvNdyHzWaFIQJBALr73hWO
+		V07SJx/bND5Xt4g5KoqzsYXYL6OzBZ3R6g96UbLXQ0H2XCDknVlLGtUtopV08bWb
+		yuFkopNhqBo9Yng=
+	</entry>
+	<!-- 支付宝公钥 -->
+	<entry key="RSA_PUBLIC">
+		MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDI6d306Q8fIfCOaTXyiUeJHkr
+		IvYISRcc73s3vF1ZT7XN8RNPwJxo8pWaJMmvyTn9N4HQ632qJBVHf8sxHi/fEsra
+		prwCtzvzQETrNRwVxLO5jVmRGi60j8Ue1efIlzPXV9je9mkjzOmdssymZkh2QhUr
+		CmZYI/FCEa3/cNMW0QIDAQAB
+	</entry>
+	<!-- 服务器异步通知页面路径 ，充值押金的支付宝回调-->
+	<entry key="NOTIFY_URL">
+		http://api.huliansudi.com/hlsdv1/alipay/wapPay/notify_url.act
+	</entry>
+	<!-- 微信后台下单扫码支付回调地址 -->
+	<entry key="WEIXIN_SCAN_NOTIFY_URL">http://go888.f3322.net:88/website/weixin/ScanPayNotifyByWebSite</entry>
+	<!-- 部署目录，用于系统里面查看日志的功能可以直接看到的目录结构 -->
+	<entry key="DEPLOY_DISK">D:\apache-tomcat-7.0.47\</entry>
+	
+	<!-- BD获取分享的文字配置 -->
+	<entry key="BD_SHARE_JSON">
+		<![CDATA[
+			[
+			  {
+			  	 "type":"horseman",
+				 "title":"邀请你一起加入互联骑手！",
+			     "content":"互联速递品质服务配送平台，为互联骑手提供大量优质鲜花蛋糕配送订单，高端配送客单价11--30元，一起加入互联骑手吧！",
+			     "url":"/web/hlsdBD/#/inviteriders?BDCODE="
+			   },
+			   {
+			   	 "type":"user",
+				 "title":"互联速递10元优惠券送不停，快来下载注册吧！！",
+			     "content":"互联速递同城快件一小时送达，注册即送10元优惠券。更多优惠尽在互联速递！",
+			     "url":"/web/hlsdBD/#/inviteusers?BDCODE="
+			   },
+			   {
+			     "type":"partner",
+				 "title":"互联市场合伙人：从今天起，自己做老板！",
+			     "content":"互联速递邀您一起加入互联市场合伙人！互联市场合伙人给您更自由的赚钱方式，更高效赚钱模式，让您从今天起，自己做老板！",
+			     "url":"#"
+			   }
+			 ]
+		]]>
+	</entry>
+</properties>

@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no">
+<script type="text/javascript" src="script/jquery-3.2.0.min.js"></script>
+<title>邀请有奖</title>
+<link rel="stylesheet" type="text/css" href="css/pub.css" />
+<script type="text/javascript">
+function myfun()
+{
+	var src = window.location.href; 
+	var I = src.substr(src.indexOf("inviteId=")+9);
+	//alert(I);
+
+	var src = window.location.href; 
+	var I = src.substr(src.indexOf("inviteId=")+9); 
+	var inviteRoot;
+	if("1" ==I){
+		inviteRoot = "wxgg";
+	}else{
+		inviteRoot = "APP"
+	}
+	$.get("/steedFramework4web/client/html/getUserMessageLogin.act?token=dev&ajax=1&inviteId="+I+"&inviteRoot="+inviteRoot,function(data){
+		var dataObj=eval("("+data+")");//转换为json对象
+		//alert(dataObj);
+		//alert(dataObj);
+		$("img").attr("src","/steedFramework4web"+dataObj.content.userPhoto);
+	});
+
+	   
+}
+/*用window.onload调用myfun()*/
+window.onload=myfun;//不要括号
+</script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	$("#sj").focusin(function(){
+		if ($(this).val()=="输入手机号接受邀请")
+		{
+			$(this).val("");
+		}
+	});	
+	$("#yzminput").focusin(function(){
+	if ($(this).val()=="输入短信验证码")
+		{
+			$(this).val("");
+		}
+	});
+	$("#yzminput").focusout(function(){
+		var mylen=$(this).val().length;
+		if (mylen==0)
+		{
+			$(this).val("输入短信验证码");
+		}
+	});
+	$("#sj").focusout(function(){
+		var mylen=$(this).val().length;
+		if (mylen==0)
+		{
+			$(this).val("输入手机号接受邀请");
+		}
+	});
+	$("#yz").click(function(){
+
+
+		var sj=$("#sj").val();
+		var yzm=$("#yzminput").val();
+		if (sj.length!=11||isNaN(parseInt(sj,10)))
+		{
+			alert("请输入正确的手机号码！");
+			return;
+		}
+		
+		//发送短信验证码
+
+		
+		$.get("/steedFramework4web/client/login/sendCodeForHorsemanHtmlLogin.act?token=dev&ajax=1&userMobileNo="+sj,function(data,status){
+			if(status!="success"){
+				 alert("系统发送短信故障，请联系管理员！");
+			}
+			else
+			{
+				
+				// alert(status);
+				var dataObj=eval("("+data+")");
+				
+				alert(dataObj.message);
+				time($("#yz"),60);//倒计时
+			}
+		});
+
+
+	});
+
+
+	
+
+	
+
+	$("#zc").click(function(){
+
+	var src = window.location.href; 
+	var I = src.substr(src.indexOf("inviteId=")+9); 
+	var inviteRoot;
+	if("1" ==I){
+		inviteRoot = "wxgg";
+	}else{
+		inviteRoot = "APP"
+	}
+
+		var sjnumber=$("#sj").val();
+		var yzm=$("#yzminput").val();
+
+		if (yzm.length!=6)
+		{
+			alert("请输入正确的验证码！");
+			return;
+		}
+		$.get("/steedFramework4web/client/login/horsemanHtmlLogin.act?userMobileNo="+sjnumber+"&verification="+yzm+"&token=dev&ajax=1&userId="+I+"&inviteRoot="+inviteRoot,function(data,status){
+			if(status!="success"){
+				 alert("系统注册出现故障，请联系管理员！");
+			}
+			else
+			{
+				var dataObj=eval("("+data+")"); 
+				alert(dataObj.message);
+			}
+		});
+
+	});
+
+});
+function time(o,wait){
+	
+	if (wait==0)
+	{	
+		o.text("发送");
+		o.attr("disabled", false);
+		wait = 60;
+	}else{
+		o.attr("disabled", true);
+		o.text("重发：" + wait + "S");
+		wait--;
+		setTimeout(function() {time(o,wait)},1000);
+	}
+}
+
+
+</script>
+</head>
+
+<body>
+<div class="wraper">
+<div class="one">
+	<div class="hehe"></div>
+	<div class="yuan"><img src="" width="100%" /></div>
+    <!-- <div class="p1">接受<span></span>邀请，体验互联速递</div> -->
+    <div class="p2">邀请好友成为骑手可获50元大奖</div>
+</div>
+<div class="kk"><input value="输入手机号接受邀请" class="sj" id="sj"></div>
+
+<div class="dy">
+	<input class="dx" value="输入短信验证码" id="yzminput">
+	<button type="button" id="yz">发送</button>
+
+</div>
+<div  class="zc" value="注册" id="zc">注册</div>
+<div class="sdcz">
+	<div class="sd" align="center" onclick="javascript:window.location='http://2bai.co/15764852';">下载骑手</div><br><br>
+</div></div>
+	<div class="gsm" align="center" style="padding:10px">深圳市互联速递信息科技有限公司</div>
+</body>
+
+</html>

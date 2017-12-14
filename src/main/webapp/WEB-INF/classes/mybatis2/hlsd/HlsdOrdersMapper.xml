@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HlsdOrdersMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		T_ORDERS_INFO
+	</sql>
+	
+	<!-- 订单分页列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+	 <![CDATA[
+			SELECT o.orderId,o.userId,concat_ws('<br/>',u.nickName,o.senderMobileNo) as nickName,d.username,
+			o.driverId,o.allPrice,o.mileage,
+			o.orderStatus,date_format(o.createTime, '%Y-%m-%d %H:%i') createTime,o.driverMobileNo,
+			concat_ws(c1.city,a1.area,o.senderAddress) sendAddress,concat_ws(c2.city,a2.area,o.receiverAddress) receiverAddress
+			FROM t_orders_info o left join t_user u  on o.userId = u.userId  
+		left join t_user d on o.driverId = d.userId 
+		left join t_provinces p1 on o.sendProvinceId = p1.provinceId 
+		left join t_provinces p2 on o.receiveProvinceId = p2.provinceId
+		left join t_cities c1 on o.sendCityId = c1.cityId 
+		left join t_cities c2 on o.receiveCityId = c2.cityId 
+		left join t_areas a1 on o.sendAreaId = a1.areaId 
+		left join t_areas a2 on o.receiveAreaId = a2.areaId 
+		where orderType IN ('1','2.1','2.2','2.3','2.4','3','3.5','5') 
+	 ]]>
+		<if test="pd.orderStatus == '' or pd.orderStatus == null ">
+			and o.orderStatus in ('8','9','13') 
+		</if>
+		
+		<if test="pd.orderStatus!= null and pd.orderStatus != '' and pd.orderStatus=='000'" >
+			and o.orderStatus ='0'
+		</if>
+		<if test="pd.orderStatus!= null and pd.orderStatus != '' and pd.orderStatus=='11'" >
+			and o.orderStatus ='11'
+		</if>
+		<!-- 超过3分钟以上未接单 -->
+		<if test="pd.orderStatus!= null and pd.orderStatus != '' and pd.orderStatus=='999'" >
+			and o.orderStatus ='1' and MINUTE(timediff(now(), o.createTime)) >=3
+		</if>
+		
+		<!-- 下单时间 -->
+		<if test="pd.lastStart!= null and pd.lastStart != ''">
+			<![CDATA[
+				AND o.createtime >= '${pd.lastStart} 00:00:00'
+			]]>
+		</if>
+		<if test="pd.lastEnd!= null and pd.lastEnd != ''">
+			<![CDATA[
+				AND o.createtime <= '${pd.lastEnd} 23:59:59'
+			]]>
+		</if>
+		
+		<!-- 通过省、市查询 -->
+		<if test="pd.province!= null and pd.province != ''">
+			AND o.sendProvinceId = #{pd.province}
+		</if>
+		<if test="pd.city!= null and pd.city != ''">
+			AND o.sendCityId = #{pd.city}
+		</if>
+		
+		<!-- 通过关键字查询[司机姓名和司机电话] -->
+		<if test="pd.keywords!= null and pd.keywords != ''">
+			and
+				(
+					d.username LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					o.driverMobileNo LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		</if>
+		ORDER BY o.createTime DESC 
+	</select>
+	
+	
+	
+	<!-- excel导出列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		SELECT o.orderId,o.userId,u.nickName,d.username,
+		o.driverId,o.allPrice,o.mileage,
+		o.orderStatus,date_format(o.createTime, '%Y-%m-%d %H:%i') createTime,o.driverMobileNo,
+		concat_ws(c1.city,a1.area,o.senderAddress) sendAddress,concat_ws(c2.city,a2.area,o.receiverAddress) receiverAddress
+		 FROM t_orders_info o left join t_user u  on o.userId = u.userId  
+	left join t_user d on o.driverId = d.userId 
+	left join t_provinces p1 on o.sendProvinceId = p1.provinceId 
+	left join t_provinces p2 on o.receiveProvinceId = p2.provinceId
+	left join t_cities c1 on o.sendCityId = c1.cityId 
+	left join t_cities c2 on o.receiveCityId = c2.cityId 
+	left join t_areas a1 on o.sendAreaId = a1.areaId 
+	left join t_areas a2 on o.receiveAreaId = a2.areaId 
+	where orderType IN ('1','2.1','2.2','2.3','2.4','3','3.5','5') 
+		
+		<!-- 下单时间 -->
+		<if test="lastStart!= null and lastStart != ''">
+			<![CDATA[
+				AND o.createtime >= '${lastStart} 00:00:00'
+			]]>
+		</if>
+		<if test="lastEnd!= null and lastEnd != ''">
+			<![CDATA[
+				AND o.createtime <= '${lastEnd} 23:59:59'
+			]]>
+		</if>
+		
+		<!-- 通过省、市查询 -->
+		<if test="province!= null and province != ''">
+			AND o.sendProvinceId = #{province}
+		</if>
+		<if test="city!= null and city != ''">
+			AND o.sendCityId = #{city}
+		</if>
+		
+		<!-- 通过关键字查询[司机姓名和司机电话] -->
+		<if test="keywords!= null and keywords != ''">
+			and
+				(
+					d.username LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+					 or 
+					o.driverMobileNo LIKE CONCAT(CONCAT('%', #{keywords}),'%') 
+				)
+		</if>
+		ORDER BY o.createTime desc 
+	</select>
+	
+	
+	<!-- 骑手分页列表 -->
+	<select id="datalistPageForHorse" parameterType="page" resultType="pd">
+		SELECT t1.userId,t1.userName,t1.userMobileNo,t1.userCardNo,truncate(t1.money,2) as money,t1.commentScore,t1.createTime,t1.orderNumberStatus,
+		t2.province,t3.city,
+		(select CONCAT(date_format(createTime, '%Y-%m-%d %H:%i'),' / ', transactionAmount,'元') from t_recharge_withdrawals_history where userId = t1.userId and transactionType='6' order by createTime desc limit 1)
+		as settleAccountTime
+		from t_user t1 left join address t2 on t1.provinceId = t2.id left join address t3 on t1.cityId = t3.id
+		where t1.userType='5' and t1.isUse='0' and t1.orderNumberStatus > 0 
+		
+		<!-- 通过省、市查询 -->
+		<if test="pd.province!= null and pd.province != ''">
+			AND t1.provinceId = #{pd.province}
+		</if>
+		<if test="pd.city!= null and pd.city != ''">
+			AND t1.cityId = #{pd.city}
+		</if>
+		<!-- 通过关键字查询[骑手姓名和骑手电话] -->
+		<if test="pd.keywords!= null and pd.keywords != ''">
+		   and (
+			  t1.userName LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or  t1.userMobileNo LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+			)
+		</if>
+		order by t1.money desc 
+	</select>
+	
+	<!-- 通过用户id计算订单的数量 和订单金额-->
+	<select id="findOrderCount" parameterType="pd" resultType="pd">
+		select sum(o.allPrice) allMoney,count(o.orderId) orderCnt from t_orders_info o left join t_user t
+		on t.userId = o.driverId
+		where o.orderType IN ('1','2.1','2.2','2.3','2.4','3','3.5','5') 
+		
+		<if test="orderStatus == '' or orderStatus ==null ">
+			and o.orderStatus in ('8','9','13') 
+		</if>
+		
+		<if test="orderStatus!= null and orderStatus != '' and orderStatus=='000'" >
+			and o.orderStatus ='0'
+		</if>
+		<if test="orderStatus!= null and orderStatus != '' and orderStatus=='11'" >
+			and o.orderStatus ='11'
+		</if>
+		<!-- 超过3分钟以上未接单 -->
+		<if test="orderStatus!= null and orderStatus != '' and orderStatus=='999'" >
+			and o.orderStatus ='1' and MINUTE(timediff(now(), o.createTime)) >=3
+		</if>
+		
+		<if test="userId!= null and userId != ''">
+			and o.driverId = #{userId}
+		</if>
+		
+		<if test="lastStart!= null and lastStart != ''">
+			<![CDATA[
+				AND o.createtime >= '${lastStart} 00:00:00'
+			]]>
+		</if>
+		<if test="lastEnd!= null and lastEnd != ''">
+			<![CDATA[
+				AND o.createtime <= '${lastEnd} 23:59:59'
+			]]>
+		</if>
+		
+		<!-- 通过省、市查询 -->
+		<if test="province!= null and province != ''">
+			AND o.sendProvinceId = #{province}
+		</if>
+		<if test="city!= null and city != ''">
+			AND o.sendCityId = #{city}
+		</if>
+		
+		<!-- 通过关键字查询[司机姓名和司机电话] -->
+		<if test="keywords!= null and keywords != ''">
+			and
+				(
+					t.username LIKE CONCAT(CONCAT('%', #{keywords}),'%')
+					 or 
+					o.driverMobileNo LIKE CONCAT(CONCAT('%', #{keywords}),'%') 
+				)
+		</if>
+	</select>
+	
+	<!-- 修改tuser的余额 -->
+	<update id="editUserMoney" parameterType="pd">
+		update t_user set allTotalPrices = allTotalPrices - #{settlementMoney}
+		where userId = #{userId}
+	</update>
+	
+	<!-- 保存结算信息 -->
+	<insert id="saveTransactionHistory" parameterType="pd">
+		insert into t_recharge_withdrawals_history
+		(Id,userId,transactionType,transactionAmount,payWay,createTime,creater) 
+		values (
+			#{Id},
+			#{userId},
+			'6',
+			#{transactionAmount},
+			'财务结算',
+			now(),
+			#{creater}
+		)
+	</insert>
+	
+	
+	<!-- 统计今日订单 -->
+	<select id="findTodayOrder" resultType="pd">
+		select count(o.orderId) orderCnt,sum(o.allPrice) orderMoney,p.province
+		from t_orders_info o left join t_provinces p on o.sendProvinceId = p.provinceId
+		where o.orderStatus in ('8','9','13') and DATE_FORMAT(o.createTime, '%Y-%m-%d') = DATE_FORMAT(now(), '%Y-%m-%d')
+		GROUP BY o.sendProvinceId HAVING orderCnt>3 order by orderCnt desc 
+	</select>
+	
+	<!-- 统计昨日订单 -->
+	<select id="findTomorrowOrder" resultType="pd">
+		select count(o.orderId) orderCnt,sum(o.allPrice) orderMoney,p.province
+		from t_orders_info o left join t_provinces p on o.sendProvinceId = p.provinceId
+		where o.orderStatus in ('8','9','13') and DATE_FORMAT(o.createTime, '%Y-%m-%d') 
+		= DATE_FORMAT(DATE_SUB(curdate(),INTERVAL 1 DAY), '%Y-%m-%d')
+		GROUP BY o.sendProvinceId HAVING orderCnt>3 order by orderCnt desc 
+	</select>
+	
+	<!-- 统计所有订单 -->
+	<select id="findAllOrder" resultType="pd">
+		select count(o.orderId) orderCnt,sum(o.allPrice) orderMoney,p.province
+		from t_orders_info o left join t_provinces p on o.sendProvinceId = p.provinceId
+		where o.orderStatus in ('8','9','13')  
+		GROUP BY o.sendProvinceId HAVING orderCnt>3 order by orderCnt desc 
+	</select>
+	
+	<!-- zhangWenchao -->
+</mapper>

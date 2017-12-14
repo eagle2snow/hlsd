@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TNewCouponMapper">
+  <!-- <resultMap id="BaseResultMap" type="pd">
+    <id column="couponId" jdbcType="VARCHAR" property="couponid" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+    <result column="number" jdbcType="INTEGER" property="number" />
+    <result column="couponType" jdbcType="VARCHAR" property="coupontype" />
+    <result column="useCondition" jdbcType="INTEGER" property="usecondition" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="orderNumber" jdbcType="INTEGER" property="ordernumber" />
+    <result column="carType" jdbcType="VARCHAR" property="cartype" />
+    <result column="driverType" jdbcType="VARCHAR" property="drivertype" />
+  </resultMap> -->
+  <sql id="Base_Column_List">
+    couponId, amount, number, couponType, useCondition, remark, type, orderNumber, carType, 
+    driverType
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from t_new_coupon
+    where couponId = #{_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_new_coupon
+    where couponId = #{_parameter}
+  </delete>
+  <insert id="insert" parameterType="pd">
+    insert into t_new_coupon (couponId, amount, number, 
+      couponType, useCondition, remark, 
+      type, orderNumber, carType, 
+      driverType)
+    values (#{couponid,jdbcType=VARCHAR}, #{amount,jdbcType=DOUBLE}, #{number,jdbcType=INTEGER}, 
+      #{coupontype,jdbcType=VARCHAR}, #{usecondition,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{ordernumber,jdbcType=INTEGER}, #{cartype,jdbcType=VARCHAR}, 
+      #{drivertype,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pd">
+    insert into t_new_coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="couponid != null">
+        couponId,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="coupontype != null">
+        couponType,
+      </if>
+      <if test="usecondition != null">
+        useCondition,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="ordernumber != null">
+        orderNumber,
+      </if>
+      <if test="cartype != null">
+        carType,
+      </if>
+      <if test="drivertype != null">
+        driverType,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="couponid != null">
+        #{couponid,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="coupontype != null">
+        #{coupontype,jdbcType=VARCHAR},
+      </if>
+      <if test="usecondition != null">
+        #{usecondition,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ordernumber != null">
+        #{ordernumber,jdbcType=INTEGER},
+      </if>
+      <if test="cartype != null">
+        #{cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="drivertype != null">
+        #{drivertype,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update t_new_coupon
+    <set>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="coupontype != null">
+        couponType = #{coupontype,jdbcType=VARCHAR},
+      </if>
+      <if test="usecondition != null">
+        useCondition = #{usecondition,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ordernumber != null">
+        orderNumber = #{ordernumber,jdbcType=INTEGER},
+      </if>
+      <if test="cartype != null">
+        carType = #{cartype,jdbcType=VARCHAR},
+      </if>
+      <if test="drivertype != null">
+        driverType = #{drivertype,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where couponId = #{couponid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pd">
+    update t_new_coupon
+    set amount = #{amount,jdbcType=DOUBLE},
+      number = #{number,jdbcType=INTEGER},
+      couponType = #{coupontype,jdbcType=VARCHAR},
+      useCondition = #{usecondition,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      orderNumber = #{ordernumber,jdbcType=INTEGER},
+      carType = #{cartype,jdbcType=VARCHAR},
+      driverType = #{drivertype,jdbcType=VARCHAR}
+    where couponId = #{couponid,jdbcType=VARCHAR}
+  </update>
+</mapper>

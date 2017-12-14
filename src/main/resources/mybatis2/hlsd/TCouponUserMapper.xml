@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TCouponUserMapper">
+  <!-- <resultMap id="BaseResultMap" type="pd">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="couponId" jdbcType="VARCHAR" property="couponid" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="endTime" jdbcType="TIMESTAMP" property="endtime" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="useTime" jdbcType="TIMESTAMP" property="usetime" />
+    <result column="orderId" jdbcType="VARCHAR" property="orderid" />
+  </resultMap> -->
+  <sql id="Base_Column_List">
+    uuid, couponId, userId, createTime, endTime, remark, status, useTime, orderId
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from t_coupon_user
+    where uuid = #{_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_coupon_user
+    where uuid = #{_parameter}
+  </delete>
+  <insert id="insert" parameterType="pd">
+    insert into t_coupon_user (uuid, couponId, userId, 
+      createTime, endTime, remark, 
+      status, useTime, orderId
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{couponid,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{usetime,jdbcType=TIMESTAMP}, #{orderid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="pd">
+    insert into t_coupon_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="couponid != null">
+        couponId,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="usetime != null">
+        useTime,
+      </if>
+      <if test="orderid != null">
+        orderId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="couponid != null">
+        #{couponid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="usetime != null">
+        #{usetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update t_coupon_user
+    <set>
+      <if test="couponid != null">
+        couponId = #{couponid,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null">
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="usetime != null">
+        useTime = #{usetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderid != null">
+        orderId = #{orderid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pd">
+    update t_coupon_user
+    set couponId = #{couponid,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      endTime = #{endtime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      useTime = #{usetime,jdbcType=TIMESTAMP},
+      orderId = #{orderid,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

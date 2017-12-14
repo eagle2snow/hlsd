@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UsualAddressDomainMapper">
+  <!-- <resultMap id="BaseResultMap" type="pd">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="areaId" jdbcType="VARCHAR" property="areaid" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="detailAddress" jdbcType="VARCHAR" property="detailaddress" />
+    <result column="lat" jdbcType="VARCHAR" property="lat" />
+    <result column="lng" jdbcType="VARCHAR" property="lng" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="userMobileNo" jdbcType="VARCHAR" property="usermobileno" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+  </resultMap> -->
+  <sql id="Base_Column_List">
+    uuid, address, areaId, createTime, detailAddress, lat, lng, userId, userMobileNo, 
+    userName
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from t_usual_address
+    where uuid = #{_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_usual_address
+    where uuid = #{_parameter}
+  </delete>
+  <insert id="insert" parameterType="pd">
+    insert into t_usual_address (uuid, address, areaId, 
+      createTime, detailAddress, lat, 
+      lng, userId, userMobileNo, 
+      userName)
+    values (#{uuid,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{areaid,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{detailaddress,jdbcType=VARCHAR}, #{lat,jdbcType=VARCHAR}, 
+      #{lng,jdbcType=VARCHAR}, #{userid,jdbcType=VARCHAR}, #{usermobileno,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pd">
+    insert into t_usual_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="areaid != null">
+        areaId,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="detailaddress != null">
+        detailAddress,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="lng != null">
+        lng,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="usermobileno != null">
+        userMobileNo,
+      </if>
+      <if test="username != null">
+        userName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null">
+        #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailaddress != null">
+        #{detailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="usermobileno != null">
+        #{usermobileno,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update t_usual_address
+    <set>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null">
+        areaId = #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailaddress != null">
+        detailAddress = #{detailaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        lng = #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="usermobileno != null">
+        userMobileNo = #{usermobileno,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pd">
+    update t_usual_address
+    set address = #{address,jdbcType=VARCHAR},
+      areaId = #{areaid,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      detailAddress = #{detailaddress,jdbcType=VARCHAR},
+      lat = #{lat,jdbcType=VARCHAR},
+      lng = #{lng,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=VARCHAR},
+      userMobileNo = #{usermobileno,jdbcType=VARCHAR},
+      userName = #{username,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

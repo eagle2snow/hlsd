@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TScaleScoreRecordMapper">
+  <!-- <resultMap id="BaseResultMap" type="pd">
+    <id column="recordId" jdbcType="VARCHAR" property="recordid" />
+    <result column="recordDescription" jdbcType="VARCHAR" property="recorddescription" />
+    <result column="recordScore" jdbcType="DOUBLE" property="recordscore" />
+    <result column="recordType" jdbcType="VARCHAR" property="recordtype" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pd">
+    <result column="createTime" jdbcType="BINARY" property="createtime" />
+  </resultMap> -->
+  <sql id="table_name">
+  	t_scale_score_record
+  </sql>
+  <sql id="Base_Column_List">
+    recordId, 
+    recordDescription, 
+    recordScore, 
+    recordType, 
+    userId,
+    status,
+    DATE_FORMAT(createTime, '%Y-%m-%d %H:%i' ) AS createTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from 
+    <include refid="table_name" />
+    where recordId = #{_parameter}
+  </select>
+  <!-- 根据用户id查询用户的等级分数记录数 -->
+  <select id="selectCountByUserId" resultType = "java.lang.Long" parameterType="java.lang.String">
+  	select count(1) from 
+  	<include refid="table_name"></include>
+  	where userId = #{_parameter} and status = '1'
+  </select>
+  <!-- 根据用户id查询用户等级记录信息 -->
+  <select id="selectScoreRecordByUserId" parameterType="pd" resultType = "pd">
+  	SELECT 
+  	recordId, 
+    recordDescription,
+    (CASE when recordType = 0 THEN CONCAT("+",recordScore)
+	ELSE CONCAT("-",recordScore)
+	END
+	) recordScore , 
+    DATE_FORMAT(createTime, '%Y-%m-%d %H:%i' ) AS createTime
+  	FROM
+  	<include refid="table_name"/>
+  	WHERE userId = #{userId} and status = '1' ORDER BY createTime DESC LIMIT #{begin},#{end}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from 
+    <include refid="table_name" />
+    where recordId = #{_parameter}
+  </delete>
+  <insert id="insertSelective" parameterType="pd">
+    insert into 
+    <include refid="table_name" />
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        recordId,
+      </if>
+      <if test="recordDescription != null">
+        recordDescription,
+      </if>
+      <if test="recordScore != null">
+        recordScore,
+      </if>
+      <if test="recordType != null">
+        recordType,
+      </if>
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        #{recordId},
+      </if>
+      <if test="recordDescription != null">
+        #{recordDescription},
+      </if>
+      <if test="recordScore != null">
+        #{recordScore},
+      </if>
+      <if test="recordType != null">
+        #{recordType},
+      </if>
+      <if test="userId != null">
+        #{userId},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="status != null">
+        #{status},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update t_scale_score_record
+    <set>
+      <if test="recordDescription != null">
+        recordDescription = #{recordDescription},
+      </if>
+      <if test="recordScore != null">
+        recordScore = #{recordScore},
+      </if>
+      <if test="recordType != null">
+        recordType = #{recordType},
+      </if>
+      <if test="userId != null">
+        userId = #{userId},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime},
+      </if>
+      <if test="status != null">
+        status = #{status},
+      </if>
+    </set>
+    where recordId = #{recordId}
+  </update>
+</mapper>

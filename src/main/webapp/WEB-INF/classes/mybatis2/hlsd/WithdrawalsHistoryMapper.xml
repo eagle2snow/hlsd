@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="WithdrawalsHistoryMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		t_recharge_withdrawals_history
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,	
+		USERID,	
+		TRANSACTIONTYPE,	
+		TRANSACTIONAMOUNT,	
+		PAYWAY,	
+		ACCOUNT,	
+		CREATETIME,	
+		CREATER,	
+		UPDATETIME,	
+		UPDATER,	
+		STATUS,	
+		ORDERID,	
+		REMARK,	
+		FAILBACK,	
+		HISTORYID,	
+		AMOUNT,	
+		COUPONID,
+		BDUSERID	
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},	
+		#{USERID},	
+		#{TRANSACTIONTYPE},	
+		#{TRANSACTIONAMOUNT},	
+		#{PAYWAY},	
+		#{ACCOUNT},	
+		#{CREATETIME},	
+		#{CREATER},	
+		#{UPDATETIME},	
+		#{UPDATER},	
+		#{STATUS},	
+		#{ORDERID},	
+		#{REMARK},	
+		#{FAILBACK},	
+		#{HISTORYID},	
+		#{AMOUNT},	
+		#{COUPONID}	,
+		#{BDUSERID}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+		<if test="USERID!= null and USERID != ''">
+			USERID = #{USERID},
+		</if>
+		<if test="TRANSACTIONTYPE != null and TRANSACTIONTYPE != ''">
+			TRANSACTIONTYPE = #{TRANSACTIONTYPE},
+		</if>
+		<if test="TRANSACTIONAMOUNT != null and TRANSACTIONAMOUNT != ''">
+			TRANSACTIONAMOUNT = #{TRANSACTIONAMOUNT},
+		</if>
+		<if test="PAYWAY != null and PAYWAY != ''">
+			PAYWAY = #{PAYWAY},
+		</if>
+		<if test="ACCOUNT != null and ACCOUNT != ''">
+			ACCOUNT = #{ACCOUNT},
+		</if>
+		<if test="CREATETIME != null and CREATETIME != ''">
+			CREATETIME = #{CREATETIME},
+		</if>
+		<if test="CREATER != null and CREATER != ''">
+			CREATER = #{CREATER},
+		</if>
+		<if test="UPDATETIME != null and UPDATETIME != ''">
+			UPDATETIME = #{UPDATETIME},
+		</if>
+		<if test="UPDATER != null and UPDATER != ''">
+			UPDATER = #{UPDATER},
+		</if>
+		<if test="STATUS != null and STATUS != ''">
+			STATUS = #{STATUS},
+		</if>
+		<if test="ORDERID != null and ORDERID != ''">
+			ORDERID = #{ORDERID},
+		</if>
+		<if test="REMARK != null and REMARK != ''">
+			REMARK = #{REMARK},
+		</if>
+		<if test="FAILBACK != null and FAILBACK != ''">
+			FAILBACK = #{FAILBACK},
+		</if>
+		<if test="HISTORYID != null and HISTORYID != ''">
+			HISTORYID = #{HISTORYID},
+		</if>
+		<if test="AMOUNT != null and AMOUNT != ''">
+			AMOUNT = #{AMOUNT},
+		</if>
+		<if test="COUPONID != null and COUPONID != ''">
+			COUPONID = #{COUPONID}
+		</if>
+		<if test="BDUSERID != null and BDUSERID != ''">
+			BDUSERID = #{BDUSERID}
+		</if>
+		where 
+		ID = #{ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		ID,	h.USERID,h.TRANSACTIONTYPE,h.TRANSACTIONAMOUNT,h.PAYWAY,h.ACCOUNT,h.STATUS,h.ORDERID,h.REMARK,h.HISTORYID,h.CREATETIME,u.USERMOBILENO,u.USERTYPE	
+		from 
+		<include refid="tableName"/> h , t_user u 
+		where  h.userId = u.userId AND
+			h.ID = #{ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		ID,	h.USERID,h.TRANSACTIONTYPE,h.TRANSACTIONAMOUNT,h.PAYWAY,h.ACCOUNT,h.STATUS,h.ORDERID,h.REMARK,h.HISTORYID,h.CREATETIME,u.USERMOBILENO,u.USERTYPE	
+		from 
+		<include refid="tableName"/> h , t_user u 
+		where 1=1 AND h.userId = u.userId 
+		<if test="pd.TRANSACTIONTYPE != null and pd.TRANSACTIONTYPE != ''">
+			and h.TRANSACTIONTYPE = #{pd.TRANSACTIONTYPE}
+		</if>
+		<if test="pd.USERTYPE != null and pd.USERTYPE != ''">
+			and u.USERTYPE = #{pd.USERTYPE}
+		</if>
+		<if test="pd.CREATETIME_MIN != null and pd.CREATETIME_MIN != ''">
+			and h.CREATETIME &gt;= #{pd.CREATETIME_MIN}
+		</if>
+		<if test="pd.CREATETIME_MAX != null and pd.CREATETIME_MAX != ''">
+			and h.CREATETIME &lt;= #{pd.CREATETIME_MAX}
+		</if>
+		<if test="pd.STATUS != null and pd.STATUS != ''">
+			and h.STATUS = #{pd.STATUS}
+		</if>
+		<if test="pd.PAYWAY != null and pd.PAYWAY != ''">
+			and h.PAYWAY LIKE CONCAT(CONCAT('%', #{pd.PAYWAY}),'%')
+		</if>
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					<!-- 根据需求自己加检索条件 -->
+					u.USERMOBILENO LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					h.ORDERID LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+					 or 
+					h.ID LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				
+				)
+		</if>
+		ORDER BY h.CREATETIME DESC
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPageUserMoney" parameterType="page" resultType="pd">
+	
+		SELECT SUM(IF(h.TRANSACTIONTYPE='3' AND h.STATUS = '1',ABS(h.TRANSACTIONAMOUNT),0)) AS TRANSACTIONAMOUNT31,
+				SUM(IF(h.TRANSACTIONTYPE='1' AND h.STATUS = '0',ABS(h.TRANSACTIONAMOUNT),0)) AS TRANSACTIONAMOUNT10, 
+				SUM(IF(h.TRANSACTIONTYPE='1' AND h.STATUS = '2',ABS(h.TRANSACTIONAMOUNT),0)) AS TRANSACTIONAMOUNT12, 
+				SUM(IF(h.TRANSACTIONTYPE='1' AND h.STATUS = '1',ABS(h.TRANSACTIONAMOUNT),0)) AS TRANSACTIONAMOUNT11,
+				SUM(IF(h.TRANSACTIONTYPE='4',ABS(h.TRANSACTIONAMOUNT),0)) AS TRANSACTIONAMOUNT4,
+				SUM(IF(h.TRANSACTIONTYPE='5',ABS(h.TRANSACTIONAMOUNT),0)) AS TRANSACTIONAMOUNT5,
+				SUM(IF(h.TRANSACTIONTYPE='8',ABS(h.TRANSACTIONAMOUNT),0)) AS TRANSACTIONAMOUNT8,
+				SUM(IF(h.TRANSACTIONTYPE='9',ABS(h.TRANSACTIONAMOUNT),0)) AS TRANSACTIONAMOUNT9,
+				u.USERMOBILENO,u.USERTYPE,u.MONEY,u.CREATETIME,u.USERID
+				FROM t_recharge_withdrawals_history h ,t_user u WHERE u.userId = h.userId 
+		<if test="pd.USERTYPE != null and pd.USERTYPE != ''">
+			and u.USERTYPE = #{pd.USERTYPE}
+		</if>
+		<if test="pd.CREATETIME_MIN != null and pd.CREATETIME_MIN != ''">
+			and u.CREATETIME &gt;= #{pd.CREATETIME_MIN}
+		</if>
+		<if test="pd.CREATETIME_MAX != null and pd.CREATETIME_MAX != ''">
+			and u.CREATETIME &lt;= #{pd.CREATETIME_MAX}
+		</if>
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					<!-- 根据需求自己加检索条件 -->
+					u.USERMOBILENO LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					u.USERNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				
+				)
+		</if>
+		GROUP BY h.USERID ORDER BY u.CREATETIME DESC
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		ID,	h.USERID,h.TRANSACTIONTYPE,h.TRANSACTIONAMOUNT,h.PAYWAY,h.ACCOUNT,h.STATUS,h.ORDERID,h.REMARK,h.HISTORYID,h.CREATETIME,u.USERMOBILENO,u.USERTYPE	
+		from 
+		<include refid="tableName"/> h , t_user u 
+		where h.userId = u.userId
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	<!-- 添加流水记录 -->
+	<insert id="insertSelective" parameterType="pd">
+    insert into 
+    <include refid="tableName"></include>
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="Id != null">
+        Id,
+      </if>
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="transactionType != null">
+        transactionType,
+      </if>
+      <if test="transactionAmount != null">
+        transactionAmount,
+      </if>
+      <if test="payWay != null">
+        payWay,
+      </if>
+      <if test="bankName != null">
+        bankName,
+      </if>
+      <if test="openAccountBank != null">
+        openAccountBank,
+      </if>
+      <if test="owner != null">
+        owner,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="creater != null">
+        creater,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="orderId != null">
+        orderId,
+      </if>
+      <if test="realName != null">
+        realName,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="cashbackType != null">
+        cashbackType,
+      </if>
+      <if test="withdrawals != null">
+        withdrawals,
+      </if>
+      <if test="expressCompanyId != null">
+        expressCompanyId,
+      </if>
+      <if test="failBack != null">
+        failBack,
+      </if>
+      <if test="historyId != null">
+        historyId,
+      </if>
+      <if test="peopleId != null">
+        peopleId,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="couponId != null">
+        couponId,
+      </if>
+      <if test="isFlag != null">
+        isFlag,
+      </if>
+      <if test="nickName != null">
+        nickName,
+      </if>
+      <if test="bdUserId != null">
+        bdUserId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="Id != null">
+        #{Id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionType != null">
+        #{transactionType,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionAmount != null">
+        #{transactionAmount,jdbcType=REAL},
+      </if>
+      <if test="payWay != null">
+        #{payWay,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null">
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="openAccountBank != null">
+        #{openAccountBank,jdbcType=VARCHAR},
+      </if>
+      <if test="owner != null">
+        #{owner,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null">
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="cashbackType != null">
+        #{cashbackType,jdbcType=VARCHAR},
+      </if>
+      <if test="withdrawals != null">
+        #{withdrawals,jdbcType=VARCHAR},
+      </if>
+      <if test="expressCompanyId != null">
+        #{expressCompanyId,jdbcType=INTEGER},
+      </if>
+      <if test="failBack != null">
+        #{failBack,jdbcType=VARCHAR},
+      </if>
+      <if test="historyId != null">
+        #{historyId,jdbcType=VARCHAR},
+      </if>
+      <if test="peopleId != null">
+        #{peopleId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="couponId != null">
+        #{couponId,jdbcType=VARCHAR},
+      </if>
+      <if test="isFlag != null">
+        #{isFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="bdUserId != null">
+        #{bdUserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+	
+	<!-- zhangWenchao -->
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.PreferentialCityAdminMapper">
+  <!-- <resultMap id="BaseResultMap" type="pd">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="cityId" jdbcType="VARCHAR" property="cityid" />
+    <result column="money" jdbcType="REAL" property="money" />
+  </resultMap> -->
+  <sql id="Base_Column_List">
+    uuid, cityId, money
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from t_preferential_city
+    where uuid = #{_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_preferential_city
+    where uuid = #{_parameter}
+  </delete>
+  <insert id="insert" parameterType="pd">
+    insert into t_preferential_city (uuid, cityId, money
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{cityid,jdbcType=VARCHAR}, #{money,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="pd">
+    insert into t_preferential_city
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="cityid != null">
+        cityId,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="cityid != null">
+        #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update t_preferential_city
+    <set>
+      <if test="cityid != null">
+        cityId = #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=REAL},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pd">
+    update t_preferential_city
+    set cityId = #{cityid,jdbcType=VARCHAR},
+      money = #{money,jdbcType=REAL}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FileInfoMapper">
+	<!--表名 -->
+	<sql id="tableName">
+		T_HLSD_COMMN_FILE
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+	   FILE_ID,    <!-- 附件编号  -->
+	   REF_ID,     <!-- 附件关联编号 -->
+	   FILE_TYPE,  <!-- 附件类型 -->
+	   FILE_NAME,  <!-- 附件名称 -->
+	   FILE_SIZE,  <!-- 附件大小 -->
+	   FILE_DES,   <!-- 附件描述 -->
+	   FILE_PATH,  <!-- 附件存储路径 -->
+	   CREATETIME, <!-- 创建时间 -->
+	   CREATEUSER, <!-- 创建人 -->
+	   UPDATETIME, <!-- 修改时间 -->
+	   UPDATEUSER <!-- 修改人 -->
+	</sql>
+	<!-- 字段 -->
+	<sql id="FieldValue">
+	   #{FILE_ID},    <!-- 附件编号  -->
+	   #{REF_ID},     <!-- 附件关联编号 -->
+	   #{FILE_TYPE},  <!-- 附件类型 -->
+	   #{FILE_NAME},  <!-- 附件名称 -->
+	   #{FILE_SIZE},  <!-- 附件大小 -->
+	   #{FILE_DES},   <!-- 附件描述 -->
+	   #{FILE_PATH},  <!-- 附件存储路径 -->
+	   #{CREATETIME}, <!-- 创建时间 -->
+	   #{CREATEUSER}, <!-- 创建人 -->
+	   #{UPDATETIME}, <!-- 修改时间 -->
+	   #{UPDATEUSER} <!-- 修改人 -->
+	</sql>
+	
+	
+	<!-- 根据关联编号和文件类型查询文件信息列表(全部) -->
+	<select id="listFile" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1 = 1 
+		<if test="REF_ID!= null and REF_ID != ''">
+			and REF_ID = #{REF_ID}
+		</if>
+		<if test="FILE_TYPE!= null and FILE_TYPE != ''">
+			and FILE_TYPE = #{FILE_TYPE}
+		</if>
+		order by CREATETIME ASC 
+	</select>
+	<select id="selectFileByCondition" parameterType="pd" resultType="pd">
+		SELECT 
+		<include refid="Field"/>
+		FROM
+		<include refid="tableName"/>
+		<where>
+			<if test="REF_ID != null">
+				REF_ID = #{REF_ID}
+			</if>
+			<if test="FILE_TYPE != null">
+				AND FILE_TYPE = #{FILE_TYPE}
+			</if>
+		</where>
+	</select>
+	<insert id="savaFile" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	<delete id="deleteFileByRefId" parameterType="java.lang.String">
+		DELETE FROM 
+		<include refid="tableName"/>
+		WHERE REF_ID = #{_parameter}
+	</delete>
+	
+	<!-- zhangWenchao -->
+</mapper>

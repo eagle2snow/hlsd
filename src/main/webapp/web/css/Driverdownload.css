@@ -1,0 +1,320 @@
+@charset "utf-8";
+.d-header {
+	height: 900px;
+	width: 100%;
+	background: url(../img/driverdownload/banner.jpg) no-repeat;
+	background-size: 100% 100%;
+}
+
+.header-text {
+	position: relative;
+	width: 1400px;
+	height: 700px;
+	margin: 0 auto;
+}
+
+.d-header .header-text-box {
+	position: absolute;
+	left: 400px;
+	top: 200px;
+	letter-spacing: 10px;
+}
+.qrcode{
+	position: absolute;
+	right: 80px;
+	bottom: 0;
+}
+.qrcode p{
+	font-size: 18px;
+	color: #FFf;
+	text-align: center;
+	width: 140px;
+	}
+	
+.d-header .header-text .header-text-box p {
+	font-size: 120px;
+	color: #fff;
+}
+
+.header-text .header-text-box em {
+	font-size: 36px;
+	color: #fff;
+	opacity: 0.6;
+	text-align: center;
+}
+
+.driver-download {
+	height: 1560px;
+}
+
+.steps-box {
+	width: 1400px;
+	margin: 0 auto;
+}
+
+.steps-1-box {
+	width: 1400px;
+	height: 720px;
+	margin: 0 auto;
+}
+
+.steps-1 {
+	height: 720px;
+	background: #e5e5e5;
+}
+
+.steps-1-left {
+	width: 540px;
+	height: 650px;
+	padding-top: 70px;
+	padding-right: 160px;
+	float: left;
+}
+
+.steps-1-right {
+	width: 700px;
+	height: 720px;
+	float: left;
+	position: relative;
+}
+
+.steps-1-btn {
+	position: absolute;
+	right: 240px;
+	bottom: 70px;
+}
+
+.steps-2-btn {
+	position: absolute;
+	right: 120px;
+	bottom: 70px;
+}
+
+.steps-3-btn {
+	position: absolute;
+	left: 120px;
+	bottom: 70px;
+}
+
+.text-box {
+	height: 70px;
+}
+
+.steps-2-btn .text-box {
+	height: 100px;
+}
+
+.text-box em {
+	font-size: 48px;
+	color: #44c2f1;
+	float: left;
+	padding-left: 5px;
+	font-weight: bold;
+}
+
+.steps-1-btn .text-box p {
+	width: 200px;
+	height: 40px;
+}
+
+.steps-2-btn .text-box p {
+	width: 250px;
+}
+
+.steps-3-btn .text-box p {
+	width: 300px;
+	padding-top: 30px;
+}
+
+.text-box p {
+	font-size: 16px;
+	color: #575757;
+	margin-left: 60px;
+	padding-top: 10px;
+}
+
+.steps-1-btn a {
+	background: url(../img/driverdownload/ANNIU1.png) no-repeat center center;
+}
+
+.steps-2-btn a {
+	background: url(../img/driverdownload/ANNIU2.png) no-repeat center center;
+}
+
+.steps-3-btn a {
+	background: url(../img/driverdownload/ANJIU3.png) no-repeat center center;
+}
+
+.steps-btn a {
+	display: block;
+	width: 320px;
+	height: 100px;
+	line-height: 80px;
+	text-align: center;
+	font-size: 18px;
+	color: #fff;
+}
+
+.steps-2 {
+	height: 420px;
+}
+
+.steps-2-left {
+	width: 700px;
+	height: 420px;
+	float: left;
+	position: relative;
+}
+
+.steps-2-right {
+	width: 700px;
+	height: 420px;
+	float: left;
+	overflow: hidden;
+}
+
+.steps-3 {
+	height: 420px;
+}
+
+.steps-3-left {
+	width: 700px;
+	height: 420px;
+	float: left;
+	overflow: hidden;
+}
+
+.steps-3-right {
+	width: 700px;
+	height: 420px;
+	float: left;
+	position: relative;
+	
+}
+.steps-2:hover .bb{
+	position: relative;
+	width: 1400px;
+	height: 420px;
+}
+.steps-2 img{
+	opacity: 0.8;
+}
+.steps-2:hover img{
+	opacity: 1;
+	-webkit-animation: imgtrans 2s infinite linear;
+	animation-iteration-count:1;
+	-ms-transform:scale(1.1); /* IE 9 */
+	-webkit-transform: scale(1.1); /* Safari */
+	transform: scale(1.1); /* 标准语法 */
+}
+.steps-3:hover .bb{
+	position: relative;
+	width: 1400px;
+	height: 420px;
+}
+.steps-3 img{
+	opacity: 0.8;
+}
+.steps-3:hover img{
+	opacity: 1;
+	-webkit-animation: imgtrans 2s infinite linear;
+	animation-iteration-count:1;
+	-ms-transform:scale(1.1); /* IE 9 */
+	-webkit-transform: scale(1.1); /* Safari */
+	transform: scale(1.1); /* 标准语法 */
+}
+.steps-3:hover .bb:before,.steps-3:hover .bb:after{
+	display: block;
+}
+.steps-2:hover .bb:before,.steps-2:hover .bb:after{
+	display: block;
+}
+.bb:before,.bb:after {
+	content: " ";
+	display: none;
+	position: absolute;
+	width: 1400px;
+	height: 420px;
+	top: 0;
+	left: 0;
+	border: 2px solid #44C2F1;
+	z-index: 999;
+	box-sizing: border-box;
+	-webkit-animation: clipAni 4s infinite linear;
+}
+
+.bb:before {
+	-webkit-animation-delay: -2s;
+}
+
+@keyframes clipAni {
+	0%,
+	100% {
+		clip: rect(0px, 1400px, 420px, 1397px);
+	}
+	25% {
+		clip: rect(0px, 1400px, 3px, 0px);
+	}
+	50% {
+		clip: rect(0px, 3px, 420px, 0px);
+	}
+	75% {
+		clip: rect(417px, 1400px, 420px, 0px);
+	}
+}
+@keyframes imgtrans {
+	0%{
+		-ms-transform:scale(1); /* IE 9 */
+	-webkit-transform: scale(1); /* Safari */
+	transform: scale(1); /* 标准语法 */
+	}
+	50% {
+		-ms-transform:scale(1.05); /* IE 9 */
+	-webkit-transform: scale(1.05); /* Safari */
+	transform: scale(1.05); /* 标准语法 */
+	}
+	100% {
+		-ms-transform:scale(1.1); /* IE 9 */
+	-webkit-transform: scale(1.1); /* Safari */
+	transform: scale(1.1); /* 标准语法 */
+	}
+}
+/*userdownload*/
+.u-header {
+	height: 900px;
+	width: 100%;
+	background: url(../img/driverdownload/banner2.jpg) no-repeat;
+	background-size: 100% 100%;
+}
+.user-download .steps-1 {
+	height: 720px;
+	background: url(../img/driverdownload/TU1.png)
+}
+.user-download .steps-1-btn .text-box p {
+	width: 300px;
+	height: 140px!important;
+	padding-bottom: 50px;
+}
+
+.user-download .steps-2-btn .text-box p {
+	width: 250px;
+}
+
+.user-download .steps-3-btn .text-box p {
+	width: 300px;
+	padding-top: 10px;
+}
+.u-header  .header-text-box {
+	position: absolute;
+	right: 0;
+	top: 100px;
+	letter-spacing: 10px;
+	color: #000000;
+}
+.u-header .header-text .header-text-box p {
+	font-size: 120px;
+	color: #000;
+}
+.u-header .header-text .header-text-box em {
+	color: #000;
+}

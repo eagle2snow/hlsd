@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderStepsMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		T_HLSD_ORDERS_STEPS
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		XH,	
+		ORDERID,	
+		STEPNAME,	
+		STEPDESCRIBE,	
+		ORDERSTATUSCODE,
+		CREATETIME,
+		CREATEUSER,	
+		UPDATETIME,	
+		UPDATEUSER
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{xh},
+		#{orderId},
+		#{stepName},
+		#{stepDescribe},
+		#{orderStatusCode},
+		#{createTime},	
+		#{createUser},	
+		#{updateTime},	
+		#{updateUser}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="com.fh.entity.hlsd.OrdersStepsVO">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 通过OrderId查询 -->
+	<select id="findByOrderId" parameterType="pd" resultType="pd">
+		select
+			XH,	
+			ORDERID,	
+			STEPNAME,	
+			STEPDESCRIBE,	
+			ORDERSTATUSCODE,
+			date_format(CREATETIME, '%Y-%m-%d %H:%i:%s') CREATETIME,
+			CREATEUSER,	
+			UPDATETIME,	
+			UPDATEUSER
+		from 
+		<include refid="tableName"></include>
+		where ORDERID = #{ORDERID} order by CREATETIME ASC 
+	</select>
+	<!-- zhangWenchao -->
+</mapper>

@@ -1,0 +1,183 @@
+@CHARSET "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 14px;
+	font-family: 微软雅黑;
+	font-style: normal;
+}
+
+a {
+	text-decoration: none
+}
+
+a, a:hover {
+	transition: background 0.5s linear;
+	-webkit-transition: background 0.5s linear;
+	-moz-transition: background 0.5s linear;
+	-o-transition: background 0.5s linear;
+}
+
+em, i {
+	font-style: normal;
+}
+
+ul, ol, li {
+	list-style: none;
+}
+
+img {
+	border: none;
+	vertical-align: middle;
+}
+
+input, select, textarea {
+	outline: none;
+	border: none;
+	background: none;
+}
+
+textarea {
+	resize: none;
+}
+
+p {
+	line-height: 22px;
+}
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+
+.clear {
+	clear: both;
+	height: 0px;
+	width: 100%;
+	overflow: hidden;
+}
+
+.position {
+	position: relative;
+}
+
+html, body {
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	background: url('./img/beijing.jpg') no-repeat;
+	background-size: 100% 100%;
+}
+
+.hlsd_login {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 480px;
+	height: 500px;
+	margin: auto;
+}
+
+.input_box {
+	border: 1px solid #ccc;
+	padding: 10px;
+	background-color: #fff;
+	border-radius: 5px;
+	opacity: 0.9
+}
+
+.hlsd_title {
+	height: 80px;
+	border-bottom: 1px solid #ccc;
+	padding-left: 108px;
+}
+
+.title_img {
+	float: left;
+}
+
+.title_text {
+	float: left;
+	font-size: 18px;
+	color: #fff;
+	margin-left: 20px;
+	letter-spacing: 2px;
+}
+
+.hlsd_login ul {
+	padding-top: 20px;
+}
+
+.hlsd_login ul li {
+	padding: 10px;
+	height: 40px;
+}
+
+.large_input {
+	padding: 5px;
+	width: 90%;
+}
+
+.small_input {
+	padding: 5px;
+	width: 85%;
+}
+
+.input_box_code {
+	width: 307px;
+	float: left;
+	background-color: #fff;
+	padding: 5px;
+	border-radius: 5px;
+	opacity: 0.9
+}
+
+.input_box_submit {
+	background-color: #e0af46;
+	height: 40px;
+	border-radius: 5px;
+	color: #fff;
+	font-size: 16px;
+}
+
+.submit_input {
+	height: 100%;
+	width: 100%;
+	color: #fff;
+	cursor: pointer;
+	font-size: 17px;
+}
+
+.input_box_code_img {
+	float: right;
+	padding: 0 10px;
+	width: 100px;
+	height: 36px;
+	line-height: 36px;
+	border-radius: 5px;
+	background-color: #fff;
+	font-size: 22px;
+	text-align: center;
+	color: #e0af46;
+	cursor: pointer;
+}
+.rememberPwd{
+	float: right;
+	margin-top:5px;
+	margin-right:2px;
+	font-size: 12px;
+	position:relative;
+    left:20%;
+    top: 4px;
+}

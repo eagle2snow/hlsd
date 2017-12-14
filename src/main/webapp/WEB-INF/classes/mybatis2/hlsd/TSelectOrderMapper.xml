@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TSelectOrderMapper">
+  <!-- <resultMap id="BaseResultMap" type="pd">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="carId" jdbcType="VARCHAR" property="carid" />
+    <result column="orderId" jdbcType="VARCHAR" property="orderid" />
+    <result column="ordertype" jdbcType="VARCHAR" property="ordertype" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+  </resultMap> -->
+  <sql id="Base_Column_List">
+    Id, userId, carId, orderId, ordertype, createTime, creater, updateTime, updater
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from t_select_order
+    where Id = #{_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_select_order
+    where Id = #{_parameter}
+  </delete>
+  <insert id="insert" parameterType="pd">
+    insert into t_select_order (Id, userId, carId, 
+      orderId, ordertype, createTime, 
+      creater, updateTime, updater
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=VARCHAR}, #{carid,jdbcType=VARCHAR}, 
+      #{orderid,jdbcType=VARCHAR}, #{ordertype,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{creater,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, #{updater,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="pd">
+    insert into t_select_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="carid != null">
+        carId,
+      </if>
+      <if test="orderid != null">
+        orderId,
+      </if>
+      <if test="ordertype != null">
+        ordertype,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="creater != null">
+        creater,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="carid != null">
+        #{carid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertype != null">
+        #{ordertype,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null">
+        #{updater,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update t_select_order
+    <set>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="carid != null">
+        carId = #{carid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        orderId = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertype != null">
+        ordertype = #{ordertype,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null">
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null">
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pd">
+    update t_select_order
+    set userId = #{userid,jdbcType=VARCHAR},
+      carId = #{carid,jdbcType=VARCHAR},
+      orderId = #{orderid,jdbcType=VARCHAR},
+      ordertype = #{ordertype,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updater = #{updater,jdbcType=VARCHAR}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

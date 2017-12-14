@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TTwoCargoMapper">
+  <!-- <resultMap id="BaseResultMap" type="pd">
+    <id column="cargoId" jdbcType="VARCHAR" property="cargoid" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="areaId" jdbcType="VARCHAR" property="areaid" />
+    <result column="goodsDescription" jdbcType="VARCHAR" property="goodsdescription" />
+    <result column="goodsPhoto" jdbcType="VARCHAR" property="goodsphoto" />
+    <result column="goodsVolume" jdbcType="INTEGER" property="goodsvolume" />
+    <result column="itemWeight" jdbcType="INTEGER" property="itemweight" />
+    <result column="lat" jdbcType="VARCHAR" property="lat" />
+    <result column="lng" jdbcType="VARCHAR" property="lng" />
+    <result column="mileage" jdbcType="REAL" property="mileage" />
+    <result column="mobileNo" jdbcType="VARCHAR" property="mobileno" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="orderId" jdbcType="VARCHAR" property="orderid" />
+    <result column="orderStatus" jdbcType="VARCHAR" property="orderstatus" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="userId" jdbcType="VARCHAR" property="userid" />
+    <result column="cityId" jdbcType="VARCHAR" property="cityid" />
+    <result column="provinceId" jdbcType="VARCHAR" property="provinceid" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="mileageFee" jdbcType="REAL" property="mileagefee" />
+    <result column="cargoPrice" jdbcType="REAL" property="cargoprice" />
+    <result column="nightChanger" jdbcType="REAL" property="nightchanger" />
+    <result column="serviceCharge" jdbcType="REAL" property="servicecharge" />
+    <result column="valueFee" jdbcType="REAL" property="valuefee" />
+    <result column="valueFee1" jdbcType="REAL" property="valuefee1" />
+    <result column="valueFee2" jdbcType="REAL" property="valuefee2" />
+    <result column="valueFee3" jdbcType="REAL" property="valuefee3" />
+    <result column="cargoDetailAddress" jdbcType="VARCHAR" property="cargodetailaddress" />
+  </resultMap> -->
+  <sql id="Base_Column_List">
+    cargoId, address, areaId, goodsDescription, goodsPhoto, goodsVolume, itemWeight, 
+    lat, lng, mileage, mobileNo, name, orderId, orderStatus, remark, userId, cityId, 
+    provinceId, signature, mileageFee, cargoPrice, nightChanger, serviceCharge, valueFee, 
+    valueFee1, valueFee2, valueFee3, cargoDetailAddress
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from t_two_cargo
+    where cargoId = #{_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_two_cargo
+    where cargoId = #{_parameter}
+  </delete>
+  <insert id="insert" parameterType="pd">
+    insert into t_two_cargo (cargoId, address, areaId, 
+      goodsDescription, goodsPhoto, goodsVolume, 
+      itemWeight, lat, lng, 
+      mileage, mobileNo, name, 
+      orderId, orderStatus, remark, 
+      userId, cityId, provinceId, 
+      signature, mileageFee, cargoPrice, 
+      nightChanger, serviceCharge, valueFee, 
+      valueFee1, valueFee2, valueFee3, 
+      cargoDetailAddress)
+    values (#{cargoid,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{areaid,jdbcType=VARCHAR}, 
+      #{goodsdescription,jdbcType=VARCHAR}, #{goodsphoto,jdbcType=VARCHAR}, #{goodsvolume,jdbcType=INTEGER}, 
+      #{itemweight,jdbcType=INTEGER}, #{lat,jdbcType=VARCHAR}, #{lng,jdbcType=VARCHAR}, 
+      #{mileage,jdbcType=REAL}, #{mobileno,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{orderid,jdbcType=VARCHAR}, #{orderstatus,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=VARCHAR}, #{cityid,jdbcType=VARCHAR}, #{provinceid,jdbcType=VARCHAR}, 
+      #{signature,jdbcType=VARCHAR}, #{mileagefee,jdbcType=REAL}, #{cargoprice,jdbcType=REAL}, 
+      #{nightchanger,jdbcType=REAL}, #{servicecharge,jdbcType=REAL}, #{valuefee,jdbcType=REAL}, 
+      #{valuefee1,jdbcType=REAL}, #{valuefee2,jdbcType=REAL}, #{valuefee3,jdbcType=REAL}, 
+      #{cargodetailaddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pd">
+    insert into t_two_cargo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cargoid != null">
+        cargoId,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="areaid != null">
+        areaId,
+      </if>
+      <if test="goodsdescription != null">
+        goodsDescription,
+      </if>
+      <if test="goodsphoto != null">
+        goodsPhoto,
+      </if>
+      <if test="goodsvolume != null">
+        goodsVolume,
+      </if>
+      <if test="itemweight != null">
+        itemWeight,
+      </if>
+      <if test="lat != null">
+        lat,
+      </if>
+      <if test="lng != null">
+        lng,
+      </if>
+      <if test="mileage != null">
+        mileage,
+      </if>
+      <if test="mobileno != null">
+        mobileNo,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="orderid != null">
+        orderId,
+      </if>
+      <if test="orderstatus != null">
+        orderStatus,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="userid != null">
+        userId,
+      </if>
+      <if test="cityid != null">
+        cityId,
+      </if>
+      <if test="provinceid != null">
+        provinceId,
+      </if>
+      <if test="signature != null">
+        signature,
+      </if>
+      <if test="mileagefee != null">
+        mileageFee,
+      </if>
+      <if test="cargoprice != null">
+        cargoPrice,
+      </if>
+      <if test="nightchanger != null">
+        nightChanger,
+      </if>
+      <if test="servicecharge != null">
+        serviceCharge,
+      </if>
+      <if test="valuefee != null">
+        valueFee,
+      </if>
+      <if test="valuefee1 != null">
+        valueFee1,
+      </if>
+      <if test="valuefee2 != null">
+        valueFee2,
+      </if>
+      <if test="valuefee3 != null">
+        valueFee3,
+      </if>
+      <if test="cargodetailaddress != null">
+        cargoDetailAddress,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cargoid != null">
+        #{cargoid,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null">
+        #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsdescription != null">
+        #{goodsdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsphoto != null">
+        #{goodsphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsvolume != null">
+        #{goodsvolume,jdbcType=INTEGER},
+      </if>
+      <if test="itemweight != null">
+        #{itemweight,jdbcType=INTEGER},
+      </if>
+      <if test="lat != null">
+        #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="mileage != null">
+        #{mileage,jdbcType=REAL},
+      </if>
+      <if test="mobileno != null">
+        #{mobileno,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstatus != null">
+        #{orderstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="cityid != null">
+        #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceid != null">
+        #{provinceid,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null">
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="mileagefee != null">
+        #{mileagefee,jdbcType=REAL},
+      </if>
+      <if test="cargoprice != null">
+        #{cargoprice,jdbcType=REAL},
+      </if>
+      <if test="nightchanger != null">
+        #{nightchanger,jdbcType=REAL},
+      </if>
+      <if test="servicecharge != null">
+        #{servicecharge,jdbcType=REAL},
+      </if>
+      <if test="valuefee != null">
+        #{valuefee,jdbcType=REAL},
+      </if>
+      <if test="valuefee1 != null">
+        #{valuefee1,jdbcType=REAL},
+      </if>
+      <if test="valuefee2 != null">
+        #{valuefee2,jdbcType=REAL},
+      </if>
+      <if test="valuefee3 != null">
+        #{valuefee3,jdbcType=REAL},
+      </if>
+      <if test="cargodetailaddress != null">
+        #{cargodetailaddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update t_two_cargo
+    <set>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null">
+        areaId = #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsdescription != null">
+        goodsDescription = #{goodsdescription,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsphoto != null">
+        goodsPhoto = #{goodsphoto,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsvolume != null">
+        goodsVolume = #{goodsvolume,jdbcType=INTEGER},
+      </if>
+      <if test="itemweight != null">
+        itemWeight = #{itemweight,jdbcType=INTEGER},
+      </if>
+      <if test="lat != null">
+        lat = #{lat,jdbcType=VARCHAR},
+      </if>
+      <if test="lng != null">
+        lng = #{lng,jdbcType=VARCHAR},
+      </if>
+      <if test="mileage != null">
+        mileage = #{mileage,jdbcType=REAL},
+      </if>
+      <if test="mobileno != null">
+        mobileNo = #{mobileno,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null">
+        orderId = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstatus != null">
+        orderStatus = #{orderstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userId = #{userid,jdbcType=VARCHAR},
+      </if>
+      <if test="cityid != null">
+        cityId = #{cityid,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceid != null">
+        provinceId = #{provinceid,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null">
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="mileagefee != null">
+        mileageFee = #{mileagefee,jdbcType=REAL},
+      </if>
+      <if test="cargoprice != null">
+        cargoPrice = #{cargoprice,jdbcType=REAL},
+      </if>
+      <if test="nightchanger != null">
+        nightChanger = #{nightchanger,jdbcType=REAL},
+      </if>
+      <if test="servicecharge != null">
+        serviceCharge = #{servicecharge,jdbcType=REAL},
+      </if>
+      <if test="valuefee != null">
+        valueFee = #{valuefee,jdbcType=REAL},
+      </if>
+      <if test="valuefee1 != null">
+        valueFee1 = #{valuefee1,jdbcType=REAL},
+      </if>
+      <if test="valuefee2 != null">
+        valueFee2 = #{valuefee2,jdbcType=REAL},
+      </if>
+      <if test="valuefee3 != null">
+        valueFee3 = #{valuefee3,jdbcType=REAL},
+      </if>
+      <if test="cargodetailaddress != null">
+        cargoDetailAddress = #{cargodetailaddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cargoId = #{cargoid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pd">
+    update t_two_cargo
+    set address = #{address,jdbcType=VARCHAR},
+      areaId = #{areaid,jdbcType=VARCHAR},
+      goodsDescription = #{goodsdescription,jdbcType=VARCHAR},
+      goodsPhoto = #{goodsphoto,jdbcType=VARCHAR},
+      goodsVolume = #{goodsvolume,jdbcType=INTEGER},
+      itemWeight = #{itemweight,jdbcType=INTEGER},
+      lat = #{lat,jdbcType=VARCHAR},
+      lng = #{lng,jdbcType=VARCHAR},
+      mileage = #{mileage,jdbcType=REAL},
+      mobileNo = #{mobileno,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      orderId = #{orderid,jdbcType=VARCHAR},
+      orderStatus = #{orderstatus,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      userId = #{userid,jdbcType=VARCHAR},
+      cityId = #{cityid,jdbcType=VARCHAR},
+      provinceId = #{provinceid,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      mileageFee = #{mileagefee,jdbcType=REAL},
+      cargoPrice = #{cargoprice,jdbcType=REAL},
+      nightChanger = #{nightchanger,jdbcType=REAL},
+      serviceCharge = #{servicecharge,jdbcType=REAL},
+      valueFee = #{valuefee,jdbcType=REAL},
+      valueFee1 = #{valuefee1,jdbcType=REAL},
+      valueFee2 = #{valuefee2,jdbcType=REAL},
+      valueFee3 = #{valuefee3,jdbcType=REAL},
+      cargoDetailAddress = #{cargodetailaddress,jdbcType=VARCHAR}
+    where cargoId = #{cargoid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TScaleScoreMapper">
+ <!--  <resultMap id="BaseResultMap" type="pd">
+    <id column="scaleId" jdbcType="VARCHAR" property="scaleid" />
+    <result column="scaleScoreMax" jdbcType="INTEGER" property="scalescoremax" />
+    <result column="scaleScoreMin" jdbcType="INTEGER" property="scalescoremin" />
+    <result column="scalePicture" jdbcType="VARCHAR" property="scalepicture" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="pd">
+    <result column="scaleName" jdbcType="LONGVARCHAR" property="scalename" />
+  </resultMap> -->
+  <!-- 表格名称 -->
+  <sql id="table_name">
+  	t_scale_score
+  </sql>
+  <sql id="Base_Column_List">
+    scaleId, 
+    scaleScoreMax, 
+    scaleScoreMin, 
+    scalePicture,
+    scaleName,
+    orderQuantity,
+    scaleDes,
+    createTime,
+    updateTime,
+    creater,
+    updater
+  </sql>
+  <sql id="filed_value">
+    #{scaleId}, 
+    #{scaleScoreMax}, 
+    #{scaleScoreMin}, 
+    #{scalePicture},
+    #{scaleName},
+    #{orderQuantity},
+    #{scaleDes},
+    #{createTime},
+    #{updateTime},
+    #{creater},
+    #{updater}
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from 
+     <include refid="table_name" />
+    where scaleId = #{_parameter}
+  </select>
+  <!-- 根据等级名称获取等级信息 -->
+  <select id="selectScaleByScaleName" parameterType="java.lang.String" resultType="pd">
+  	select 
+    <include refid="Base_Column_List" />
+    from 
+     <include refid="table_name" />
+    where scaleDes = #{_parameter}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from 
+    <include refid="table_name" />
+    where scaleId = #{_parameter}
+  </delete>
+  <insert id="insert" parameterType="pd">
+    insert into 
+    <include refid="table_name" /> 
+    	(
+    <include refid="Base_Column_List" />
+    	)
+   	 values (
+    <include refid="filed_value" />
+    	)
+  </insert>
+  <insert id="insertSelective" parameterType="pd">
+    insert into 
+    <include refid="table_name" />
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="scaleId != null">
+        scaleId,
+      </if>
+      <if test="scaleScoreMax != null">
+        scaleScoreMax,
+      </if>
+      <if test="scaleScoreMin != null">
+        scaleScoreMin,
+      </if>
+      <if test="scalePicture != null">
+        scalePicture,
+      </if>
+      <if test="scaleName != null">
+        scaleName,
+      </if>
+      <if test="orderQuantity != null">
+        orderQuantity,
+      </if>
+      <if test="scaleDes != null">
+        scaleDes,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="creater != null">
+        creater,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+      <if test="updateTime != null">
+        updateTime
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="scaleId != null">
+        #{scaleId},
+      </if>
+      <if test="scaleScoreMax != null">
+        #{scaleScoreMax},
+      </if>
+      <if test="scaleScoreMin != null">
+        #{scaleScoreMin},
+      </if>
+      <if test="scalePicture != null">
+        #{scalePicture},
+      </if>
+      <if test="scaleName != null">
+        #{scaleName},
+      </if>
+      <if test="orderQuantity != null">
+        #{orderQuantity},
+      </if>
+      <if test="scaleDes != null">
+        #{scaleDes},
+      </if>
+      <if test="createTime != null">
+        #{createTime},
+      </if>
+      <if test="creater != null">
+        #{creater},
+      </if>
+      <if test="updater != null">
+        #{updater},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update 
+    <include refid="table_name" />
+    <set>
+      <if test="scaleScoreMax != null">
+        scaleScoreMax = #{scaleScoreMax},
+      </if>
+      <if test="scaleScoreMin != null">
+        scaleScoreMin = #{scaleScoreMin},
+      </if>
+      <if test="scalePicture != null">
+        scalePicture = #{scalePicture},
+      </if>
+      <if test="scaleName != null">
+        scaleName = #{scaleName},
+      </if>
+      <if test="orderQuantity != null">
+        orderQuantity = #{orderQuantity},
+      </if>
+      <if test="scaleDes != null">
+        scaleDes = #{scaleDes},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime},
+      </if>
+      <if test="creater != null">
+        creater = #{creater},
+      </if>
+      <if test="updater != null">
+        updater = #{updater},
+      </if>
+      <if test="updateTime != null">
+       updateTime =  #{updateTime}
+      </if>
+    </set>
+    where scaleId = #{scaleId}
+  </update>
+  <!-- 根据分数查询等级 -->
+  <select id="getScaleByScaleScore" parameterType="java.lang.Integer" resultType="java.lang.String">
+  	SELECT scaleId FROM 
+  	<include refid="table_name"/>
+  	WHERE scaleScoreMax &gt;= #{_parameter} AND scaleScoreMin &lt;= #{_parameter}
+  </select>
+  <!-- 查询最大等级分数 -->
+  <select id="getMaxScaleScore" resultType="java.lang.Integer">
+  	SELECT scaleScoreMax FROM 
+  	<include refid="table_name"/>
+  	WHERE scaleScoreMin = scaleScoreMax
+  </select>
+</mapper>

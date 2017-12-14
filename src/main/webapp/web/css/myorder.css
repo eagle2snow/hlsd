@@ -1,0 +1,206 @@
+@charset "utf-8";
+.display{
+	display: none; 
+}
+.display0{
+	display: block; 
+}
+.dispaly1{
+	display: none; 
+}
+#layuipage{
+	    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+.myorder{
+	width: 1400px;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.myorder-left{
+	float: left;
+	width: 235px;
+	
+	
+}
+.myorder-left ul{
+	height: 180px;
+	width: 150px;
+	margin: 0 auto;
+	margin-top: 50px;
+	transform: translate3d(0,-5px,0);
+	-webkit-transform: translate3d(0,-5px,0);
+    box-shadow: 0 7px 21px rgba(0,0,0,.15);
+    padding-top: 1px;
+}
+.myorder-left ul li{
+	width: 150px;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 16px;
+	margin-top: 24px;
+}
+.myorder-left ul li a:hover{
+	color: #44C2F1 ;
+	}
+.myorder-left ul .myorder-active{
+	border-left: 2px solid #44C2F1;
+	
+	}
+.myorder-left ul .myorder-active a{
+	color: #44C2F1 ;
+}	
+.myorder-right{
+	float: left;
+	width: 1165px;
+	padding-bottom: 100px;
+    position: relative;
+	padding-top: 70px;
+	
+}
+.myorder-right .myorder-tab{
+	width: 1100px;
+	margin: 0 auto;
+	height: 30px;
+	
+}
+.myorder-right .myorder-tab li{
+	float: left;
+	height: 30px;
+	line-height: 30px;
+	margin-right: 75px;
+}
+.myorder-right .myorder-tab li a{
+	font-size: 18px;
+}
+.myorder-right .myorder-tab .myorder-order-active a{
+	color: #44C2F1;
+}
+	
+	
+.myorder-right .myorder-content{
+	width: 1100px;
+	min-height: 820px;
+	
+	
+}
+.myorder-right .myorder-content .order-box{
+	min-height: 240px;
+	width: 1100px;
+	margin-top: 30px;
+	transform: translate3d(0,-5px,0);
+	-webkit-transform: translate3d(0,-5px,0);
+    box-shadow: 0 7px 21px rgba(0,0,0,.15);
+	}
+.myorder-right .myorder-content .order-title .order-title-box{
+	height: 170px;
+	width: 980px;
+	padding: 20px 70px  0 50px;
+	background: #ecf9fe;
+	}
+.myorder-right .myorder-content .order-title-img{
+	float: left;
+}
+.myorder-right .myorder-content .order-title-text{
+	float: left;
+	padding-left: 35px;
+	font-size: 14px;
+	width: 800px;
+	height: 150px;
+}
+.myorder-right .myorder-content .order-title-price{
+	height: 150px;
+	line-height: 150px;
+	font-size: 20px;
+	}
+.myorder-right .myorder-content .order-title-text span{
+	float: left;
+	width: 400px;
+}
+.myorder-right .myorder-content .order-btn{
+	height: 50px;
+	width: 1100px;
+	
+	}
+.myorder-right .myorder-content .order-btn a{
+	width: 80px;
+	height: 24px;
+	line-height: 24px;
+	float: right;
+	margin: 10px 40px 0 0;
+	color: #44C2F1;
+	border: 2px dashed #44C2F1;
+	border-radius: 5px;
+	text-align: center;
+	}
+.myorder-right .myorder-content .order-btn a:hover{
+	background: #44C2F1;
+	color: #FFFFFF;
+	}
+.order-null{
+	width: 1100px;
+	height: 300px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+	color: #44C2F1;
+}
+/*count*/
+.order-box-title{
+	width: 450px;
+	height: 100px;
+	padding: 20px;
+}
+.order-box-title li{
+	float: left;
+	font-size: 16px;
+	height: 50px;	
+}
+.order-box-title li p{
+	float: left;
+	margin-right: 20px;
+	}
+.order-box-title li p a{
+	float: left;
+	width: 60px;
+	height: 24px;
+	line-height: 24px;
+	text-align: center;
+	color: #FFFFFF;
+	background: #44C2F1;
+	margin-left: 20px;
+	
+	}
+.order-box-border{
+	border: 1px solid #DCDCDC;
+	margin: 0 20px;
+	padding: 20px;
+	border-radius: 10px;
+}	
+.order-box-head{
+	width: 1000px;
+	height: 50px;
+	border-bottom: 1px solid #DCDCDC;
+	
+}	
+.order-box-head li{
+	float: left;
+	width: 140px;
+	text-align: center;
+	
+}
+.order-box-content{
+	width: 1000px;
+	height: 50px;
+	line-height: 50px;
+	border-bottom: 1px dashed #DCDCDC;
+}
+.order-box-content li{
+	float: left;
+	width: 140px;
+	text-align: center;
+	
+}				

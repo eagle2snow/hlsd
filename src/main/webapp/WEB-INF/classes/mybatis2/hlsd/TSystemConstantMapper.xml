@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SystemContentMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		t_system_constant
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,	           <!-- 编号 -->
+		ADDSCORE,	         <!-- 司机好评每颗心分数 -->
+		SUBTRACTSCORE,	     <!-- 司机差评每颗星分数 -->
+		DRIVERDISTANCE,	      <!-- 司机的接单距离 -->
+		DRIVERORDERFEEPERCENT,	 <!-- 平台的抽成系数 -->
+		HORSEMANORDERFEEPERCENT,<!-- 骑手负责人的抽成系数 -->	
+		SERVICEFEE,	     <!-- 服务费 -->
+		TWOORDERSERVICEFEE,<!-- 第二单服务费 -->
+		CANCELNUMBER,   <!-- 取消订单的数量 -->	
+		CITYID,	        <!-- 市id -->
+		PROVINCEID,	    <!-- 省id -->
+		VOLUEFEE1,	    <!-- 小浮浮动系数 -->
+		VOLUEFEE2,	    <!-- 中浮浮动系数 -->
+		VOLUEFEE3,	    <!-- 大浮浮动系数 -->
+		HORSEMANDISTANCE,	 <!-- 骑手接单距离 -->
+		HORSEMANADDSCORE,	 <!-- 骑手好评每颗星分数 -->
+		HORSEMANSUBTRACTSCORE <!-- 骑手差评每颗星分数 -->
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},	
+		#{ADDSCORE},	
+		#{SUBTRACTSCORE},	
+		#{DRIVERDISTANCE},	
+		#{DRIVERORDERFEEPERCENT},	
+		#{HORSEMANORDERFEEPERCENT},	
+		#{SERVICEFEE},	
+		#{TWOORDERSERVICEFEE},	
+		#{CANCELNUMBER},	
+		#{CITYID},	
+		#{PROVINCEID},	
+		#{VOLUEFEE1},	
+		#{VOLUEFEE2},	
+		#{VOLUEFEE3},	
+		#{HORSEMANDISTANCE},	
+		#{HORSEMANADDSCORE},	
+		#{HORSEMANSUBTRACTSCORE}	
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+		<if test="ID != null and ID != ''">
+			ID = #{ID},
+		</if>
+		<if test="ADDSCORE != null and ADDSCORE != ''">
+			ADDSCORE = #{ADDSCORE},
+		</if>
+		<if test="SUBTRACTSCORE != null and SUBTRACTSCORE != ''">
+			SUBTRACTSCORE = #{SUBTRACTSCORE},
+		</if>
+		<if test="DRIVERDISTANCE != null and DRIVERDISTANCE != ''">
+			DRIVERDISTANCE = #{DRIVERDISTANCE},
+		</if>
+		<if test="DRIVERORDERFEEPERCENT != null and DRIVERORDERFEEPERCENT != ''">
+			DRIVERORDERFEEPERCENT = #{DRIVERORDERFEEPERCENT},
+		</if>
+		<if test="HORSEMANORDERFEEPERCENT != null and HORSEMANORDERFEEPERCENT != ''">
+			HORSEMANORDERFEEPERCENT = #{HORSEMANORDERFEEPERCENT},
+		</if>
+		<if test="SERVICEFEE != null and SERVICEFEE != ''">
+			SERVICEFEE = #{SERVICEFEE},
+		</if>
+		<if test="TWOORDERSERVICEFEE != null and TWOORDERSERVICEFEE != ''">
+			TWOORDERSERVICEFEE = #{TWOORDERSERVICEFEE},
+		</if>
+		<if test="CANCELNUMBER != null and CANCELNUMBER != ''">
+			CANCELNUMBER = #{CANCELNUMBER},
+		</if>
+		<if test="CITYID != null and CITYID != ''">
+			CITYID = #{CITYID},
+		</if>
+		<if test="PROVINCEID != null and PROVINCEID != ''">
+			PROVINCEID = #{PROVINCEID},
+		</if>
+		<if test="VOLUEFEE1 != null and VOLUEFEE1 != ''">
+			VOLUEFEE1 = #{VOLUEFEE1},
+		</if>
+		<if test="VOLUEFEE2 != null and VOLUEFEE2 != ''">
+			VOLUEFEE2 = #{VOLUEFEE2},
+		</if>
+		<if test="VOLUEFEE3 != null and VOLUEFEE3 != ''">
+			VOLUEFEE3 = #{VOLUEFEE3},
+		</if>
+		<if test="HORSEMANDISTANCE != null and HORSEMANDISTANCE != ''">
+			HORSEMANDISTANCE = #{HORSEMANDISTANCE},
+		</if>
+		<if test="HORSEMANADDSCORE != null and HORSEMANADDSCORE != ''">
+			HORSEMANADDSCORE = #{HORSEMANADDSCORE},
+		</if>
+		<if test="HORSEMANSUBTRACTSCORE != null and HORSEMANSUBTRACTSCORE != ''">
+			HORSEMANSUBTRACTSCORE = #{HORSEMANSUBTRACTSCORE},
+		</if>
+		ID = ID
+		where 
+		ID = #{ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			ID = #{ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		s.ID,	           <!-- 编号 -->
+		s.ADDSCORE,	         <!-- 司机好评每颗心分数 -->
+		s.SUBTRACTSCORE,	     <!-- 司机差评每颗星分数 -->
+		s.DRIVERDISTANCE,	      <!-- 司机的接单距离 -->
+		s.DRIVERORDERFEEPERCENT,	 <!-- 平台的抽成系数 -->
+		s.SERVICEFEE,	     <!-- 服务费 -->
+		s.TWOORDERSERVICEFEE,<!-- 第二单服务费 -->
+		s.CANCELNUMBER,   <!-- 取消订单的数量 -->	
+		c.CITY,	        <!-- 市id -->
+		p.PROVINCE,	    <!-- 省id -->
+		s.VOLUEFEE1,	    <!-- 小浮浮动系数 -->
+		s.VOLUEFEE2,	    <!-- 中浮浮动系数 -->
+		s.VOLUEFEE3,	    <!-- 大浮浮动系数 -->
+		s.HORSEMANDISTANCE,	 <!-- 骑手接单距离 -->
+		s.HORSEMANADDSCORE,	 <!-- 骑手好评每颗星分数 -->
+		s.HORSEMANSUBTRACTSCORE <!-- 骑手差评每颗星分数 -->
+		from 
+		<include refid="tableName"/> s LEFT JOIN t_provinces p ON s.PROVINCEID = p.PROVINCEID LEFT JOIN t_cities c ON s.CITYID = c.CITYID
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+		ORDER BY s.PROVINCEID
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- zhangWenchao -->
+</mapper>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TDriverFeeMapper">
+ <!--  <resultMap id="BaseResultMap" type="pd">
+    <id column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="allPrice" jdbcType="REAL" property="allprice" />
+    <result column="driverId" jdbcType="VARCHAR" property="driverid" />
+    <result column="mileageFee" jdbcType="REAL" property="mileagefee" />
+    <result column="nightcharge" jdbcType="REAL" property="nightcharge" />
+    <result column="orderId" jdbcType="VARCHAR" property="orderid" />
+    <result column="orderStatus" jdbcType="VARCHAR" property="orderstatus" />
+    <result column="serviceCharge" jdbcType="REAL" property="servicecharge" />
+    <result column="startingPrice" jdbcType="REAL" property="startingprice" />
+    <result column="valueFee" jdbcType="REAL" property="valuefee" />
+    <result column="cargoMileageFee" jdbcType="REAL" property="cargomileagefee" />
+  </resultMap> -->
+  <sql id="Base_Column_List">
+    uuid, allPrice, driverId, mileageFee, nightcharge, orderId, orderStatus, serviceCharge, 
+    startingPrice, valueFee, cargoMileageFee
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from t_driver_fee
+    where uuid = #{_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_driver_fee
+    where uuid = #{_parameter}
+  </delete>
+  <insert id="insert" parameterType="pd">
+    insert into t_driver_fee (uuid, allPrice, driverId, 
+      mileageFee, nightcharge, orderId, 
+      orderStatus, serviceCharge, startingPrice, 
+      valueFee, cargoMileageFee)
+    values (#{uuid,jdbcType=VARCHAR}, #{allprice,jdbcType=REAL}, #{driverid,jdbcType=VARCHAR}, 
+      #{mileagefee,jdbcType=REAL}, #{nightcharge,jdbcType=REAL}, #{orderid,jdbcType=VARCHAR}, 
+      #{orderstatus,jdbcType=VARCHAR}, #{servicecharge,jdbcType=REAL}, #{startingprice,jdbcType=REAL}, 
+      #{valuefee,jdbcType=REAL}, #{cargomileagefee,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="pd">
+    insert into t_driver_fee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        uuid,
+      </if>
+      <if test="allprice != null">
+        allPrice,
+      </if>
+      <if test="driverid != null">
+        driverId,
+      </if>
+      <if test="mileagefee != null">
+        mileageFee,
+      </if>
+      <if test="nightcharge != null">
+        nightcharge,
+      </if>
+      <if test="orderid != null">
+        orderId,
+      </if>
+      <if test="orderstatus != null">
+        orderStatus,
+      </if>
+      <if test="servicecharge != null">
+        serviceCharge,
+      </if>
+      <if test="startingprice != null">
+        startingPrice,
+      </if>
+      <if test="valuefee != null">
+        valueFee,
+      </if>
+      <if test="cargomileagefee != null">
+        cargoMileageFee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="allprice != null">
+        #{allprice,jdbcType=REAL},
+      </if>
+      <if test="driverid != null">
+        #{driverid,jdbcType=VARCHAR},
+      </if>
+      <if test="mileagefee != null">
+        #{mileagefee,jdbcType=REAL},
+      </if>
+      <if test="nightcharge != null">
+        #{nightcharge,jdbcType=REAL},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstatus != null">
+        #{orderstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="servicecharge != null">
+        #{servicecharge,jdbcType=REAL},
+      </if>
+      <if test="startingprice != null">
+        #{startingprice,jdbcType=REAL},
+      </if>
+      <if test="valuefee != null">
+        #{valuefee,jdbcType=REAL},
+      </if>
+      <if test="cargomileagefee != null">
+        #{cargomileagefee,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update t_driver_fee
+    <set>
+      <if test="allprice != null">
+        allPrice = #{allprice,jdbcType=REAL},
+      </if>
+      <if test="driverid != null">
+        driverId = #{driverid,jdbcType=VARCHAR},
+      </if>
+      <if test="mileagefee != null">
+        mileageFee = #{mileagefee,jdbcType=REAL},
+      </if>
+      <if test="nightcharge != null">
+        nightcharge = #{nightcharge,jdbcType=REAL},
+      </if>
+      <if test="orderid != null">
+        orderId = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstatus != null">
+        orderStatus = #{orderstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="servicecharge != null">
+        serviceCharge = #{servicecharge,jdbcType=REAL},
+      </if>
+      <if test="startingprice != null">
+        startingPrice = #{startingprice,jdbcType=REAL},
+      </if>
+      <if test="valuefee != null">
+        valueFee = #{valuefee,jdbcType=REAL},
+      </if>
+      <if test="cargomileagefee != null">
+        cargoMileageFee = #{cargomileagefee,jdbcType=REAL},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pd">
+    update t_driver_fee
+    set allPrice = #{allprice,jdbcType=REAL},
+      driverId = #{driverid,jdbcType=VARCHAR},
+      mileageFee = #{mileagefee,jdbcType=REAL},
+      nightcharge = #{nightcharge,jdbcType=REAL},
+      orderId = #{orderid,jdbcType=VARCHAR},
+      orderStatus = #{orderstatus,jdbcType=VARCHAR},
+      serviceCharge = #{servicecharge,jdbcType=REAL},
+      startingPrice = #{startingprice,jdbcType=REAL},
+      valueFee = #{valuefee,jdbcType=REAL},
+      cargoMileageFee = #{cargomileagefee,jdbcType=REAL}
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,63 @@
+.price{
+	
+}
+.price-box{
+	height: 1900px;
+	width: 1400px;
+	margin: 0 auto;
+	
+	
+}
+.intracity-price{
+	overflow: hidden;
+	margin-top: 20px;
+}
+.price-title{
+	background: #44C2F1;
+	color: #FFFFFF;
+	height: 50px;
+	line-height: 50px;
+	font-size: 16px;
+	text-align: center;
+}
+
+.price-content-left{
+  float: left;
+  width: 690px;	
+}
+.price-content-right{
+  float: left;
+  width: 690px;
+  margin-left: 20px;	
+}
+.price-content .price-content-title{
+	margin-top: 10px;
+	background: #44C2F1;
+	color: #FFFFFF;
+	height: 30px;
+	line-height: 30px;
+	font-size: 14px;
+	text-align: center;
+	
+}
+.price-content ul{
+	width: 688px;
+	border: 1px solid #44C2F1;
+	min-height: 480px;
+	
+}
+.price-content ul li{
+	font-size: 16px;
+	min-height: 50px;
+	border-bottom: 1px solid #44C2F1;
+}
+.price-content ul li b{
+	float: left;
+	width: 200px;
+	min-height: 50px;
+	line-height: 50px;
+	text-align: center;
+}
+.price-content ul li span{
+	
+	}

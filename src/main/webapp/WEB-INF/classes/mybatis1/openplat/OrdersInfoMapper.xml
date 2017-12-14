@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrdersInfoMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		T_HLSD_ORDERS_INFO
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		XH,	
+		ORDERID,	
+		STARTPRICE,
+		USERID,	
+		ORDERAPPXH,	
+		ORDERTIME,
+		SENDERNAME,	
+		SENDERPHONE,	
+		SENDPROVANCE,	
+		SENDCITY,	
+		SENDAREA,	
+		SENDDETAILADDRESS,		
+		DRIVERID,	
+		ISSHAREBILL,
+		PICKUP,
+		SERVICECHARGE,	
+		EXPRESSTYPE,	
+		ORDERTYPE,
+		ORDERCITYTYPE,
+		APPOINTMENTTIME,
+		STATUS,	
+		ORDERPRICE,	
+		ORDERMILEAGE,
+		AWARDAMOUNT,
+		PREFERENTIALAMOUNT,
+		PREFERENTIALTYPE,
+		PAYTYPE,	
+		PAYSTATUS,	
+		DONATIONTYPE,	
+		CREATETIME,	
+		CREATEUSER,	
+		UPDATETIME,	
+		UPDATEUSER
+	</sql>
+	
+	<!-- 用于查询的字段,起了T1的别名 -->
+	<sql id="FieldSelect">
+		T1.XH,	
+		T1.ORDERID,	
+		T1.STARTPRICE,
+		T1.USERID,	
+		T1.ORDERAPPXH,	
+		date_format(T1.ORDERTIME, '%Y-%m-%d %H:%i:%s') ORDERTIME,
+		T1.SENDERNAME,	
+		T1.SENDERPHONE,	
+		T1.SENDPROVANCE,	
+		T1.SENDCITY,	
+		T1.SENDAREA,	
+		T1.SENDDETAILADDRESS,		
+		T1.DRIVERID,	
+		T1.ISSHAREBILL,
+		T1.PICKUP,
+		T1.SERVICECHARGE,	
+		T1.EXPRESSTYPE,	
+		T1.ORDERTYPE,
+		T1.ORDERCITYTYPE,
+		T1.APPOINTMENTTIME,
+		T1.STATUS,	
+		T1.ORDERPRICE,	
+		T1.ORDERMILEAGE,
+		T1.AWARDAMOUNT,
+		T1.PREFERENTIALAMOUNT,
+		T1.PREFERENTIALTYPE,
+		T1.PAYTYPE,	
+		T1.PAYSTATUS,	
+		T1.DONATIONTYPE,	
+		T1.CREATETIME,	
+		T1.CREATEUSER,	
+		T1.UPDATETIME,	
+		T1.UPDATEUSER
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{xh},	
+		#{orderId},	
+		#{startPrice},	
+		#{userId},	
+		#{orderAppxh},	
+		#{orderTime},	
+		#{senderName},	
+		#{senderPhone},	
+		#{sendProvance},	
+		#{sendCity},	
+		#{sendArea},	
+		#{sendDetailAddress},	
+		#{driverId},	
+		#{isShareBill},	
+		#{pickUp},
+		#{serviceCharge},	
+		#{expressType},	
+		#{orderType},	
+		#{orderCityType},	
+		#{appointmentTime},	
+		#{status},	
+		#{orderPrice},	
+		#{orderMileage},
+		#{awardAmount},
+		#{preferentialAmount},
+		#{preferentialType},	
+		#{payType},	
+		#{payStatus},	
+		#{donationType},	
+		#{createTime},	
+		#{createUser},	
+		#{updateTime},
+		#{updateUser}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="com.fh.entity.hlsd.OrdersInfoVO">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ORDERID = #{ORDERID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			USERID = #{USERID},
+			ORDERAPPXH = #{ORDERAPPXH},
+			ORDERTIME = #{ORDERTIME},
+			DRIVERID = #{DRIVERID},
+			ISSHAREBILL = #{ISSHAREBILL},
+			EXPRESSTYPE = #{EXPRESSTYPE},
+			STATUS = #{STATUS},
+			ORDERPRICE = #{ORDERPRICE},
+			ORDERMILEAGE = #{ORDERMILEAGE},
+			PAYTYPE = #{PAYTYPE},
+			PAYSTATUS = #{PAYSTATUS},
+			DONATIONTYPE = #{DONATIONTYPE}
+		where 
+		ORDERID = #{ORDERID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="FieldSelect"></include>,
+		T2.STATUNAME,T3.NAME AS REALNAME,T3.PHONE AS MOBILENO
+		from T_HLSD_ORDERS_INFO T1 
+		left join T_HLSD_ORDERS_STATUS T2 ON T1.STATUS = T2.STATUCODE
+		left join SYS_APP_USER T3 ON T1.DRIVERID=T3.USER_ID
+		where 
+			T1.XH = #{XH}
+	</select>
+	
+	
+	<!-- 通过订单号查询订单详情 -->
+	<select id="findByOrderId" resultType="com.fh.entity.hlsd.OrdersInfoVO" parameterType="String">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where orderId = #{_parameter} 
+	</select>
+	
+	<!-- 通过订单号和订单状态获取数据 -->
+	<select id="findByOrderIdAndStatu" parameterType="hashmap" resultType="com.fh.entity.hlsd.OrdersInfoVO">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		WHERE ORDERID = #{orderId} AND STATUS = #{status}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		T1.XH,T1.ORDERID,T1.USERID,date_format(T1.ORDERTIME, '%Y-%m-%d %H:%i:%s') AS ORDERTIME,T1.SENDERNAME,
+		T1.SENDPROVANCE,T1.SENDCITY,T1.SENDAREA,T1.SENDDETAILADDRESS,
+		T1.SENDERPHONE,T1.DRIVERID,T1.EXPRESSTYPE,T1.STATUS,T1.ORDERPRICE,T1.ORDERMILEAGE,T1.PAYSTATUS,
+		T2.STATUNAME,T3.NAME AS REALNAME,T3.PHONE AS MOBILENO
+		from T_HLSD_ORDERS_INFO T1 
+		left join T_HLSD_ORDERS_STATUS T2 ON T1.STATUS = T2.STATUCODE
+		left join SYS_APP_USER T3 ON T1.DRIVERID=T3.USER_ID
+		where 1 = 1 
+		<!-- 订单状态 -->
+		<if test="pd.STATUS!= null and pd.STATUS != ''">
+			AND T1.STATUS = #{pd.STATUS}
+		</if>
+		<!-- 下单时间 -->
+		<if test="pd.lastStart!= null and pd.lastStart != '' and pd.lastEnd!= null and pd.lastEnd != ''">
+			<![CDATA[
+				AND T1.ORDERTIME >= '${pd.lastStart} 00:00:00'
+			]]>
+		</if>
+		<if test="pd.lastEnd!= null and pd.lastEnd != ''">
+			<![CDATA[
+				AND T1.ORDERTIME <= '${pd.lastEnd} 23:59:59'
+			]]>
+		</if>
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					T1.ORDERID LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					SENDERNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		</if>
+		<if test="pd.orderUserId!= null and pd.orderUserId!= ''">
+			<![CDATA[
+				AND T1.USERID = #{pd.orderUserId}
+			]]>
+		</if>
+		order by T1.ORDERTIME desc 
+	</select>
+	
+	<!-- 分页列表，给网站查询我的订单使用 -->
+	<select id="datalistPageForWebSite" parameterType="pd" resultType="pd">
+		select
+		T1.XH,T1.ORDERID,T1.USERID,date_format(T1.ORDERTIME, '%Y-%m-%d %H:%i:%s') AS ORDERTIME,T1.SENDERNAME,
+		T1.SENDPROVANCE,T1.SENDCITY,T1.SENDAREA,T1.SENDDETAILADDRESS,T1.DONATIONTYPE,
+		T1.SENDERPHONE,T1.DRIVERID,T1.EXPRESSTYPE,T1.STATUS,T1.ORDERPRICE,T1.ORDERMILEAGE,T1.PAYSTATUS,
+		T2.STATUNAME,T3.NAME AS REALNAME,T3.PHONE AS MOBILENO
+		from T_HLSD_ORDERS_INFO T1 
+		left join T_HLSD_ORDERS_STATUS T2 ON T1.STATUS = T2.STATUCODE
+		left join SYS_APP_USER T3 ON T1.DRIVERID=T3.USER_ID
+		where 1 = 1 
+		<!-- 订单状态  -->
+		<if test="pd.apiStatus!= null">
+			AND T1.STATUS IN ${pd.apiStatus}
+		</if>
+		<!-- 下单时间 -->
+		<if test="pd.lastStart!= null and pd.lastStart != ''">
+			<![CDATA[
+				AND T1.ORDERTIME >= '${pd.lastStart} 00:00:00'
+			]]>
+		</if>
+		<if test="pd.lastEnd!= null and pd.lastEnd != ''">
+			<![CDATA[
+				AND T1.ORDERTIME <= '${pd.lastEnd} 23:59:59'
+			]]>
+		</if>
+		AND T1.USERID = #{pd.orderUserId} AND T1.STATUS !='13' <!-- 用户自己删除的订单不展示 -->
+		order by T1.ORDERTIME desc 
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		T1.XH,T1.ORDERID,T1.USERID,date_format(T1.ORDERTIME, '%Y-%m-%d %H:%i:%s') AS ORDERTIME,T1.SENDERNAME,
+		T1.SENDERPHONE,T1.DRIVERID,T1.EXPRESSTYPE,T1.STATUS,T1.ORDERPRICE,T1.ORDERMILEAGE,T1.PAYSTATUS,T2.STATUNAME
+		from T_HLSD_ORDERS_INFO T1 
+		LEFT JOIN 
+		T_HLSD_ORDERS_STATUS T2 ON T1.STATUS = T2.STATUCODE
+	</select>
+	
+	<!-- 列表(超过20分钟没人接的订单数据) -->
+	<select id="listSecondMiniteData" parameterType="pd" resultType="pd">
+		<![CDATA[
+			select ORDERID,CREATETIME,USERID,STATUS from t_hlsd_orders_info where status ='1' 
+			and createTime <= date_sub(NOW(),interval 20 minute)
+		]]>
+	</select>
+
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ORDERID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+		</foreach>
+	</delete>
+	
+	<!-- 修改订单状态 -->
+	<update id="updateOrderStatus" parameterType="hashmap">
+		update
+		<include refid="tableName"></include>
+		set 
+			STATUS = #{status},
+			UPDATETIME = NOW()
+		where 
+		ORDERID = #{orderId}
+	</update>
+	
+	<!-- 修改订单支付状态 -->
+	<update id="updateOrderPayStatus" parameterType="hashmap">
+		update
+		<include refid="tableName"></include>
+		set 
+			PAYSTATUS = #{payStatus},
+			PAYTYPE = #{payType},
+			TRANSACTION_ID = #{transaction_id},
+			STATUS = '5', <!-- 修改为确认发货并付款 -->
+			UPDATETIME = NOW()
+		where 
+		ORDERID = #{orderId}
+	</update>
+	
+	
+	<!-- 抢单更新司机ID -->
+	<update id="updateOrderDriver" parameterType="hashmap">
+		update
+		<include refid="tableName"></include>
+		set 
+			DRIVERID = #{driverId},
+			STATUS = '2',
+			UPDATETIME = NOW()
+		where 
+		ORDERID = #{orderId}
+	</update>
+	
+	<!-- 查询通过用户ID查询订单类型条数 -->
+	<select id="findUserOrderTypeCount" parameterType="String" resultType="pd">
+		SELECT
+		    sum(status in ('1','2','3','4','5')) DQH_COUNT,
+			sum(status in ('6','7','10')) JXZ_COUNT,
+			sum(status in ('0','11')) YGQ_COUNT,
+			sum(status in ('8')) DPJ_COUNT
+		FROM T_HLSD_ORDERS_INFO WHERE userId = #{_parameter} 
+	</select>
+		
+	<!-- zhangWenchao -->
+</mapper>

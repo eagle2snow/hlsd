@@ -1,0 +1,1023 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TOrdersInfoMapper">
+  <sql id="table_name">
+  	t_orders_info
+  </sql>
+  <sql id="Base_Column_List">
+    ORDERID, EXPRESSCOMPANYID, SENDERNAME, SENDERMOBILENO, SENDERADDRESS, EXPRESSTYPE, 
+    EXPRESSNUMBER, RECEIVERNAME, RECEIVERMOBILENO, RECEIVERADDRESS, GOODSDESCRIPTION, 
+    ITEMWEIGHT, GOODSVOLUME, PAYTYPE, ISFIGHTALONE, GOODSPHOTO, ORDERSTATUS, ORDERPRICE, 
+    ORDERTYPE, DRIVERID, DRIVERNAME, DRIVERMOBILENO, CARID, USERID, SENDPROVINCEID, SENDCITYID, 
+    SENDAREAID, RECEIVEPROVINCEID, RECEIVECITYID, RECEIVEAREAID, SERVICECHARGE, SIGNATURE, 
+    EXPRESSTIME, REMARK, COUNT, STARTINGPRICE, MILEAGEPRICE, ALLPRICE, REWARDMONEY, DISCOUNTPRICE, 
+    DISCOUNTMODE, PAYMENTTYPE, PAYMENTSTATUS, EVALUATESTARS, EVALUATECONTENT, CREATETIME, 
+    CREATER, UPDATETIME, UPDATER, LAT, LNG, MILEAGE, MILEAGEFEE, CITYTYPE, FOLLOWINGTYPE, 
+    HEIGHT, LENGTH, SPECIALTYPE, VALUEFEE, WIDTH, ENDLAT, ENDLNG, CANCELREASON, CANCELTIME, 
+    CANCELUSERID, CARBRAND, CARCOLOR, CARNUMBER, BALANCE, LABEL, FAILPRICE, RECEIVETIME, 
+    SUCCESSPRICE, TOGETHERUSERID, WAITFORCASHBACK, FINISHTIME, SIMILARITY, DELIVERYINVITECODE, 
+    DRIVERINVITECODE, INVITECODELIST, USERINVITECODE, RECEIVERADDRESS1, RECEIVERADDRESS2, 
+    SENDERADDRESS1, SENDERADDRESS2, CARGOID, COUPONUUID, NIGHTCHANGER, DRIVERFEEID, PREFERENCEAMOUNT, 
+    DRIVERTYPE, ISCALL, VALUEFEE1, VALUEFEE2, VALUEFEE3, RECEIVEDETAILADDRESS, SENDDETAILADDRESS, 
+    ORDERGOODSCOUNT, ISSUBSCRIBE, STATUSORDER, GAINORDERTIME, VERSION
+  </sql>
+  <sql id="s_sql">
+  	o.orderId,
+  	o.orderType,
+  	o.createTime,
+  	o.goodsDescription ,
+  	o.isCall,
+  	concat_ws('',pfa.province,cfa.city,afa.area,o.senderAddress,o.sendDetailAddress) ,
+  	concat_ws('', pshou.province , cshou.city , ashou.area ,o.receiverAddress, o.receiveDetailAddress),
+  	o.cargoId,
+  	o.orderGoodsCount,
+  	d.allPrice
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from 
+    <include refid="table_name"/>
+    where orderId = #{_parameter}
+  </select>
+  <!-- 根据司机id和条件查询订单信息 -->
+  <select id="selectByDriverIdAndCondition" parameterType="pd" resultType="pd">
+        SELECT 
+	        t.orderId, 
+	        t.orderType, 
+	        t.createTime, 
+	        t.senderAddress, 
+	        t.goodsDescription, 
+	        (case when t.displayPrice = 0 then ''
+			else t.allPrice
+			end
+			) allPrice ,
+	        t.driverType,
+	        (case when t.orderGoodsCount = 2 then t.cargoAddress
+			else t.receiverAddress
+			end
+			) receiverAddress ,
+	        (case when t.orderGoodsCount = 2 then t.receiverAddress
+			else t.cargoAddress
+			end
+			) receiverAddress2 ,
+	        t.orderGoodsCount,
+	        t.isSubscribe,
+	        t.isCall,
+	        t.cargoDescription 
+        FROM 
+        (SELECT 
+	        	o.orderId, 
+	        	o.orderType, 
+	        	o.createTime, 
+	        	CONCAT_WS('',a1.area, o.senderAddress,o.sendDetailAddress ) AS senderAddress, 
+	        	CONCAT_WS('', a2.area, o.receiverAddress,o.receiveDetailAddress ) AS receiverAddress, 
+	        	o.goodsDescription, 
+	        	f.allPrice ,
+	        	o.driverType,
+	        	o.orderGoodsCount,
+	        	o.isSubscribe,
+	        	o.isCall,
+	        	u.displayPrice,
+	        	o.cargoId AS cargoAddress,
+	        	o.cargoId AS cargoDescription 
+        	FROM 
+        		t_orders_info o, 
+        		t_provinces p1, 
+        		t_cities c1, 
+        		t_areas a1, 
+        		t_provinces p2, 
+        		t_cities c2, 
+        		t_areas a2 ,
+        		t_driver_fee f,
+        		t_user u
+          WHERE
+          		u.userId = o.driverId 
+          		AND 
+          		o.orderId = f.orderId 
+          		AND 
+          		o.sendProvinceId = p1.provinceId 
+          		AND o.sendCityId = c1.cityId 
+          		AND o.sendAreaId = a1.areaId 
+          		AND o.receiveProvinceId = p2.provinceId 
+          		AND o.receiveCityId = c2.cityId 
+          		AND o.receiveAreaId = a2.areaId 
+          		 <if test="driverId != null">
+        			AND o.driverId=#{driverId}
+       			</if>
+        		AND o.statusOrder in 
+		       <if test="statusOrderList != null">
+		           <foreach collection="statusOrderList" item="statusOrder" index="index" open="(" close=")" separator=",">
+		            	#{statusOrder}
+		     	  </foreach>
+		       </if>  
+          		AND o.cargoId IS NULL 
+          UNION
+		SELECT 
+			o.orderId, 
+			o.orderType, 
+			o.createTime, 
+			CONCAT_WS('',a1.area, o.senderAddress,o.sendDetailAddress ) AS senderAddress, 
+			CONCAT_WS('', a2.area, o.receiverAddress,o.receiveDetailAddress ) AS receiverAddress, 
+			o.goodsDescription, 
+			f.allPrice ,
+			o.driverType,
+			o.orderGoodsCount,
+			o.isSubscribe,
+			o.isCall,
+			u.displayPrice,
+			concat_ws('',a3.area,c.address,c.cargoDetailAddress) AS cargoAddress,
+			c.goodsDescription AS cargoDescription 
+		FROM 
+			t_orders_info o, 
+			t_two_cargo c, 
+			t_provinces p1, 
+			t_cities c1, 
+			t_areas a1, 
+			t_provinces p2, 
+			t_cities c2, 
+			t_areas a2,
+			t_areas a3 ,
+			t_driver_fee f ,
+			t_user u
+		WHERE 
+			o.driverId = u.userId
+			AND c.orderId = o.orderId 
+			AND o.cargoId IS NOT NULL 
+			AND o.orderId = f.orderId 
+			AND c.areaId = a3.areaId 
+			AND o.sendProvinceId = p1.provinceId 
+			AND o.sendCityId = c1.cityId 
+			AND o.sendAreaId = a1.areaId 
+			AND o.receiveProvinceId = p2.provinceId 
+			AND o.receiveCityId = c2.cityId 
+			AND o.receiveAreaId = a2.areaId 
+			 <if test="driverId != null">
+        		AND o.driverId=#{driverId}
+       		</if>
+       		 AND o.statusOrder in 
+       		<if test="statusOrderList != null">
+           		<foreach collection="statusOrderList" item="statusOrder" index="index" open="(" close=")" separator=",">
+            		#{statusOrder}
+     	  		</foreach>
+       		</if> 
+			) t 
+			ORDER BY t.createTime DESC
+         	LIMIT #{begin},#{end}
+   </select>
+  <select id="selectForOrderByDriverIdAndCondition" parameterType="pd" resultType="pd">
+  	SELECT 
+  		t.orderId, 
+  		t.orderType, 
+  		t.createTime, 
+  		t.senderAddress, 
+  		(case when t.orderGoodsCount = 2 then t.cargoAddress
+		else t.receiverAddress
+		end
+		) receiverAddress ,
+	    (case when t.orderGoodsCount = 2 then t.receiverAddress
+		else t.cargoAddress
+		end
+		) receiverAddress2 , 
+  		t.goodsDescription, 
+  		t.allPrice ,
+  		t.driverType,
+  		t.orderGoodsCount,
+  		t.isSubscribe,
+  		t.isCall,
+  	FROM 
+  		(SELECT 
+  			o.orderId, 
+  			o.orderType, 
+  			DATE_FORMAT( o.createTime, '%m-%d %H:%i' ) AS createTime, 
+  			CONCAT_WS('',a1.area, o.senderAddress,o.sendDetailAddress ) AS senderAddress, 
+  			CONCAT_WS('', a2.area, o.receiverAddress,o.receiveDetailAddress ) AS receiverAddress, 
+  			o.goodsDescription, 
+  			f.allPrice ,
+  			o.driverType,
+  			o.orderGoodsCount,
+  			o.isSubscribe,
+  			o.isCall,
+  			o.cargoId AS receiveAddress,
+  			o.cargoId cargoDescription 
+  		FROM 
+  			t_orders_info o, 
+  			t_provinces p1, 
+  			t_cities c1, 
+  			t_areas a1, 
+  			t_provinces p2, 
+  			t_cities c2, 
+  			t_areas a2 ,
+  			t_driver_fee f 
+  		WHERE 
+  			o.orderId = f.orderId AND 
+  			o.orderStatus = '1' AND 
+  			o.sendProvinceId = p1.provinceId AND 
+  			o.sendCityId = c1.cityId AND 
+  			o.sendAreaId = a1.areaId AND 
+  			o.receiveProvinceId = p2.provinceId AND 
+  			o.receiveCityId = c2.cityId AND 
+  			o.receiveAreaId = a2.areaId AND 
+  			o.expressTime >= date_sub(NOW(), INTERVAL 20 MINUTE) AND 
+  			o.cargoId IS NULL AND 
+  			round( 6378.138 * 2 * asin( sqrt( pow( sin(( o.lat * pi() / 180 - #{lat} * pi() / 180 ) / 2 ), 2 ) + cos(o.lat * pi() / 180) * cos(#{lat} * pi() / 180) * pow( sin(( o.lng * pi() / 180 - #{lng} * pi() / 180 ) / 2 ), 2 ))) * 1000 ) <![CDATA[  < #{distance}  ]]> AND 
+  			orderType IN ('1','5','3.5','3')
+	UNION
+	SELECT 
+		o.orderId, 
+		o.orderType, 
+		DATE_FORMAT( o.createTime, '%m-%d %H:%i' ) AS createTime, 
+		CONCAT_WS('',a1.area, o.senderAddress,o.sendDetailAddress ) AS senderAddress, 
+		CONCAT_WS('', a2.area, o.receiverAddress,o.receiveDetailAddress ) AS receiverAddress, 
+		o.goodsDescription, 
+		f.allPrice ,
+		o.driverType,
+		o.orderGoodsCount,
+		o.isSubscribe,
+		o.isCall,
+		concat_ws('',a3.area,c.address,c.cargoDetailAddress) AS receiveAddress,
+		c.goodsDescription AS cargoDescription 
+	FROM 
+		t_orders_info o, 
+		t_two_cargo c, 
+		t_provinces p1, 
+		t_cities c1, 
+		t_areas a1, 
+		t_provinces p2, 
+		t_cities c2, 
+		t_areas a2,
+		t_areas a3 ,
+		t_driver_fee f 
+	WHERE 
+		c.orderId = o.orderId AND 
+		o.cargoId IS NOT NULL AND 
+		o.orderId = f.orderId AND 
+		o.orderStatus = '1' AND 
+		c.areaId = a3.areaId AND 
+		o.sendProvinceId = p1.provinceId AND 
+		o.sendCityId = c1.cityId AND 
+		o.sendAreaId = a1.areaId AND 
+		o.receiveProvinceId = p2.provinceId AND 
+		o.receiveCityId = c2.cityId AND 
+		o.receiveAreaId = a2.areaId AND 
+		o.expressTime >= date_sub(NOW(), INTERVAL 20 MINUTE) AND 
+		round( 6378.138 * 2 * asin( sqrt( pow( sin(( o.lat * pi() / 180 - #{lat} * pi() / 180 ) / 2 ), 2 ) + cos(o.lat * pi() / 180) * cos(#{lat} * pi() / 180) * pow( sin(( o.lng * pi() / 180 - #{lng} * pi() / 180 ) / 2 ), 2 ))) * 1000 ) <![CDATA[  < #{distance}  ]]> AND 
+		orderType IN ('1','5','3.5','3')) 
+		t ORDER BY t.createTime  DESC 
+		LIMIT #{begin},#{end}
+  
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_orders_info
+    where orderId = #{_parameter}
+  </delete>
+   <!-- 新增-->
+  <insert id="save" parameterType="pd">
+    insert into 
+    <include refid="table_name"/> 
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ORDERID != null">
+        ORDERID,
+      </if>
+      <if test="EXPRESSCOMPANYID != null">
+        EXPRESSCOMPANYID,
+      </if>
+      <if test="SENDERNAME != null">
+        SENDERNAME,
+      </if>
+      <if test="SENDERMOBILENO != null">
+        SENDERMOBILENO,
+      </if>
+      <if test="SENDERADDRESS != null">
+        SENDERADDRESS,
+      </if>
+      <if test="RECEIVERNAME != null">
+        RECEIVERNAME,
+      </if>
+      <if test="RECEIVERMOBILENO != null">
+        RECEIVERMOBILENO,
+      </if>
+      <if test="RECEIVERADDRESS != null">
+        RECEIVERADDRESS,
+      </if>
+      <if test="GOODSDESCRIPTION != null">
+        GOODSDESCRIPTION,
+      </if>
+      <if test="ITEMWEIGHT != null">
+        ITEMWEIGHT,
+      </if>
+      <if test="GOODSVOLUME != null">
+        GOODSVOLUME,
+      </if>
+      <if test="PAYTYPE != null">
+        PAYTYPE,
+      </if>
+      <if test="ISFIGHTALONE != null">
+        ISFIGHTALONE,
+      </if>
+      <if test="GOODSPHOTO != null">
+        GOODSPHOTO,
+      </if>
+      <if test="ORDERSTATUS != null">
+        ORDERSTATUS,
+      </if>
+      <if test="ORDERPRICE != null">
+        ORDERPRICE,
+      </if>
+      <if test="ORDERTYPE != null">
+        ORDERTYPE,
+      </if>
+      <if test="DRIVERID != null">
+        DRIVERID,
+      </if>
+      <if test="DRIVERNAME != null">
+        DRIVERNAME,
+      </if>
+      <if test="DRIVERMOBILENO != null">
+        DRIVERMOBILENO,
+      </if>
+      <if test="CARID != null">
+        CARID,
+      </if>
+      <if test="USERID != null">
+        USERID,
+      </if>
+      <if test="SENDPROVINCEID != null">
+        SENDPROVINCEID,
+      </if>
+      <if test="SENDCITYID != null">
+        SENDCITYID,
+      </if>
+      <if test="SENDAREAID != null">
+        SENDAREAID,
+      </if>
+      <if test="RECEIVEPROVINCEID != null">
+        RECEIVEPROVINCEID,
+      </if>
+      <if test="RECEIVECITYID != null">
+        RECEIVECITYID,
+      </if>
+      <if test="RECEIVEAREAID != null">
+        RECEIVEAREAID,
+      </if>
+      <if test="SERVICECHARGE != null">
+        SERVICECHARGE,
+      </if>
+      <if test="SIGNATURE != null">
+        SIGNATURE,
+      </if>
+      <if test="EXPRESSTIME != null">
+        EXPRESSTIME,
+      </if>
+      <if test="REMARK != null">
+        REMARK,
+      </if>
+      <if test="STARTINGPRICE != null">
+        STARTINGPRICE,
+      </if>
+      <if test="MILEAGEPRICE != null">
+        MILEAGEPRICE,
+      </if>
+      <if test="ALLPRICE != null">
+        ALLPRICE,
+      </if>
+      <if test="REWARDMONEY != null">
+        REWARDMONEY,
+      </if>
+      <if test="PAYMENTTYPE != null">
+        PAYMENTTYPE,
+      </if>
+      <if test="PAYMENTSTATUS != null">
+        PAYMENTSTATUS,
+      </if>
+      <if test="EVALUATESTARS != null">
+        EVALUATESTARS,
+      </if>
+      <if test="EVALUATECONTENT != null">
+        EVALUATECONTENT,
+      </if>
+      <if test="CREATETIME != null">
+        CREATETIME,
+      </if>
+      <if test="CREATER != null">
+        CREATER,
+      </if>
+      <if test="UPDATETIME != null">
+        UPDATETIME,
+      </if>
+      <if test="UPDATER != null">
+        UPDATER,
+      </if>
+      <if test="LAT != null">
+        LAT,
+      </if>
+      <if test="LNG != null">
+        LNG,
+      </if>
+      <if test="MILEAGE != null">
+        MILEAGE,
+      </if>
+      <if test="MILEAGEFEE != null">
+        MILEAGEFEE,
+      </if>
+      <if test="VALUEFEE != null">
+        VALUEFEE,
+      </if>
+      <if test="ENDLAT != null">
+        ENDLAT,
+      </if>
+      <if test="ENDLNG != null">
+        ENDLNG,
+      </if>
+      <if test="CANCELREASON != null">
+        CANCELREASON,
+      </if>
+      <if test="CANCELTIME != null">
+        CANCELTIME,
+      </if>
+      <if test="CANCELUSERID != null">
+        CANCELUSERID,
+      </if>
+      <if test="CARBRAND != null">
+        CARBRAND,
+      </if>
+      <if test="CARCOLOR != null">
+        CARCOLOR,
+      </if>
+      <if test="CARNUMBER != null">
+        CARNUMBER,
+      </if>
+      <if test="BALANCE != null">
+        BALANCE,
+      </if>
+      <if test="LABEL != null">
+        LABEL,
+      </if>
+      <if test="FAILPRICE != null">
+        FAILPRICE,
+      </if>
+      <if test="RECEIVETIME != null">
+        RECEIVETIME,
+      </if>
+      <if test="SUCCESSPRICE != null">
+        SUCCESSPRICE,
+      </if>
+      <if test="TOGETHERUSERID != null">
+        TOGETHERUSERID,
+      </if>
+      <if test="SIMILARITY != null">
+        SIMILARITY,
+      </if>
+      <if test="CARGOID != null">
+        CARGOID,
+      </if>
+      <if test="COUPONUUID != null">
+        COUPONUUID,
+      </if>
+      <if test="NIGHTCHANGER != null">
+        NIGHTCHANGER,
+      </if>
+      <if test="DRIVERFEEID != null">
+        DRIVERFEEID,
+      </if>
+      <if test="PREFERENCEAMOUNT != null">
+        PREFERENCEAMOUNT,
+      </if>
+      <if test="DRIVERTYPE != null">
+        DRIVERTYPE,
+      </if>
+      <if test="ISCALL != null">
+        ISCALL,
+      </if>
+      <if test="RECEIVEDETAILADDRESS != null">
+        RECEIVEDETAILADDRESS,
+      </if>
+      <if test="SENDDETAILADDRESS != null">
+        SENDDETAILADDRESS,
+      </if>
+      <if test="ORDERGOODSCOUNT != null">
+        ORDERGOODSCOUNT,
+      </if>
+      <if test="ISSUBSCRIBE != null">
+        ISSUBSCRIBE,
+      </if>
+      <if test="STATUSORDER != null">
+        STATUSORDER,
+      </if>
+      <if test="GAINORDERTIME != null">
+        GAINORDERTIME,
+      </if>
+      <if test="VERSION != null">
+        VERSION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ORDERID != null">
+        #{ORDERID},
+      </if>
+      <if test="SENDERNAME != null">
+        #{SENDERNAME},
+      </if>
+      <if test="SENDERMOBILENO != null">
+        #{SENDERMOBILENO},
+      </if>
+      <if test="SENDERADDRESS != null">
+        #{SENDERADDRESS},
+      </if>
+      <if test="RECEIVERNAME != null">
+        #{RECEIVERNAME},
+      </if>
+      <if test="RECEIVERMOBILENO != null">
+        #{RECEIVERMOBILENO},
+      </if>
+      <if test="RECEIVERADDRESS != null">
+        #{RECEIVERADDRESS},
+      </if>
+      <if test="GOODSDESCRIPTION != null">
+        #{GOODSDESCRIPTION},
+      </if>
+      <if test="ITEMWEIGHT != null">
+        #{ITEMWEIGHT},
+      </if>
+      <if test="GOODSVOLUME != null">
+        #{GOODSVOLUME},
+      </if>
+      <if test="PAYTYPE != null">
+        #{PAYTYPE},
+      </if>
+      <if test="ISFIGHTALONE != null">
+        #{ISFIGHTALONE},
+      </if>
+      <if test="GOODSPHOTO != null">
+        #{GOODSPHOTO},
+      </if>
+      <if test="ORDERSTATUS != null">
+        #{ORDERSTATUS},
+      </if>
+      <if test="ORDERPRICE != null">
+        #{ORDERPRICE},
+      </if>
+      <if test="ORDERTYPE != null">
+        #{ORDERTYPE},
+      </if>
+      <if test="DRIVERID != null">
+        #{DRIVERID},
+      </if>
+      <if test="DRIVERNAME != null">
+        #{DRIVERNAME},
+      </if>
+      <if test="DRIVERMOBILENO != null">
+        #{DRIVERMOBILENO},
+      </if>
+      <if test="CARID != null">
+        #{CARID},
+      </if>
+      <if test="USERID != null">
+        #{USERID},
+      </if>
+      <if test="SENDPROVINCEID != null">
+        #{SENDPROVINCEID},
+      </if>
+      <if test="SENDCITYID != null">
+        #{SENDCITYID},
+      </if>
+      <if test="SENDAREAID != null">
+        #{SENDAREAID},
+      </if>
+      <if test="RECEIVEPROVINCEID != null">
+        #{RECEIVEPROVINCEID},
+      </if>
+      <if test="RECEIVECITYID != null">
+        #{RECEIVECITYID},
+      </if>
+      <if test="RECEIVEAREAID != null">
+        #{RECEIVEAREAID},
+      </if>
+      <if test="SERVICECHARGE != null">
+        #{SERVICECHARGE},
+      </if>
+      <if test="SIGNATURE != null">
+        #{SIGNATURE},
+      </if>
+      <if test="EXPRESSTIME != null">
+        #{EXPRESSTIME},
+      </if>
+      <if test="REMARK != null">
+        #{REMARK},
+      </if>
+      <if test="STARTINGPRICE != null">
+        #{STARTINGPRICE},
+      </if>
+      <if test="MILEAGEPRICE != null">
+        #{MILEAGEPRICE},
+      </if>
+      <if test="ALLPRICE != null">
+        #{ALLPRICE},
+      </if>
+      <if test="REWARDMONEY != null">
+        #{REWARDMONEY},
+      </if>
+      <if test="PAYMENTTYPE != null">
+        #{PAYMENTTYPE},
+      </if>
+      <if test="PAYMENTSTATUS != null">
+        #{PAYMENTSTATUS},
+      </if>
+      <if test="EVALUATESTARS != null">
+        #{EVALUATESTARS},
+      </if>
+      <if test="EVALUATECONTENT != null">
+        #{EVALUATECONTENT},
+      </if>
+      <if test="CREATETIME != null">
+        #{CREATETIME},
+      </if>
+      <if test="LAT != null">
+        #{LAT},
+      </if>
+      <if test="LNG != null">
+        #{LNG},
+      </if>
+      <if test="MILEAGE != null">
+        #{MILEAGE},
+      </if>
+      <if test="MILEAGEFEE != null">
+        #{MILEAGEFEE},
+      </if>
+      <if test="VALUEFEE != null">
+        #{VALUEFEE},
+      </if>
+      <if test="ENDLAT != null">
+        #{ENDLAT},
+      </if>
+      <if test="ENDLNG != null">
+        #{ENDLNG},
+      </if>
+      <if test="CANCELREASON != null">
+        #{CANCELREASON},
+      </if>
+      <if test="CANCELTIME != null">
+        #{CANCELTIME},
+      </if>
+      <if test="CANCELUSERID != null">
+        #{CANCELUSERID},
+      </if>
+      <if test="CARBRAND != null">
+        #{CARBRAND},
+      </if>
+      <if test="CARCOLOR != null">
+        #{CARCOLOR},
+      </if>
+      <if test="CARNUMBER != null">
+        #{CARNUMBER},
+      </if>
+      <if test="BALANCE != null">
+        #{BALANCE},
+      </if>
+      <if test="LABEL != null">
+        #{LABEL},
+      </if>
+      <if test="FAILPRICE != null">
+        #{FAILPRICE},
+      </if>
+      <if test="RECEIVETIME != null">
+        #{RECEIVETIME},
+      </if>
+      <if test="SUCCESSPRICE != null">
+        #{SUCCESSPRICE},
+      </if>
+      <if test="TOGETHERUSERID != null">
+        #{TOGETHERUSERID},
+      </if>
+      <if test="SIMILARITY != null">
+        #{SIMILARITY},
+      </if>
+      <if test="CARGOID != null">
+        #{CARGOID},
+      </if>
+      <if test="COUPONUUID != null">
+        #{COUPONUUID},
+      </if>
+      <if test="NIGHTCHANGER != null">
+        #{NIGHTCHANGER},
+      </if>
+      <if test="DRIVERFEEID != null">
+        #{DRIVERFEEID},
+      </if>
+      <if test="PREFERENCEAMOUNT != null">
+        #{PREFERENCEAMOUNT},
+      </if>
+      <if test="DRIVERTYPE != null">
+        #{DRIVERTYPE},
+      </if>
+      <if test="ISCALL != null">
+        #{ISCALL},
+      </if>
+      <if test="RECEIVEDETAILADDRESS != null">
+        #{RECEIVEDETAILADDRESS},
+      </if>
+      <if test="SENDDETAILADDRESS != null">
+        #{SENDDETAILADDRESS},
+      </if>
+      <if test="ORDERGOODSCOUNT != null">
+        #{ORDERGOODSCOUNT},
+      </if>
+      <if test="ISSUBSCRIBE != null">
+        #{ISSUBSCRIBE},
+      </if>
+      <if test="STATUSORDER != null">
+        #{STATUSORDER},
+      </if>
+      <if test="GAINORDERTIME != null">
+        #{GAINORDERTIME},
+      </if>
+      <if test="VERSION != null">
+        #{VERSION}
+      </if>
+    </trim>
+  </insert>
+  <update id="edit" parameterType="pd">
+    update 
+    <include refid="table_name"/> 
+    <set>
+      <if test="SENDERNAME != null">
+        SENDERNAME = #{SENDERNAME},
+      </if>
+      <if test="SENDERMOBILENO != null">
+        SENDERMOBILENO = #{SENDERMOBILENO},
+      </if>
+      <if test="SENDERADDRESS != null">
+        SENDERADDRESS = #{SENDERADDRESS},
+      </if>
+      <if test="RECEIVERNAME != null">
+        RECEIVERNAME = #{RECEIVERNAME},
+      </if>
+      <if test="RECEIVERMOBILENO != null">
+        RECEIVERMOBILENO = #{RECEIVERMOBILENO},
+      </if>
+      <if test="RECEIVERADDRESS != null">
+        RECEIVERADDRESS = #{RECEIVERADDRESS},
+      </if>
+      <if test="GOODSDESCRIPTION != null">
+        GOODSDESCRIPTION = #{GOODSDESCRIPTION},
+      </if>
+      <if test="ITEMWEIGHT != null">
+        ITEMWEIGHT = #{ITEMWEIGHT},
+      </if>
+      <if test="GOODSVOLUME != null">
+        GOODSVOLUME = #{GOODSVOLUME},
+      </if>
+      <if test="PAYTYPE != null">
+        PAYTYPE = #{PAYTYPE},
+      </if>
+      <if test="ISFIGHTALONE != null">
+        ISFIGHTALONE = #{ISFIGHTALONE},
+      </if>
+      <if test="GOODSPHOTO != null">
+        GOODSPHOTO = #{GOODSPHOTO},
+      </if>
+      <if test="ORDERSTATUS != null">
+        ORDERSTATUS = #{ORDERSTATUS},
+      </if>
+      <if test="ORDERPRICE != null">
+        ORDERPRICE = #{ORDERPRICE},
+      </if>
+      <if test="ORDERTYPE != null">
+        ORDERTYPE = #{ORDERTYPE},
+      </if>
+      <if test="DRIVERID != null">
+        DRIVERID = #{DRIVERID},
+      </if>
+      <if test="DRIVERNAME != null">
+        DRIVERNAME = #{DRIVERNAME},
+      </if>
+      <if test="DRIVERMOBILENO != null">
+        DRIVERMOBILENO = #{DRIVERMOBILENO},
+      </if>
+      <if test="CARID != null">
+        CARID = #{CARID},
+      </if>
+      <if test="USERID != null">
+        USERID = #{USERID},
+      </if>
+      <if test="SENDPROVINCEID != null">
+        SENDPROVINCEID = #{SENDPROVINCEID},
+      </if>
+      <if test="SENDCITYID != null">
+        SENDCITYID = #{SENDCITYID},
+      </if>
+      <if test="SENDAREAID != null">
+        SENDAREAID = #{SENDAREAID},
+      </if>
+      <if test="RECEIVEPROVINCEID != null">
+        RECEIVEPROVINCEID = #{RECEIVEPROVINCEID},
+      </if>
+      <if test="RECEIVECITYID != null">
+        RECEIVECITYID = #{RECEIVECITYID},
+      </if>
+      <if test="RECEIVEAREAID != null">
+        RECEIVEAREAID = #{RECEIVEAREAID},
+      </if>
+      <if test="SERVICECHARGE != null">
+        SERVICECHARGE = #{SERVICECHARGE},
+      </if>
+      <if test="SIGNATURE != null">
+        SIGNATURE = #{SIGNATURE},
+      </if>
+      <if test="EXPRESSTIME != null">
+        EXPRESSTIME = #{EXPRESSTIME},
+      </if>
+      <if test="REMARK != null">
+        REMARK = #{REMARK},
+      </if>
+      <if test="STARTINGPRICE != null">
+        STARTINGPRICE = #{STARTINGPRICE},
+      </if>
+      <if test="ALLPRICE != null">
+        ALLPRICE = #{ALLPRICE},
+      </if>
+      <if test="REWARDMONEY != null">
+        REWARDMONEY = #{REWARDMONEY},
+      </if>
+      <if test="PAYMENTTYPE != null">
+        PAYMENTTYPE = #{PAYMENTTYPE},
+      </if>
+      <if test="PAYMENTSTATUS != null">
+        PAYMENTSTATUS = #{PAYMENTSTATUS},
+      </if>
+      <if test="EVALUATESTARS != null">
+        EVALUATESTARS = #{EVALUATESTARS},
+      </if>
+      <if test="EVALUATECONTENT != null">
+        EVALUATECONTENT = #{EVALUATECONTENT},
+      </if>
+      <if test="CREATETIME != null">
+        CREATETIME = #{CREATETIME},
+      </if>
+      <if test="CREATER != null">
+        CREATER = #{CREATER},
+      </if>
+      <if test="UPDATETIME != null">
+        UPDATETIME = #{UPDATETIME},
+      </if>
+      <if test="UPDATER != null">
+        UPDATER = #{UPDATER},
+      </if>
+      <if test="LAT != null">
+        LAT = #{LAT},
+      </if>
+      <if test="LNG != null">
+        LNG = #{LNG},
+      </if>
+      <if test="MILEAGE != null">
+        MILEAGE = #{MILEAGE},
+      </if>
+      <if test="MILEAGEFEE != null">
+        MILEAGEFEE = #{MILEAGEFEE},
+      </if>
+      <if test="ENDLAT != null">
+        ENDLAT = #{ENDLAT},
+      </if>
+      <if test="ENDLNG != null">
+        ENDLNG = #{ENDLNG},
+      </if>
+      <if test="CANCELREASON != null">
+        CANCELREASON = #{CANCELREASON},
+      </if>
+      <if test="CANCELTIME != null">
+        CANCELTIME = #{CANCELTIME},
+      </if>
+      <if test="CANCELUSERID != null">
+        CANCELUSERID = #{CANCELUSERID},
+      </if>
+      <if test="CARBRAND != null">
+        CARBRAND = #{CARBRAND},
+      </if>
+      <if test="CARCOLOR != null">
+        CARCOLOR = #{CARCOLOR},
+      </if>
+      <if test="CARNUMBER != null">
+        CARNUMBER = #{CARNUMBER},
+      </if>
+      <if test="BALANCE != null">
+        BALANCE = #{BALANCE},
+      </if>
+      <if test="LABEL != null">
+        LABEL = #{LABEL},
+      </if>
+      <if test="FAILPRICE != null">
+        FAILPRICE = #{FAILPRICE},
+      </if>
+      <if test="RECEIVETIME != null">
+        RECEIVETIME = #{RECEIVETIME},
+      </if>
+      <if test="SUCCESSPRICE != null">
+        SUCCESSPRICE = #{SUCCESSPRICE},
+      </if>
+      <if test="TOGETHERUSERID != null">
+        TOGETHERUSERID = #{TOGETHERUSERID},
+      </if>
+      <if test="SIMILARITY != null">
+        SIMILARITY = #{SIMILARITY},
+      </if>
+      <if test="CARGOID != null">
+        CARGOID = #{CARGOID},
+      </if>
+      <if test="COUPONUUID != null">
+        COUPONUUID = #{COUPONUUID},
+      </if>
+      <if test="NIGHTCHANGER != null">
+        NIGHTCHANGER = #{NIGHTCHANGER},
+      </if>
+      <if test="DRIVERFEEID != null">
+        DRIVERFEEID = #{DRIVERFEEID},
+      </if>
+      <if test="PREFERENCEAMOUNT != null">
+        PREFERENCEAMOUNT = #{PREFERENCEAMOUNT},
+      </if>
+      <if test="DRIVERTYPE != null">
+        DRIVERTYPE = #{DRIVERTYPE},
+      </if>
+      <if test="ISCALL != null">
+        ISCALL = #{ISCALL,jdbcType=VARCHAR},
+      </if>
+      <if test="RECEIVEDETAILADDRESS != null">
+        RECEIVEDETAILADDRESS = #{RECEIVEDETAILADDRESS},
+      </if>
+      <if test="SENDDETAILADDRESS != null">
+        SENDDETAILADDRESS = #{SENDDETAILADDRESS},
+      </if>
+      <if test="ORDERGOODSCOUNT != null">
+        ORDERGOODSCOUNT = #{ORDERGOODSCOUNT},
+      </if>
+      <if test="ISSUBSCRIBE != null">
+        ISSUBSCRIBE = #{ISSUBSCRIBE},
+      </if>
+      <if test="STATUSORDER != null">
+        STATUSORDER = #{STATUSORDER},
+      </if>
+      <if test="GAINORDERTIME != null">
+        GAINORDERTIME = #{GAINORDERTIME},
+      </if>
+      <if test="VERSION != null">
+        VERSION = #{VERSION}
+      </if>
+    </set>
+    where ORDERID = #{ORDERID}
+  </update>
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="table_name"></include>
+		where 
+			ORDERID = #{ORDERID}
+	</delete>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Base_Column_List"/>
+		from 
+		<include refid="table_name"/>
+		where 
+			ORDERID = #{ORDERID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Base_Column_List"></include>
+		from 
+		<include refid="table_name"></include>
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Base_Column_List"></include>
+		from 
+		<include refid="table_name"></include>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="table_name"></include>
+		where 
+			ORDERID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+</mapper>

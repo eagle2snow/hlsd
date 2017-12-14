@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HorseManMapper">
+	<sql id="tableName">
+		t_user
+	</sql>
+	<sql id="Base_Column_List">
+		userId, 
+		expressCompanyId, 
+		userName, 
+		userPassword, 
+		userType, 
+		nickName,
+		userPhoto,
+		userMobileNo, 
+		userSex, 
+		userBirthday, 
+		userCardNo, 
+		userlevel, 
+		expressCompany,
+		industry,
+		provinceId, 
+		cityId, 
+		areaId, 
+		detailAddress, 
+		driverLicense, 
+		counterPart,
+		wokerNumber,
+		networkTel, 
+		employeeCard, 
+		identityCard, 
+		getLicenseDate, 
+		selectCarId, 
+		money,
+		orderId1,
+		orderId2, 
+		currentMode, 
+		inviteCode, 
+		status, 
+		noPassReason, 
+		commentScore,
+		createTime,
+		creater, 
+		updateTime, 
+		updater, 
+		spelllistState, 
+		loginFlag, 
+		backCashFlag,
+		beInvitedCode,
+		alipayAccount, 
+		alipayRealName, 
+		openId, 
+		wxRealName, 
+		easemobFlag, 
+		wxpayRealName,
+		wxImage,
+		wxNickName, 
+		ywtFlag, 
+		createTime_max_1, 
+		createTime_min_1, 
+		beInvitedCodeList,
+		inviteCodeId,
+		inviteId, 
+		inviteRoot, 
+		onlySign, 
+		orderNumberStatus, 
+		allTotalPrices, 
+		phoneFlag,
+		isUse,
+		standId, 
+		role, 
+		PromoNum, 
+		deliveryDistance, 
+		parentInviteCodeIdList,
+		allPriceDiscount,
+		displayPrice, 
+		discount
+	</sql>
+	
+	
+	<!-- 分页查询骑手列表 -->
+	<select id="datalistPageHorseMan" parameterType="page" resultType="pd">
+		select t1.userId,t1.userName,t1.userMobileNo,t1.userCardNo,t1.createTime,t1.role,
+			t2.province,t3.city,t4.area,t5.stand,t1.status from t_user t1 
+			left join address t2 on t1.provinceId = t2.id
+			left join address t3 on t1.cityId = t3.id
+			left join address t4 on t1.areaId = t4.id
+			left join t_stand t5 on t1.standId = t5.standId
+		where t1.userType='5' and t1.isUse='0'
+		
+		<if test="pd.userstatus!= null and pd.userstatus != ''">
+			and t1.status = #{pd.userstatus}
+		</if>
+		
+		<if test="pd.province!= null and pd.province != ''">
+			AND t1.provinceId = #{pd.province}
+		</if>
+		<if test="pd.city!= null and pd.city != ''">
+			AND t1.cityId = #{pd.city}
+		</if>
+		<if test="pd.area!= null and pd.area != ''">
+			AND t1.areaId = #{pd.area}
+		</if>
+		<if test="pd.stand!= null and pd.stand != ''">
+			AND t1.standId = #{pd.stand}
+		</if>
+		<!-- 通过关键字查询[司机姓名和司机电话] -->
+		<if test="pd.keywords!= null and pd.keywords != ''">
+			and
+				(
+					t1.userName LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					t1.userMobileNo LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		</if>
+		ORDER BY t1.createTime DESC 
+	</select>
+	
+	
+	<!-- 分页查询骑手考试结果列表 -->
+	<select id="datalistPageExamResult" parameterType="page" resultType="pd">
+		select t1.userId,t1.userName,t1.userMobileNo,t1.userCardNo,t1.createTime,t1.role,
+			t2.province,t3.city,t4.stand,t1.status,t1.cashPledge from t_user t1 
+			left join address t2 on t1.provinceId = t2.id
+			left join address t3 on t1.cityId = t3.id
+			left join t_stand t4 on t1.standId = t4.standId
+		where t1.userType='5' and t1.isUse='0' and (t1.status='4' or t1.status='5')
+		
+		<if test="pd.userstatus!= null and pd.userstatus != ''">
+			and t1.status = #{pd.userstatus}
+		</if>
+		<!-- 通过关键字查询[司机姓名和司机电话] -->
+		<if test="pd.keywords!= null and pd.keywords != ''">
+			and
+				(
+					t1.userName LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					t1.userMobileNo LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		</if>
+		ORDER BY t1.createTime DESC 
+	</select>
+	
+	<!-- 骑手信息分页列表 -->
+	<select id="datalistPageHorsemanMessage" parameterType="page" resultType="pd">
+		select t1.userId,t1.userName,t1.userMobileNo,t1.createTime,t1.role,
+			t2.province,t3.city,t4.stand,a.area,t1.scaleScore,t1.commentScore 
+			, s.scaleName , c.grade,t1.isUse,c.description from t_user t1 
+			left join t_provinces t2 on t1.provinceId = t2.provinceId
+			left join t_cities t3 on t1.cityId = t3.cityId
+			left join t_areas a on t1.areaId = a.areaId
+			left join t_stand t4 on t1.standId = t4.standId
+			left join t_scale_score s on s.scaleId = t1.scaleId
+			left join t_common_score c on c.commonId = t1.commonId
+		where t1.userType='5'
+		
+		<if test="pd.commonId != null and pd.commonId != ''">
+			and t1.commonId = #{pd.commonId}
+		</if>
+		<if test="pd.scaleId != null and pd.scaleId != ''">
+			and t1.scaleId = #{pd.scaleId}
+		</if>
+		<if test="pd.provinceId != null and pd.provinceId != ''">
+			and t1.provinceId = #{pd.provinceId}
+		</if>
+		<if test="pd.cityId != null and pd.cityId != ''">
+			and t1.cityId = #{pd.cityId}
+		</if>
+		<if test="pd.areaId != null and pd.areaId != ''">
+			and t1.areaId = #{pd.areaId}
+		</if>
+		<if test="pd.standId != null and pd.standId != ''">
+			and t1.standId = #{pd.standId}
+		</if>
+		<if test="pd.isUse != null and pd.isUse != ''">
+			and t1.isUse = #{pd.isUse}
+		</if>
+		<!-- 通过关键字查询[司机姓名和司机电话] -->
+		<if test="pd.keywords!= null and pd.keywords != ''">
+			and
+				(
+					t1.userName LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					t1.userMobileNo LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		</if>
+		ORDER BY t1.createTime DESC 
+	</select>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select t1.userId,t1.userName,t1.userMobileNo,t1.userCardNo,t1.createTime,t1.role,
+			t1.provinceId,t1.cityId,t1.areaId,t1.standId,t1.cashPledge,t1.scaleScore
+			,t1.commentScore,t1.isUse,
+			t2.province,t3.city,t4.area,t5.stand,t1.status from t_user t1 
+			left join address t2 on t1.provinceId = t2.id
+			left join address t3 on t1.cityId = t3.id
+			left join address t4 on t1.areaId = t4.id
+			left join t_stand t5 on t1.standId = t5.standId
+		where t1.userType='5'
+		and 
+			userId = #{userId}
+	</select>
+	
+	
+	<!-- 更新审核状态 -->
+	<update id="updateUserStatu" parameterType="pd">
+		update t_user set status = #{userStatu},
+		updateTime = #{updateTime},
+		updater = #{updater}
+		 where userId = #{userId} 
+	</update>
+	
+	<!-- 更新审核状态,新增0.01分钱的押金 -->
+	<update id="updateUserStatuFor7" parameterType="pd">
+		update t_user set status = #{userStatu},
+		updateTime = #{updateTime},
+		updater = #{updater},
+		cashPledge=0.01
+		 where userId = #{userId}
+	</update>
+	
+	<!-- 修改骑手信息 -->
+	<update id="edit" parameterType="pd">
+		update t_user
+		
+			set userName = #{userName},
+			userMobileNo = #{userMobileNo},
+			userCardNo = #{userCardNo},
+			provinceId = #{provinceId},
+			cityId = #{cityId},
+			updateTime = #{updateTime},
+			updater = #{updater}
+			<if test="areaId!= null and areaId != ''">
+			 ,areaId = #{areaId}
+			</if>
+			<if test="standId!= null and standId != ''">
+			 ,standId = #{standId}
+			</if>
+			
+		where userId = #{userId}
+	</update>
+	<!-- 修改骑手信息 -->
+	<update id="updateByPrimaryKeySelective" parameterType="pd">
+	update t_user
+	<set>
+		<if test="expressCompanyId != null">
+			expressCompanyId = #{expressCompanyId},
+		</if>
+		<if test="userName != null">
+			userName = #{userName},
+		</if>
+		<if test="userPassword != null">
+			userPassword = #{userPassword},
+		</if>
+		<if test="userType != null">
+			userType = #{userType},
+		</if>
+		<if test="nickName != null">
+			nickName = #{nickName},
+		</if>
+		<if test="userPhoto != null">
+			userPhoto = #{userPhoto},
+		</if>
+		<if test="userMobileNo != null">
+			userMobileNo = #{userMobileNo},
+		</if>
+		<if test="userSex != null">
+			userSex = #{userSex},
+		</if>
+		<if test="userBirthday != null">
+			userBirthday = #{userBirthday},
+		</if>
+		<if test="userCardNo != null">
+			userCardNo = #{userCardNo},
+		</if>
+		<if test="userlevel != null">
+			userlevel = #{userlevel},
+		</if>
+		<if test="expressCompany != null">
+			expressCompany = #{expressCompany},
+		</if>
+		<if test="industry != null">
+			industry = #{industry},
+		</if>
+		<if test="provinceId != null">
+			provinceId = #{provinceId},
+		</if>
+		<if test="cityId != null">
+			cityId = #{cityId},
+		</if>
+		<if test="areaId != null">
+			areaId = #{areaId},
+		</if>
+		<if test="detailAddress != null">
+			detailAddress = #{detailAddress},
+		</if>
+		<if test="driverLicense != null">
+			driverLicense = #{driverLicense},
+		</if>
+		<if test="counterPart != null">
+			counterPart = #{counterPart},
+		</if>
+		<if test="wokerNumber != null">
+			wokerNumber = #{wokerNumber},
+		</if>
+		<if test="networkTel != null">
+			networkTel = #{networkTel},
+		</if>
+		<if test="employeeCard != null">
+			employeeCard = #{employeeCard},
+		</if>
+		<if test="identityCard != null">
+			identityCard = #{identityCard},
+		</if>
+		<if test="getLicenseDate != null">
+			getLicenseDate = #{getLicenseDate},
+		</if>
+		<if test="selectCarId != null">
+			selectCarId = #{selectCarId},
+		</if>
+		<if test="money != null">
+			money = #{money},
+		</if>
+		<if test="orderId1 != null">
+			orderId1 = #{orderId1},
+		</if>
+		<if test="orderId2 != null">
+			orderId2 = #{orderId2},
+		</if>
+		<if test="currentMode != null">
+			currentMode = #{currentMode},
+		</if>
+		<if test="inviteCode != null">
+			inviteCode = #{inviteCode},
+		</if>
+		<if test="status != null">
+			status = #{status},
+		</if>
+		<if test="noPassReason != null">
+			noPassReason = #{noPassReason},
+		</if>
+		<if test="commentScore != null">
+			commentScore = #{commentScore},
+		</if>
+		<if test="createTime != null">
+			createTime = #{createTime},
+		</if>
+		<if test="creater != null">
+			creater = #{creater},
+		</if>
+		<if test="updateTime != null">
+			updateTime = #{updateTime},
+		</if>
+		<if test="updater != null">
+			updater = #{updater},
+		</if>
+		<if test="spelllistState != null">
+			spelllistState = #{spelllistState},
+		</if>
+		<if test="loginFlag != null">
+			loginFlag = #{loginFlag},
+		</if>
+		<if test="backCashFlag != null">
+			backCashFlag = #{backCashFlag},
+		</if>
+		<if test="beInvitedCode != null">
+			beInvitedCode = #{beInvitedCode},
+		</if>
+		<if test="alipayAccount != null">
+			alipayAccount = #{alipayAccount},
+		</if>
+		<if test="alipayRealName != null">
+			alipayRealName = #{alipayRealName},
+		</if>
+		<if test="openId != null">
+			openId = #{openId},
+		</if>
+		<if test="wxRealName != null">
+			wxRealName = #{wxRealName},
+		</if>
+		<if test="easemobFlag != null">
+			easemobFlag = #{easemobFlag},
+		</if>
+		<if test="wxpayRealName != null">
+			wxpayRealName = #{wxpayRealName},
+		</if>
+		<if test="wxImage != null">
+			wxImage = #{wxImage},
+		</if>
+		<if test="wxNickName != null">
+			wxNickName = #{wxNickName},
+		</if>
+		<if test="ywtFlag != null">
+			ywtFlag = #{ywtFlag},
+		</if>
+		<if test="createTime_max_1 != null">
+			createTime_max_1 = #{createTime_max_1},
+		</if>
+		<if test="createTime_min_1 != null">
+			createTime_min_1 = #{createTime_min_1},
+		</if>
+		<if test="beInvitedCodeList != null">
+			beInvitedCodeList = #{beInvitedCodeList},
+		</if>
+		<if test="inviteCodeId != null">
+			inviteCodeId = #{inviteCodeId},
+		</if>
+		<if test="inviteId != null">
+			inviteId = #{inviteId},
+		</if>
+		<if test="inviteRoot != null">
+			inviteRoot = #{inviteRoot},
+		</if>
+		<if test="onlySign != null">
+			onlySign = #{onlySign},
+		</if>
+		<if test="orderNumberStatus != null">
+			orderNumberStatus = #{orderNumberStatus},
+		</if>
+		<if test="allTotalPrices != null">
+			allTotalPrices = #{allTotalPrices},
+		</if>
+		<if test="phoneFlag != null">
+			phoneFlag = #{phoneFlag},
+		</if>
+		<if test="isUse != null">
+			isUse = #{isUse},
+		</if>
+		<if test="standId != null">
+			standId = #{standId},
+		</if>
+		<if test="role != null">
+			role = #{role},
+		</if>
+		<if test="PromoNum != null">
+			PromoNum = #{PromoNum},
+		</if>
+		<if test="deliveryDistance != null">
+			deliveryDistance = #{deliveryDistance},
+		</if>
+		<if test="parentInviteCodeIdList != null">
+			parentInviteCodeIdList = #{parentInviteCodeIdList},
+		</if>
+		<if test="allPriceDiscount != null">
+			allPriceDiscount = #{allPriceDiscount},
+		</if>
+		<if test="displayPrice != null">
+			displayPrice = #{displayPrice},
+		</if>
+		<if test="smokedScore != null">
+			smokedScore = #{smokedScore,jdbcType=DOUBLE},
+		</if>
+		<if test="scaleScore != null">
+			scaleScore = #{scaleScore},
+		</if>
+		<if test="scaleId != null">
+			scaleId = #{scaleId},
+		</if>
+		<if test="commonId != null">
+			commonId = #{commonId},
+		</if>
+		<if test="availableBalance != null">
+			availableBalance = #{availableBalance}
+		</if>
+	</set>
+	where userId = #{userId}
+</update>
+	
+	<!-- 查询发送短信验证码的列表 -->
+	<select id="datalistPageForSms" parameterType="page" resultType="pd">
+		select
+			CONTENT,	
+			TYPE,	
+			TO_USERNAME,	
+			FROM_USERNAME,	
+			SEND_TIME,	
+			STATUS,	
+			FHSMS_ID,
+			SANME_ID
+		from sys_sms 
+		where 1 = 1 
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+					FROM_USERNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					TO_USERNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					CONTENT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		</if>
+		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''"><!-- 开始时间检索 -->
+			and SEND_TIME &gt;= #{pd.lastLoginStart} 
+		</if>
+		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''"><!-- 结束时间检索 -->
+			and SEND_TIME &lt;= #{pd.lastLoginEnd} 
+		</if>
+		<if test="pd.STATUS != null and pd.STATUS != ''"><!-- 状态检索 -->
+			and STATUS = #{pd.STATUS} 
+		</if>
+		order by SEND_TIME desc
+	</select>
+</mapper>

@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BDUserMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		t_bd_user
+	</sql>
+
+	<!-- 字段 -->
+	<sql id="Field">
+		BDUSERID,	<!-- BD专员id -->
+		BDUSERNAME, <!-- BD名称 -->
+		BDMOBILENO,	<!-- 电话 -->
+		BDPICTURE,	<!-- 头像 -->
+		BDCODE,		<!-- BD码 -->
+		PROVINCEID,		<!-- 省编号 -->
+		CITYID,		<!-- 市编号 -->
+		AREAID,		<!-- 区编号 -->
+		STANDID,		<!-- 站编号 -->
+		CREATETIME,	<!-- 创建时间 -->
+		CREATER,	<!-- 创建者 -->
+		UPDATETIME,	<!-- 修改时间 -->
+		UPDATER,	<!-- 修改者 -->
+		MONEY,		<!-- 余额 -->
+		AVAILABLEBALANCE, <!-- 可用余额 -->
+		ALIPAYACCOUNT,  <!-- 支付宝账号 -->
+		ALIPAYREALNAME, <!-- 支付宝名称 -->
+		OPENID, 		<!-- 微信标志 -->
+		WXREALNAME,     <!-- 微信名称 -->
+		WXIMAGE,         <!-- 微信头像 -->
+		STATE,
+		BEINVITEDCODE   <!-- 被邀请码 -->
+	</sql>
+
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		<if test="BDUSERID != null and BDUSERID != ''">
+			#{BDUSERID},
+		</if>
+		<if test="BDMOBILENO != null and BDMOBILENO != ''">
+			#{BDMOBILENO},
+		</if>
+		<if test="BDUSERNAME != null and BDUSERNAME != ''">
+			#{BDUSERNAME},
+		</if>
+		<if test="BDPICTURE != null and BDPICTURE != ''">
+			#{BDPICTURE},
+		</if>
+		<if test="BDCODE != null and BDCODE != ''">
+			#{BDCODE},
+		</if>
+		<if test="PROVINCEID != null and PROVINCEID != ''">
+			#{PROVINCEID},
+		</if>
+		<if test="CITYID != null and CITYID != ''">
+			#{CITYID},
+		</if>
+		<if test="AREAID != null and AREAID != ''">
+			#{AREAID},
+		</if>
+		<if test="AREAID != null and AREAID != ''">
+			#{STANDID},
+		</if>
+		<if test="CREATETIME != null and CREATETIME != ''">
+			#{CREATETIME},
+		</if>
+		<if test="CREATER != null and CREATER != ''">
+			#{CREATER},
+		</if>
+		<if test="UPDATETIME != null and UPDATETIME != ''">
+			#{UPDATETIME},
+		</if>
+		<if test="UPDATER != null and UPDATER != ''">
+			#{UPDATER},
+		</if>
+		<if test="MONEY != null and MONEY != ''">
+			#{MONEY},
+		</if>
+		<if test="AVAILABLEBALANCE != null and AVAILABLEBALANCE != ''">
+			#{AVAILABLEBALANCE},
+		</if>
+		<if test="ALIPAYACCOUNT != null and ALIPAYACCOUNT != ''">
+			#{ALIPAYACCOUNT},
+		</if>
+		<if test="ALIPAYREALNAME != null and ALIPAYREALNAME != ''">
+			#{ALIPAYREALNAME},
+		</if>
+		<if test="OPENID != null and OPENID != ''">
+			#{OPENID},
+		</if>
+		<if test="WXREALNAME != null and WXREALNAME != ''">
+			#{WXREALNAME},
+		</if>
+		<if test="WXIMAGE != null and WXIMAGE != ''">
+			#{WXIMAGE},
+		</if>
+		<if test="BEINVITEDCODE != null and BEINVITEDCODE != ''">
+			#{BEINVITEDCODE}
+		</if>
+	</sql>
+
+	<!-- 新增 -->
+	<insert id="save" parameterType="pd">
+		insert into
+		<include refid="tableName"></include>
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="BDUSERID != null and BDUSERID != ''">
+				BDUSERID,
+			</if>
+			<if test="BDMOBILENO != null and BDMOBILENO != ''">
+				BDMOBILENO,
+			</if>
+			<if test="BDUSERNAME != null and BDUSERNAME != ''">
+				BDUSERNAME,
+			</if>
+			<if test="BDPICTURE != null and BDPICTURE != ''">
+				BDPICTURE,
+			</if>
+			<if test="BDCODE != null and BDCODE != ''">
+				BDCODE,
+			</if>
+			<if test="PROVINCEID != null and PROVINCEID != ''">
+				PROVINCEID,
+			</if>
+			<if test="CITYID != null and CITYID != ''">
+				CITYID,
+			</if>
+			<if test="AREAID != null and AREAID != ''">
+				AREAID,
+			</if>
+			<if test="AREAID != null and AREAID != ''">
+				STANDID,
+			</if>
+			<if test="CREATETIME != null and CREATETIME != ''">
+				CREATETIME,
+			</if>
+			<if test="CREATER != null and CREATER != ''">
+				CREATER,
+			</if>
+			<if test="UPDATETIME != null and UPDATETIME != ''">
+				UPDATETIME,
+			</if>
+			<if test="UPDATER != null and UPDATER != ''">
+				UPDATER,
+			</if>
+			<if test="MONEY != null and MONEY != ''">
+				MONEY,
+			</if>
+			<if test="AVAILABLEBALANCE != null and AVAILABLEBALANCE != ''">
+				AVAILABLEBALANCE,
+			</if>
+			<if test="ALIPAYACCOUNT != null and ALIPAYACCOUNT != ''">
+				ALIPAYACCOUNT,
+			</if>
+			<if test="ALIPAYREALNAME != null and ALIPAYREALNAME != ''">
+				ALIPAYREALNAME,
+			</if>
+			<if test="OPENID != null and OPENID != ''">
+				OPENID,
+			</if>
+			<if test="WXREALNAME != null and WXREALNAME != ''">
+				WXREALNAME,
+			</if>
+			<if test="WXIMAGE != null and WXIMAGE != ''">
+				WXIMAGE,
+			</if>
+			<if test="STATE != null and STATE != ''">
+				STATE,
+			</if>
+			<if test="BEINVITEDCODE != null and BEINVITEDCODE != ''">
+				BEINVITEDCODE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="BDUSERID != null and BDUSERID != ''">
+				#{BDUSERID},
+			</if>
+			<if test="BDMOBILENO != null and BDMOBILENO != ''">
+				#{BDMOBILENO},
+			</if>
+			<if test="BDUSERNAME != null and BDUSERNAME != ''">
+				#{BDUSERNAME},
+			</if>
+			<if test="BDPICTURE != null and BDPICTURE != ''">
+				#{BDPICTURE},
+			</if>
+			<if test="BDCODE != null and BDCODE != ''">
+				#{BDCODE},
+			</if>
+			<if test="PROVINCEID != null and PROVINCEID != ''">
+				#{PROVINCEID},
+			</if>
+			<if test="CITYID != null and CITYID != ''">
+				#{CITYID},
+			</if>
+			<if test="AREAID != null and AREAID != ''">
+				#{AREAID},
+			</if>
+			<if test="AREAID != null and AREAID != ''">
+				#{STANDID},
+			</if>
+			<if test="CREATETIME != null and CREATETIME != ''">
+				#{CREATETIME},
+			</if>
+			<if test="CREATER != null and CREATER != ''">
+				#{CREATER},
+			</if>
+			<if test="UPDATETIME != null and UPDATETIME != ''">
+				#{UPDATETIME},
+			</if>
+			<if test="UPDATER != null and UPDATER != ''">
+				#{UPDATER},
+			</if>
+			<if test="MONEY != null and MONEY != ''">
+				#{MONEY},
+			</if>
+			<if test="AVAILABLEBALANCE != null and AVAILABLEBALANCE != ''">
+				#{AVAILABLEBALANCE},
+			</if>
+			<if test="ALIPAYACCOUNT != null and ALIPAYACCOUNT != ''">
+				#{ALIPAYACCOUNT},
+			</if>
+			<if test="ALIPAYREALNAME != null and ALIPAYREALNAME != ''">
+				#{ALIPAYREALNAME},
+			</if>
+			<if test="OPENID != null and OPENID != ''">
+				#{OPENID},
+			</if>
+			<if test="WXREALNAME != null and WXREALNAME != ''">
+				#{WXREALNAME},
+			</if>
+			<if test="WXIMAGE != null and WXIMAGE != ''">
+				#{WXIMAGE},
+			</if>
+			<if test="STATE != null and STATE != ''">
+				#{STATE},
+			</if>
+			<if test="BEINVITEDCODE != null and BEINVITEDCODE != ''">
+				#{BEINVITEDCODE},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 删除 -->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where
+		BDUSERID = #{BDUSERID}
+	</delete>
+
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set
+		<if test="BDMOBILENO != null and BDMOBILENO != ''">
+			BDMOBILENO = #{BDMOBILENO},
+		</if>
+		<if test="BDUSERNAME != null and BDUSERNAME != ''">
+			BDUSERNAME = #{BDUSERNAME},
+		</if>
+		<if test="BDPICTURE != null and BDPICTURE != ''">
+			BDPICTURE = #{BDPICTURE},
+		</if>
+		<if test="BDCODE != null and BDCODE != ''">
+			BDCODE = #{BDCODE},
+		</if>
+		<if test="PROVINCEID != null and PROVINCEID != ''">
+			PROVINCEID = #{PROVINCEID},
+		</if>
+		<if test="CITYID != null and CITYID != ''">
+			CITYID = #{CITYID},
+		</if>
+		<if test="AREAID != null and AREAID != ''">
+			AREAID = #{AREAID},
+		</if>
+		<if test="AREAID != null and AREAID != ''">
+			STANDID = #{STANDID},
+		</if>
+		<if test="CREATETIME != null and CREATETIME != ''">
+			CREATETIME = #{CREATETIME},
+		</if>
+		<if test="CREATER != null and CREATER != ''">
+			CREATER = #{CREATER},
+		</if>
+		<if test="UPDATETIME != null and UPDATETIME != ''">
+			UPDATETIME = #{UPDATETIME},
+		</if>
+		<if test="UPDATER != null and UPDATER != ''">
+			UPDATER = #{UPDATER},
+		</if>
+		<if test="MONEY != null">
+			MONEY = #{MONEY},
+		</if>
+		<if test="AVAILABLEBALANCE != null">
+			AVAILABLEBALANCE = #{AVAILABLEBALANCE},
+		</if>
+		<if test="ALIPAYACCOUNT != null and ALIPAYACCOUNT != ''">
+			ALIPAYACCOUNT = #{ALIPAYACCOUNT},
+		</if>
+		<if test="ALIPAYREALNAME != null and ALIPAYREALNAME != ''">
+			ALIPAYREALNAME = #{ALIPAYREALNAME},
+		</if>
+		<if test="OPENID != null and OPENID != ''">
+			OPENID = #{OPENID},
+		</if>
+		<if test="WXREALNAME != null and WXREALNAME != ''">
+			WXREALNAME = #{WXREALNAME},
+		</if>
+		<if test="WXIMAGE != null and WXIMAGE != ''">
+			WXIMAGE = #{WXIMAGE},
+		</if>
+		<if test="STATE != null and STATE != ''">
+			STATE = #{STATE},
+		</if>
+		BDUSERID = #{BDUSERID}
+		where
+		BDUSERID = #{BDUSERID}
+	</update>
+
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		BDUSERID = #{BDUSERID}
+	</select>
+	<!-- 根据用户id获取用户的账号信息 -->
+	<select id="getBDUserMessageByBDUSERID" parameterType="pd" resultType="pd">
+		select
+		BDUSERID,	<!-- BD专员id -->
+		MONEY,		<!-- 余额 -->
+		AVAILABLEBALANCE, <!-- 可用余额 -->
+		ROUND(MONEY - AVAILABLEBALANCE,2) NOBALANCE,
+		(CASE WHEN ALIPAYACCOUNT IS NULL THEN '' ELSE ALIPAYACCOUNT END) ALIPAYACCOUNT,  <!-- 支付宝账号 -->
+		(CASE WHEN ALIPAYREALNAME IS NULL THEN '' ELSE ALIPAYREALNAME END) ALIPAYREALNAME, <!-- 支付宝名称 -->
+		(CASE WHEN OPENID IS NULL THEN '' ELSE OPENID END) OPENID, 		<!-- 微信标志 -->
+		(CASE WHEN WXREALNAME IS NULL THEN '' ELSE WXREALNAME END) WXREALNAME,     <!-- 微信名称 -->
+		(CASE WHEN WXIMAGE IS NULL THEN '' ELSE WXIMAGE END) WXIMAGE          <!-- 微信头像 -->
+		from
+		<include refid="tableName"></include>
+		where
+		BDUSERID = #{BDUSERID}
+	</select>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findByBDUSERID" parameterType="pd" resultType="pd">
+		select
+		BDUSERID,	<!-- BD专员id -->
+		(CASE WHEN BDUSERNAME IS NULL THEN '' ELSE BDUSERNAME END) BDUSERNAME, <!-- BD名称 -->
+		(CASE WHEN BDMOBILENO IS NULL THEN '' ELSE BDMOBILENO END) BDMOBILENO,	<!-- 电话 -->
+		(CASE WHEN BDPICTURE IS NULL THEN '' ELSE BDPICTURE END) BDPICTURE,	<!-- 头像 -->
+		(CASE WHEN BDCODE IS NULL THEN '' ELSE BDCODE END) BDCODE		<!-- BD码 -->
+		from
+		<include refid="tableName"></include>
+		where
+		BDUSERID = #{BDUSERID}
+	</select>
+	<!-- 根据BD码获取合伙人数量 -->
+	<select id="getPartnerCountByBDCODE" parameterType="pd" resultType="pd">
+		SELECT COUNT(1) count FROM 
+		<include refid="tableName"/>
+		WHERE BEINVITEDCODE = #{BDCODE}
+	</select>
+	<!-- 根据BD码获取合伙人信息 -->
+	<select id="getPartnerMessageByBdCode" parameterType="pd" resultType="pd">
+		SELECT 
+		b.BDUSERID,	<!-- BD专员id -->
+		(CASE WHEN b.BDUSERNAME IS NULL THEN '' ELSE b.BDUSERNAME END) BDUSERNAME, <!-- BD名称 -->
+		b.BDMOBILENO,	<!-- 电话 -->
+		b.BDCODE,     <!-- BD码 -->
+		(SELECT COUNT(1) FROM t_user u WHERE u.BEINVITEDCODE = b.BDCODE AND u.USERTYPE = '1') USERNUMBER,<!-- 商家的数量 -->
+		(SELECT COUNT(1) FROM t_user u WHERE u.BEINVITEDCODE = b.BDCODE AND u.USERTYPE = '5') HORSEMANNUMBER<!-- 骑手的数量 -->
+		FROM 
+		<include refid="tableName"/> b
+		WHERE b.BEINVITEDCODE = #{BDCODE}
+	</select>
+	<!-- 根据用户ID 获取用户信息 -->
+	<select id="getPartnerDetailMessageByBDUserId" parameterType="pd" resultType="pd">
+		SELECT 
+		(CASE WHEN b.BDUSERNAME IS NULL THEN '' ELSE b.BDUSERNAME END) BDUSERNAME, <!-- BD名称 -->
+		b.BDMOBILENO,	<!-- 电话 -->
+		b.BDCODE,     <!-- BD码 -->
+		(SELECT COUNT(1) FROM t_user u WHERE u.BEINVITEDCODE = b.BDCODE AND u.USERTYPE = '1') USERNUMBER,<!-- 商家的数量 -->
+		(SELECT COUNT(1) FROM t_user u WHERE u.BEINVITEDCODE = b.BDCODE AND u.USERTYPE = '5') HORSEMANNUMBER,<!-- 骑手的数量 -->
+		(SELECT COUNT(1) FROM t_orders_info o LEFT JOIN t_user u ON o.USERID = u.USERID WHERE u.BEINVITEDCODE = b.BDCODE AND o.STATUSORDER IN ('8','9','13') AND o.CREATETIME &gt;= u.BEINVITETIME) USERORDERNUMBER,<!-- 用户订单数量 -->
+		(SELECT COUNT(1) FROM t_orders_info o LEFT JOIN t_user u ON o.DRIVERID = u.USERID WHERE u.USERTYPE = '5'AND u.BEINVITEDCODE = b.BDCODE AND o.STATUSORDER IN ('8','9','13') AND o.CREATETIME &gt;= u.BEINVITETIME) HORSEMANORDERNUMBER,<!-- 骑手订单数量 -->
+		(CASE WHEN (SELECT SUM(MONEY) FROM t_bd_income c WHERE c.INCOMENAME = #{INCOMENAME} AND c.BDUSERID = b.BDUSERID) IS NULL THEN 0 ELSE (SELECT SUM(MONEY) FROM t_bd_income c WHERE c.INCOMENAME = #{INCOMENAME} AND c.BDUSERID = b.BDUSERID) END ) INCOMEALLPRICE <!-- 总合伙人收入 -->
+		FROM 
+		<include refid="tableName"/> b
+		WHERE b.BDUSERID = #{BDUSERID}
+	</select>
+	<!-- 通过ID获取数据 -->
+	<select id="findBySTATE" parameterType="pd" resultType="pd">
+		select
+		BDUSERID,	<!-- BD专员id -->
+		(CASE WHEN BDUSERNAME IS NULL THEN '' ELSE BDUSERNAME END) BDUSERNAME, <!-- BD名称 -->
+		(CASE WHEN BDMOBILENO IS NULL THEN '' ELSE BDMOBILENO END) BDMOBILENO,	<!-- 电话 -->
+		(CASE WHEN BDPICTURE IS NULL THEN '' ELSE BDPICTURE END) BDPICTURE,	<!-- 头像 -->
+		(CASE WHEN BDCODE IS NULL THEN '' ELSE BDCODE END) BDCODE		<!-- BD码 -->
+		from
+		<include refid="tableName"></include>
+		where
+		STATE = #{STATE}
+	</select>
+
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		b.BDUSERID,	<!-- BD专员id -->
+		b.BDUSERNAME, <!-- BD名称 -->
+		b.BDMOBILENO,	<!-- 电话 -->
+		b.BDCODE,		<!-- BD码 -->
+		p.PROVINCE,		<!-- 省编号 -->
+		c.CITY,		<!-- 市编号 -->
+		a.AREA,		<!-- 区编号 -->
+		s.STAND,		<!-- 站编号 -->
+		b.CREATETIME,	<!-- 创建时间 -->
+		b.MONEY	,	<!-- 余额 -->
+		b.AVAILABLEBALANCE
+		from
+		<include refid="tableName"/> b LEFT JOIN t_provinces p ON b.PROVINCEID = p.PROVINCEID LEFT JOIN t_cities c ON b.CITYID = c.CITYID
+		 LEFT JOIN t_areas a ON b.AREAID = a.AREAID LEFT JOIN t_stand s ON b.STANDID = s.STANDID
+		where 1=1
+		<if test="pd.CREATETIME_MIN != null and pd.CREATETIME_MIN != ''">
+			and CREATETIME &gt;= #{pd.CREATETIME_MIN}
+		</if>
+		<if test="pd.CREATETIME_MAX != null and pd.CREATETIME_MAX != ''">
+			and CREATETIME &lt;= #{pd.CREATETIME_MAX}
+		</if>
+		<if test="pd.PROVINCEID != null and pd.PROVINCEID != ''">
+			and PROVINCEID = #{pd.PROVINCEID}
+		</if>
+		<if test="pd.CITYID != null and pd.CITYID != ''">
+			and CITYID = #{pd.CITYID}
+		</if>
+		<if test="pd.AREAID != null and pd.AREAID != ''">
+			and AREAID = #{pd.AREAID}
+		</if>
+		<if test="pd.STANDID != null and pd.STANDID != ''">
+			and STANDID = #{pd.STANDID}
+		</if>
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+			(
+			<!-- 根据需求自己加检索条件 -->
+			BDMOBILENO LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			BDUSERID LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			or
+			BDUSERNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+
+			)
+		</if>
+		ORDER BY CREATETIME DESC
+	</select>
+
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+	</select>
+
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where
+		BDUSERID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 根据bd码获取用户数量 -->
+	<select id="findUserCountBDCode" parameterType="String" resultType="int">
+		SELECT COUNT(1) FROM 
+		<include refid="tableName"/>
+		WHERE BDCODE = #{_parameter}
+	</select>
+	<!-- 根基手机号获取BD专员信息 -->
+	<select id="getUserByMobileNo" parameterType="String" resultType="pd">
+		SELECT 
+		BDUSERID,	<!-- BD专员id -->
+		(CASE WHEN BDUSERNAME IS NULL THEN '' ELSE BDUSERNAME END) BDUSERNAME, <!-- BD名称 -->
+		(CASE WHEN BDMOBILENO IS NULL THEN '' ELSE BDMOBILENO END) BDMOBILENO,	<!-- 电话 -->
+		(CASE WHEN BDPICTURE IS NULL THEN '' ELSE BDPICTURE END) BDPICTURE,	<!-- 头像 -->
+		(CASE WHEN BDCODE IS NULL THEN '' ELSE BDCODE END) BDCODE		<!-- BD码 -->
+		FROM
+		<include refid="tableName"/>
+		WHERE BDMOBILENO = #{_parameter}
+	</select>
+	
+	<select id="getUserCountByBDCODE" parameterType="pd" resultType="pd">
+		SELECT COUNT(1) count FROM t_user WHERE beInvitedCode = #{BDCODE} 
+	</select>
+	
+	<select id="getUserOrderNumberMessage" parameterType="pd" resultType="pd">
+		SELECT 
+			(CASE WHEN u.userName IS NULL THEN '' ELSE u.userName END) shopName,
+			(CASE WHEN u.shopPicture IS NULL THEN '' ELSE u.shopPicture END) shopPicture,
+			(CASE WHEN u.userMobileNo IS NULL THEN '' ELSE u.userMobileNo END) userMobileNo,
+			u.userId ,
+			(select (case when SUM(IF( TO_DAYS(createTime) = TO_DAYS(NOW()) ,1,0)) is null then 0 else SUM(IF( TO_DAYS(createTime) = TO_DAYS(NOW()) ,1,0)) end ) from t_orders_info where statusOrder in ('8','9','13') and if(u.userType = '1',userId,driverId) = u.userId )AS dayNumber ,
+			(select (case when SUM(IF( YEARWEEK(DATE_FORMAT(createTime,'%Y-%m-%d')) = YEARWEEK(NOW()) ,1,0)) is null then 0 else SUM(IF( YEARWEEK(DATE_FORMAT(createTime,'%Y-%m-%d')) = YEARWEEK(NOW()) ,1,0)) end ) from t_orders_info where statusOrder in ('8','9','13') AND IF(u.userType = '1',userId,driverId) = u.userId) AS weekNumber ,
+			(select (case when SUM(IF(  DATE_FORMAT( createTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) ,1,0)) is null then 0 else SUM(IF(  DATE_FORMAT( createTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) ,1,0)) end ) from t_orders_info where statusOrder in ('8','9','13') AND IF(u.userType = '1',userId,driverId) = u.userId) AS mouthNumber ,
+			(select COUNT(1) from t_orders_info where statusOrder in ('8','9','13') AND IF(u.userType = '1',userId,driverId) = u.userId) allNumber,
+			(select (IF(SUM(IF( DATE_FORMAT( createTime, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) ,1,0)) >= 
+			(if(u.userType = '1' ,#{userOrderCnt},#{horseManOrderCnt})) ,'1','0' )) 
+			from t_orders_info where statusOrder in ('8','9','13') AND IF(u.userType = '1',userId,driverId) = u.userId) STATUS 
+		FROM  
+			t_user u 
+		WHERE
+			u.userType = #{USERTYPE} AND
+			u.beInvitedCode = #{BDCODE} 
+		ORDER BY mouthNumber , weekNumber ,dayNumber ,allNumber ,u.createTime DESC
+		LIMIT #{begin},#{end}
+
+		
+	</select>
+	<!-- 修改用户信息 -->
+	<update id="updateBDUserAlipayMessage" parameterType="pd">
+	
+		UPDATE <include refid="tableName"/>
+		SET ALIPAYACCOUNT = NULL,  <!-- 支付宝账号 -->
+			ALIPAYREALNAME = NULL  <!-- 支付宝名称 -->
+		WHERE BDUSERID = #{BDUSERID}
+	</update>
+	<!-- 修改用户信息 -->
+	<update id="updateBDUserWXMessage" parameterType="pd">
+		UPDATE <include refid="tableName"/>
+		SET 
+			OPENID = NULL,  <!-- 微信标志 -->
+			WXREALNAME = NULL , <!-- 微信名称 -->
+			WXIMAGE = NULL
+		WHERE BDUSERID = #{BDUSERID}
+	</update>
+	<!-- 根据openId查询用户信息 -->
+	<select id="getBDUserNumberByOpenId" resultType="pd" parameterType="pd">
+		SELECT COUNT(1) NUMBER FROM 
+		<include refid="tableName"/>
+		WHERE OPENID = #{OPENID}
+	</select>
+	
+	<update id="updateBDUserMessge" parameterType="PD">
+		UPDATE <include refid="tableName"/>
+		SET 
+			<if test="OPENID != '' and OPENID != null">
+				OPENID = #{OPENID},
+			</if>
+			<if test="WXREALNAME != '' and WXREALNAME != null">
+				WXREALNAME = #{WXREALNAME},
+			</if>
+			<if test="WXIMAGE != '' and WXIMAGE != null">
+				WXIMAGE = #{WXIMAGE},
+			</if>
+			<if test="STATE == ''">
+				STATE = NULL,
+			</if>
+			BDUSERID = #{BDUSERID}
+		WHERE BDUSERID = #{BDUSERID}
+	</update>
+
+</mapper>

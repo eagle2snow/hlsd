@@ -1,0 +1,24 @@
+@charset "utf-8";
+/* CSS Document */
+
+body,p,ul,dl,dd,dt,ol,li,h1,h4,h3,h2,h5,h6,fieldset,legend,input{margin:0;padding:0;}
+body{font:12px "微软雅黑";}
+ul,li{list-style:none;}
+a{text-decoration:none; color:#666;}
+img{border:none;}
+h1,h2,h3,h4,h5,h6,b,strong{font-weight:normal;}
+*:focus {outline: none;} 
+.hlsd-btn{
+	display: block;
+	width: 200px;
+	height: 46px;
+	background: #44c2f1;
+	box-shadow: 2px 2px 2px #44c2f1;
+	color: #fff;
+	text-align: center;
+	line-height: 46px;
+	font-size: 22px;
+}
+body{
+	-ms-zoom:1!important;
+}

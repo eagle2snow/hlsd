@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TVersionMapper">
+  <!-- <resultMap id="BaseResultMap" type="pd">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="creater" jdbcType="VARCHAR" property="creater" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="updater" jdbcType="VARCHAR" property="updater" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="versioncode" jdbcType="INTEGER" property="versioncode" />
+    <result column="versionname" jdbcType="VARCHAR" property="versionname" />
+    <result column="qrcodeUrl" jdbcType="VARCHAR" property="qrcodeurl" />
+    <result column="forceUpdate" jdbcType="VARCHAR" property="forceupdate" />
+  </resultMap> -->
+  <sql id="Base_Column_List">
+    id, createTime, creater, description, type, updateTime, updater, url, versioncode, 
+    versionname, qrcodeUrl, forceUpdate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultType="pd">
+    select 
+    <include refid="Base_Column_List" />
+    from t_version
+    where id = #{_parameter}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_version
+    where id = #{_parameter}
+  </delete>
+  <insert id="insert" parameterType="pd">
+    insert into t_version (id, createTime, creater, 
+      description, type, updateTime, 
+      updater, url, versioncode, 
+      versionname, qrcodeUrl, forceUpdate
+      )
+    values (#{id,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{updater,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{versioncode,jdbcType=INTEGER}, 
+      #{versionname,jdbcType=VARCHAR}, #{qrcodeurl,jdbcType=VARCHAR}, #{forceupdate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="pd">
+    insert into t_version
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="creater != null">
+        creater,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="updatetime != null">
+        updateTime,
+      </if>
+      <if test="updater != null">
+        updater,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="versioncode != null">
+        versioncode,
+      </if>
+      <if test="versionname != null">
+        versionname,
+      </if>
+      <if test="qrcodeurl != null">
+        qrcodeUrl,
+      </if>
+      <if test="forceupdate != null">
+        forceUpdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null">
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="versioncode != null">
+        #{versioncode,jdbcType=INTEGER},
+      </if>
+      <if test="versionname != null">
+        #{versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeurl != null">
+        #{qrcodeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="forceupdate != null">
+        #{forceupdate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pd">
+    update t_version
+    <set>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null">
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null">
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updater != null">
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="versioncode != null">
+        versioncode = #{versioncode,jdbcType=INTEGER},
+      </if>
+      <if test="versionname != null">
+        versionname = #{versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeurl != null">
+        qrcodeUrl = #{qrcodeurl,jdbcType=VARCHAR},
+      </if>
+      <if test="forceupdate != null">
+        forceUpdate = #{forceupdate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pd">
+    update t_version
+    set createTime = #{createtime,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      updater = #{updater,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      versioncode = #{versioncode,jdbcType=INTEGER},
+      versionname = #{versionname,jdbcType=VARCHAR},
+      qrcodeUrl = #{qrcodeurl,jdbcType=VARCHAR},
+      forceUpdate = #{forceupdate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
